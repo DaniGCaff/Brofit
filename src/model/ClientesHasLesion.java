@@ -1,6 +1,8 @@
 package model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -10,8 +12,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="clientes_has_lesiones")
-@NamedQuery(name="ClientesHasLesione.findAll", query="SELECT c FROM ClientesHasLesione c")
-public class ClientesHasLesione implements Serializable {
+@NamedQuery(name="ClientesHasLesion.findAll", query="SELECT c FROM ClientesHasLesion c")
+public class ClientesHasLesion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
@@ -29,7 +31,7 @@ public class ClientesHasLesione implements Serializable {
 	@JoinColumn(name="Lesiones_idLesiones", nullable=false, insertable=false, updatable=false)
 	private Lesion lesione;
 
-	public ClientesHasLesione() {
+	public ClientesHasLesion() {
 	}
 
 	public ClientesHasLesionePK getId() {
@@ -62,6 +64,13 @@ public class ClientesHasLesione implements Serializable {
 
 	public void setLesione(Lesion lesione) {
 		this.lesione = lesione;
+	}
+	
+	public Ejercicio getEjercicio(){
+		List <EjerciciosHasLesione> ej= getLesione().getEjerciciosHasLesiones();
+		if (!ej.isEmpty())
+			return ej.get(0).getEjercicio();
+		return null;
 	}
 
 }

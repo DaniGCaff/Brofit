@@ -24,7 +24,7 @@ public class Lesion implements Serializable {
 
 	//bi-directional many-to-one association to ClientesHasLesione
 	@OneToMany(mappedBy="lesione")
-	private List<ClientesHasLesione> clientesHasLesiones;
+	private List<ClientesHasLesion> clientesHasLesiones;
 
 	//bi-directional many-to-one association to EjerciciosHasLesione
 	@OneToMany(mappedBy="lesione")
@@ -62,22 +62,22 @@ public class Lesion implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public List<ClientesHasLesione> getClientesHasLesiones() {
+	public List<ClientesHasLesion> getClientesHasLesiones() {
 		return this.clientesHasLesiones;
 	}
 
-	public void setClientesHasLesiones(List<ClientesHasLesione> clientesHasLesiones) {
+	public void setClientesHasLesiones(List<ClientesHasLesion> clientesHasLesiones) {
 		this.clientesHasLesiones = clientesHasLesiones;
 	}
 
-	public ClientesHasLesione addClientesHasLesione(ClientesHasLesione clientesHasLesione) {
+	public ClientesHasLesion addClientesHasLesione(ClientesHasLesion clientesHasLesione) {
 		getClientesHasLesiones().add(clientesHasLesione);
 		clientesHasLesione.setLesione(this);
 
 		return clientesHasLesione;
 	}
 
-	public ClientesHasLesione removeClientesHasLesione(ClientesHasLesione clientesHasLesione) {
+	public ClientesHasLesion removeClientesHasLesione(ClientesHasLesion clientesHasLesione) {
 		getClientesHasLesiones().remove(clientesHasLesione);
 		clientesHasLesione.setLesione(null);
 
