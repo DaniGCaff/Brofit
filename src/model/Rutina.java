@@ -25,7 +25,7 @@ public class Rutina implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int idRutinas;
 	
-	private int musculosDia;
+	private List<String> musculosDia;
 	
 	private HashMap<Ejercicio,Boolean> ejerciciosFiltrados;
 
@@ -90,11 +90,11 @@ public class Rutina implements Serializable {
 		this.ejerciciosFiltrados = ejerciciosFiltrados;
 	}
 	
-	public int getMusculosDia(){
+	public List<String> getMusculosDia(){
 		return this.musculosDia;
 	}
 	
-	public void setMusculosDia(int musculosDia){
+	public void setMusculosDia(List<String> musculosDia){
 		this.musculosDia = musculosDia;
 	}
 	

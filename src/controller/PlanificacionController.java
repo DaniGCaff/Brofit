@@ -1,8 +1,12 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.Cliente;
 import model.Objetivo;
 import model.Rutina;
+import model.Rutina.TipoRutina;
 
 public class PlanificacionController {
 	Cliente cliente;
@@ -16,18 +20,50 @@ public class PlanificacionController {
 	
 /*	CONCLUSION: SE COMPRUEBA UNA VEZ SE TENGA LA SALIDA; 
  * SI NO NO SE PODRIA VER LO DE 1 MUSCULO O MAS POR DIA ETC
- * private void planificarMusculoDia(){
-		
-		if (objetivo.getNombre().equals("hipertrofia")){
-			if (cliente.getDiasSemana() == 5 && ejercicios !=triceps y biceps){
-			rutina.setMusculosDia(1);
-			
+ */ 
+	private void planificarMusculoDia(){
+		List <String> result =  new ArrayList();
+		if(rutina.getTipoRutina() == TipoRutina.tipoGrupoMuscular){
+			if ((objetivo.getNombre().equals("hipertrofia"))||(objetivo.getNombre().equals("tonificacion"))){
+				if (cliente.getDiasSemana() == 5){
+					result.add("G");
+					result.add("G");
+					result.add("G");
+					result.add("H");
+					result.add("B+T");
+				}
+				
+				else if (cliente.getDiasSemana() == 4){
+					result.add("G+H");
+					result.add("G");
+					result.add("G");
+					result.add("B+T");
+				}
+				
+				else if (cliente.getDiasSemana() == 3){
+					result.add("G+H");
+					result.add("G+B");
+					result.add("G+T");
+				}
 			}
 		}
-	}*/
+		
+		else if (objetivo.getNombre().equals("tonificacion")){
+			if(rutina.getTipoRutina() == TipoRutina.tipoCircuito){
+				if (cliente.getDiasSemana() == 5){
+					result.add("TS");
+					result.add("TI");
+					result.add("TS");
+					result.add("TI");
+					result.add("TS");
+				}
+			}
+		}
+	}
+ 
 	public void run(){
-		// TODO: Si es hipert. para 5 días, en un día se hace 1 músculo grande o pequeño o 2 especificos (biceps+triceps).
-		// TODO: Si es hipert. para 4 días, en un día se pueden hacerse <= 2 musculos (1 grande, 1 grande + 1 pequeño, B+T, NO SE PERMITE P+H).
+		// TODO: Si es hipert. para 5 días, en un día se hace 1 músculo grande u hombro o 2 especificos (biceps+triceps).
+		// TODO: Si es hipert. para 4 días, en un día se pueden hacerse <= 2 musculos (1 grande, 1 grande + 1 pequeño, B+T, NO SE PERMITE P+H) Resumen, h+x.
 		// TODO: Si es hipert. para 3 días, en un día se hacen 2 músculos (1 grande + 1 pequeño, B+T, NO SE PERMITE P+H).
 	
 		// TODO: Si es tonif. para rutina de t.circuito para 5 días:
