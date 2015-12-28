@@ -29,7 +29,10 @@ public class Ejercicio implements Serializable {
 
 	@Column(name="tipo_ejercicio")
 	private int tipoEjercicio;
-
+	//Técnica o fuerza
+	public enum TipoEjercicio{
+		tipoFuerza,tipoTecnica;
+	}
 	//bi-directional many-to-one association to Gmusculare
 	@ManyToOne
 	@JoinColumn(name="GMusculares_idGMusculares", nullable=false)

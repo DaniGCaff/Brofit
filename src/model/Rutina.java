@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -13,11 +15,21 @@ import java.util.List;
 @Table(name="rutinas")
 @NamedQuery(name="Rutina.findAll", query="SELECT r FROM Rutina r")
 public class Rutina implements Serializable {
+	
+	public enum TipoRutina{
+		tipoCircuito,tipoGrupoMuscular;
+	}
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(unique=true, nullable=false)
 	private int idRutinas;
+	
+	private int musculosDia;
+	
+	private HashMap<Ejercicio,Boolean> ejerciciosFiltrados;
+
+	private TipoRutina tipoRutina;
 
 	@Column(name="estres_resultante")
 	private float estresResultante;
@@ -42,7 +54,14 @@ public class Rutina implements Serializable {
 	public int getIdRutinas() {
 		return this.idRutinas;
 	}
-
+	
+	public TipoRutina getTipoRutina(){
+		return this.tipoRutina;
+	}
+	
+	public void setTipoRutina(TipoRutina tipoRutina){
+		this.tipoRutina = tipoRutina;
+	}
 	public void setIdRutinas(int idRutinas) {
 		this.idRutinas = idRutinas;
 	}
@@ -63,6 +82,22 @@ public class Rutina implements Serializable {
 		this.cliente = cliente;
 	}
 
+	public HashMap<Ejercicio,Boolean> getEjerciciosFiltrados() {
+		return this.ejerciciosFiltrados;
+	}
+
+	public void setEjerciciosFiltrados(HashMap<Ejercicio,Boolean> ejerciciosFiltrados) {
+		this.ejerciciosFiltrados = ejerciciosFiltrados;
+	}
+	
+	public int getMusculosDia(){
+		return this.musculosDia;
+	}
+	
+	public void setMusculosDia(int musculosDia){
+		this.musculosDia = musculosDia;
+	}
+	
 	public Objetivo getObjetivo() {
 		return this.objetivo;
 	}
@@ -92,5 +127,6 @@ public class Rutina implements Serializable {
 
 		return rutinasHasEjercicio;
 	}
+	
 
 }
