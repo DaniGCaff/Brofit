@@ -3,6 +3,7 @@ package controller;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -13,6 +14,7 @@ import model.Ejercicio;
 import model.Objetivo;
 import model.ObjetivosHasEjercicio;
 import model.Rutina;
+import model.Rutina.TipoRutina;
 
 public class FilterController {
 	private HashMap<Ejercicio,Boolean> ejerciciosFiltrados;
@@ -67,11 +69,24 @@ public class FilterController {
 		}
 		//TODO: Mirar el tema de las series.
 	}
-	
+	private int determinarTipoTabla(){
+		int result = cliente.getMotivacion();
+		if (cliente.getMotivacion() == -1){
+			Random random = new Random();
+			result = random.nextInt() % 2;
+		}
+		return result;
+	}
 
 	public void run(){
 		filtradoNivel();
 		filtradoLesion();
 		filtradoObjetivo();
+		rutina.setEjerciciosFiltrados(ejerciciosFiltrados);
+		if (determinarTipoTabla() == 0)
+			rutina.setTipoRutina(TipoRutina.tipoCircuito);
+		
+		else rutina.setTipoRutina(TipoRutina.tipoGrupoMuscular);
+		
 	}
 }
