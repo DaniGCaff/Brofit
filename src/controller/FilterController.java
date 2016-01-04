@@ -16,7 +16,7 @@ import model.ObjetivosHasEjercicio;
 import model.Rutina;
 import model.Rutina.TipoRutina;
 
-public class FilterController {
+class FilterController {
 	private HashMap<Ejercicio,Boolean> ejerciciosFiltrados;
 	private Cliente cliente;
 	private Rutina rutina;
