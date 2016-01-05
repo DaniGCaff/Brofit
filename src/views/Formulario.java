@@ -1,5 +1,8 @@
 
 package views;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
@@ -7,13 +10,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle;
 
+import controller.MainController;
 import model.Cliente;
 import model.ClientesHasLesion;
 import model.Lesion;
+import model.Objetivo;
+import model.ObjetivosHasEjercicio;
 
 public class Formulario extends javax.swing.JFrame {
     
-	// Variables declaration 
+	// Variables declaration
+
+ 
+	private MainController mainController ; 
     private javax.swing.JTextField altura;
     private javax.swing.JTextField apellidos;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -166,7 +175,7 @@ public class Formulario extends javax.swing.JFrame {
 
         jLabel5.setText("Objetivo");
 
-        objetivo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tonificación", "Hipertrofia", "Perdida de peso", "Mantenimiento" }));
+        objetivo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tonificacion", "Hipertrofia", "Perdida de peso", "Mantenimiento" }));
         objetivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 objetivoActionPerformed(evt);
@@ -467,7 +476,7 @@ public class Formulario extends javax.swing.JFrame {
         jPanel1.getAccessibleContext().setAccessibleName("usuario");
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
     private void r_anaerobica_infActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_anaerobica_infActionPerformed
         // TODO add your handling code here:
@@ -613,8 +622,19 @@ public class Formulario extends javax.swing.JFrame {
 		if(setCliente(cliente)){
 			
 			if(this.insertarLesiones(cliente)){
-				Resultado resultado = new Resultado();
-				resultado.main(null);
+				
+				
+
+				int index = objetivo.getSelectedIndex()+1;
+				try{
+					
+					Objetivo objetive = new Objetivo();
+					objetive = objetive.findObjetive(index);
+					mainController = new MainController(cliente,objetive).run();
+					Resultado resultado = new Resultado();
+					resultado.main(null);
+					
+				}catch(NullPointerException ex ){System.out.println("nulo");}
 			}
 			
 		}
