@@ -18,7 +18,8 @@ import java.util.List;
 public class Ejercicio implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private static EntityManager em;
+	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
+	private static EntityManager em = emf.createEntityManager();
 
 	@Id
 	@Column(unique=true, nullable=false)
