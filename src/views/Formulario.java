@@ -1,5 +1,8 @@
 
 package views;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -123,7 +126,7 @@ public class Formulario extends javax.swing.JFrame {
         continuar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("E-mail Contacts");
+        setTitle("BroFit");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos usuario"));
 
@@ -648,12 +651,13 @@ public class Formulario extends javax.swing.JFrame {
 		boolean result = true;
 		//TODO 0 = LEVE , 1 = GRAVE
 		try{
+			if(model2.getSize() >0){cliente.setClientesHasLesiones(new ArrayList<ClientesHasLesion>());}
 			for(int i =0; i<model2.getSize();i++){
 				ClientesHasLesion clientesHasLesion = new ClientesHasLesion();
 				clientesHasLesion.setCliente(cliente);
 				String aux = model2.getElementAt(i).toString();
 				String lesion = aux.substring(0,aux.indexOf("("));
-				String gravedad= aux.substring(aux.indexOf("("),aux.length()-1);
+				String gravedad= aux.substring(aux.indexOf("("),aux.length());
 				if(gravedad=="(Grave)"){
 					clientesHasLesion.setGravedadLesion(1);
 				}
@@ -667,6 +671,7 @@ public class Formulario extends javax.swing.JFrame {
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();
+			result = false;
 		}
 		
 		return result;
@@ -697,16 +702,16 @@ public class Formulario extends javax.swing.JFrame {
 	}
 
 
-	private void addLesionLeve(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLesionLeve
+	private void addLesionLeve(java.awt.event.ActionEvent evt) {
         
 		int index = lesiones1.getSelectedIndex();
 		if(	!this.LesionSelect(model1.getElementAt(index).toString())){
 			model2.add(model2.getSize(), model1.getElementAt(index).toString()+"(Leve)");
 			this.removeLesion(index,true);
 		}
-    }//GEN-LAST:event_addLesionLeve
+    }
 
-    private void addLesionGrave(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLesionGrave
+    private void addLesionGrave(java.awt.event.ActionEvent evt) {
 
 		try{
 			int index = lesiones1.getSelectedIndex();
@@ -728,6 +733,8 @@ public class Formulario extends javax.swing.JFrame {
 		model2 = new DefaultListModel();
 		lesiones2.setModel(model2);
 		lesiones1.setModel(model1);
+		
+		this.cargarDatos();
 
 	}
 	private boolean LesionSelect(String valor){
@@ -754,22 +761,21 @@ public class Formulario extends javax.swing.JFrame {
 		}
 	}
 
-	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
 
 		try{
 			int index = lesiones2.getSelectedIndex();
 			if(	!this.LesionSelect(model1.getElementAt(index).toString())){
-				//eliminar grave o leve
 				String aux = model2.getElementAt(index).toString();
 				String lesion = aux.substring(0,aux.indexOf("("));
 				model1.add(model1.getSize(), lesion);
 				this.removeLesion(index,false);
 			}
 		}catch(java.lang.ArrayIndexOutOfBoundsException ex){ex.printStackTrace();}
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }
 	
 	private void calcularEstresglobal(){
-		//calcular extreses con las tablas de diego
+		//calcular extreses con las tablas inventadas por diego
 		int estres_an_inf=0;
 		int estres_an_sup=0;
 		int estres_an_ab=0;
@@ -777,6 +783,17 @@ public class Formulario extends javax.swing.JFrame {
 		
 		int estres_global = (estres_an_inf+estres_an_sup+estres_an_ab+estres_ae)*(co_progreso.getSelectedIndex()+1);
 		
+	}
+	
+	private void cargarDatos(){
+		
+		nombre.setText("dsasad");
+		apellidos.setText("jdaskl");
+		edad.setText("12");
+		dni.setText("jasld");
+		peso.setText("78");
+		altura.setText("1");
+		pulsaciones.setText("45");
 	}
 
 }
