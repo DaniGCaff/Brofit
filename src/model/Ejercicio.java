@@ -2,6 +2,9 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -14,6 +17,8 @@ import java.util.List;
 @NamedQuery(name="Ejercicio.findAll", query="SELECT e FROM Ejercicio e")
 public class Ejercicio implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	private static EntityManager em;
 
 	@Id
 	@Column(unique=true, nullable=false)
@@ -93,7 +98,7 @@ public class Ejercicio implements Serializable {
 		this.tipoEjercicio = tipoEjercicio;
 	}
 
-	public Gmuscular getGmusculare() {
+	public Gmuscular getGmuscular() {
 		return this.gmusculare;
 	}
 
@@ -165,6 +170,55 @@ public class Ejercicio implements Serializable {
 		rutinasHasEjercicio.setEjercicio(null);
 
 		return rutinasHasEjercicio;
+	}
+	
+	public static Collection findEjerciciosByType(int tipo_ejercicio) {
+        return em.createQuery("SELECT e FROM ejercicios e WHERE e.tipo_ejercicio = :tipo_ejercicio")
+        		 .setParameter("tipo_ejercicio", tipo_ejercicio)
+        		 .getResultList();
+    }
+	
+	public static Collection findEjerciciosByTamano(TamanoGMuscular tamano_ejercicio) {
+		TypedQuery<Ejercicio> query = em.createNamedQuery("Ejercicio.findAll", Ejercicio.class);
+		List<Ejercicio> ejercicios = query.getResultList();
+		List<Integer> ejerciciosFiltrados = new ArrayList<Integer>();
+		for(Ejercicio e : ejercicios) {
+			if(e.getGmuscular().getTamano() == tamano_ejercicio.valor)
+				ejerciciosFiltrados.add(e.getIdEjercicios());
+		}
+		return ejerciciosFiltrados;
+    }
+	
+	public static Collection findEjerciciosByGMuscular(String nombreMusculo) {
+		TypedQuery<Ejercicio> query = em.createNamedQuery("Ejercicio.findAll", Ejercicio.class);
+		List<Ejercicio> ejercicios = query.getResultList();
+		List<Integer> ejerciciosFiltrados = new ArrayList<Integer>();
+		for(Ejercicio e : ejercicios) {
+			if(e.getGmuscular().getNombre().equals(nombreMusculo))
+				ejerciciosFiltrados.add(e.getIdEjercicios());
+		}
+		return ejerciciosFiltrados;
+    }
+	
+	public static Collection findEjerciciosByTren(TrenCorporal tren) {
+		TypedQuery<Ejercicio> query = em.createNamedQuery("Ejercicio.findAll", Ejercicio.class);
+		List<Ejercicio> ejercicios = query.getResultList();
+		List<Integer> ejerciciosFiltrados = new ArrayList<Integer>();
+		for(Ejercicio e : ejercicios) {
+			if(e.getGmuscular().getTipoTren() == tren.valor)
+				ejerciciosFiltrados.add(e.getIdEjercicios());
+		}
+		return ejerciciosFiltrados;
+    }
+	
+	public static Ejercicio findById(int id) {
+		return (Ejercicio)em.find(Ejercicio.class, id);
+	}
+	
+	public float getEstres(Objetivo objetivo) {
+		ObjetivosHasEjercicioPK pk = new ObjetivosHasEjercicioPK(this.getIdEjercicios(), objetivo.getIdObjetivos());
+		ObjetivosHasEjercicio oHE = em.find(ObjetivosHasEjercicio.class, pk);
+		return oHE.getEstresEjercicio();
 	}
 
 }

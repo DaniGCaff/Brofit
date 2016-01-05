@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.jgap.IChromosome;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,10 +28,9 @@ public class Rutina implements Serializable {
 	private int idRutinas;
 	
 	private List<String> musculosDia;
-	
 	private HashMap<Ejercicio,Boolean> ejerciciosFiltrados;
-
 	private TipoRutina tipoRutina;
+	private IChromosome mejorSolucion;
 
 	@Column(name="estres_resultante")
 	private float estresResultante;
@@ -102,8 +103,9 @@ public class Rutina implements Serializable {
 		return this.objetivo;
 	}
 
-	public void setObjetivo(Objetivo objetivo) {
+	public Rutina setObjetivo(Objetivo objetivo) {
 		this.objetivo = objetivo;
+		return this;
 	}
 
 	public List<RutinasHasEjercicio> getRutinasHasEjercicios() {
@@ -126,6 +128,14 @@ public class Rutina implements Serializable {
 		rutinasHasEjercicio.setRutina(null);
 
 		return rutinasHasEjercicio;
+	}
+	
+	public void setMejorSolucion(IChromosome mejorSolucion) {
+		this.mejorSolucion = mejorSolucion;
+	}
+	
+	public IChromosome getMejorSolucion() {
+		return this.mejorSolucion;
 	}
 	
 

@@ -3,62 +3,88 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jgap.Chromosome;
+import org.jgap.Configuration;
+import org.jgap.Gene;
+import org.jgap.InvalidConfigurationException;
+import org.jgap.impl.DefaultConfiguration;
+
+import genes.BrofitGene;
+import genes.GenBT;
+import genes.GenG;
+import genes.GenGB;
+import genes.GenGH;
+import genes.GenGT;
+import genes.GenH;
+import genes.GenTI;
+import genes.GenTS;
 import model.Cliente;
 import model.Objetivo;
 import model.Rutina;
 import model.Rutina.TipoRutina;
 
-public class PlanificacionController {
+class PlanificacionController {
+	static final int poblacionMaxima = 500;
 	Cliente cliente;
 	Rutina rutina;
 	Objetivo objetivo;
-	public PlanificacionController(Cliente cliente, Rutina rutina){
+	Configuration conf;
+	
+	public PlanificacionController(Cliente cliente, Rutina rutina, Configuration conf){
 		this.cliente = cliente;
 		this.rutina = rutina;
 		this.objetivo = rutina.getObjetivo();
+		this.conf = conf;
 	}
 	
 /*	CONCLUSION: SE COMPRUEBA UNA VEZ SE TENGA LA SALIDA; 
  * SI NO NO SE PODRIA VER LO DE 1 MUSCULO O MAS POR DIA ETC
  */ 
-	private void planificarMusculoDia(){
-		List <String> result =  new ArrayList();
+	private List<BrofitGene> planificarMusculoDia() throws InvalidConfigurationException{
+		List <BrofitGene> result =  new ArrayList();
+		int minEjer, maxEjer;
 		if(rutina.getTipoRutina() == TipoRutina.tipoGrupoMuscular){
-			if ((objetivo.getNombre().equals("hipertrofia"))||(objetivo.getNombre().equals("tonificacion"))){
+			if ((objetivo.getNombre().equals("perdida_peso")) || objetivo.getNombre().equals("hipertrofia") 
+					||(objetivo.getNombre().equals("tonificacion"))) {
 				if (cliente.getDiasSemana() == 5){
-					result.add("G");
-					result.add("G");
-					result.add("G");
-					result.add("H");
-					result.add("B+T");
+					minEjer = 1; maxEjer = 1;
+					result.add(new GenG(this.conf, minEjer, maxEjer));
+					result.add(new GenG(this.conf, minEjer, maxEjer));
+					result.add(new GenH(this.conf, minEjer, maxEjer));
+					result.add(new GenG(this.conf, minEjer, maxEjer));
+					result.add(new GenBT(this.conf, minEjer, maxEjer));
 				}
 				
 				else if (cliente.getDiasSemana() == 4){
-					result.add("G+H");
-					result.add("G");
-					result.add("G");
-					result.add("B+T");
+					minEjer = 1; maxEjer = 2;
+					result.add(new GenGH(this.conf, minEjer, maxEjer));
+					result.add(new GenG(this.conf, minEjer, maxEjer));
+					result.add(new GenG(this.conf, minEjer, maxEjer));
+					result.add(new GenBT(this.conf, minEjer, maxEjer));
 				}
 				
 				else if (cliente.getDiasSemana() == 3){
-					result.add("G+H");
-					result.add("G+B");
-					result.add("G+T");
+					minEjer = 2; maxEjer = 2;
+					result.add(new GenGH(this.conf, minEjer, maxEjer));
+					result.add(new GenGB(this.conf, minEjer, maxEjer));
+					result.add(new GenGT(this.conf, minEjer, maxEjer));
 				}
 			}
 		}
 		
-		else if (objetivo.getNombre().equals("tonificacion")){
-			if(rutina.getTipoRutina() == TipoRutina.tipoCircuito){
+		else if (rutina.getTipoRutina() == TipoRutina.tipoCircuito){
+			if(objetivo.getNombre().equals("tonificacion") || objetivo.getNombre().equals("mantenimiento")){
 				if (cliente.getDiasSemana() == 5){
-					result.add("TS");
-					result.add("TI");
-					result.add("TS");
-					result.add("TI");
-					result.add("TS");
+					minEjer = 1; maxEjer = 1;
+					result.add(new GenTS(this.conf, minEjer, maxEjer));
+					result.add(new GenTI(this.conf, minEjer, maxEjer));
+					result.add(new GenTS(this.conf, minEjer, maxEjer));
+					result.add(new GenTI(this.conf, minEjer, maxEjer));
+					result.add(new GenTS(this.conf, minEjer, maxEjer));
 				}
 			}
 		}
+		return result;
 	}
  
 	public void run(){
@@ -81,9 +107,18 @@ public class PlanificacionController {
 		// TODO: Si es mtto. se siguen las reglas de tonificación para t.circuito.
 		// TODO: Si es perdida de peso, se siguen las reglas de hipertrofia.
 		
-		// quiero ver como cojones vamos a diseñar estas reglas.... estructuras de datos o lo que haga falta
-		// y aqui.... no pdemos discutir
-		// 
-		
+		try {
+			List<BrofitGene> results = planificarMusculoDia();
+			Gene[] genes = new BrofitGene[results.size()];
+			for(int i = 0; i < results.size(); i++)
+				genes[i] = results.get(i);	
+			
+			Chromosome cromosoma = new Chromosome(conf, genes);
+			conf.setSampleChromosome(cromosoma);
+			conf.setPopulationSize(poblacionMaxima);
+		} catch (InvalidConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

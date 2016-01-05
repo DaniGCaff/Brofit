@@ -20,6 +20,12 @@ public class ObjetivosHasEjercicioPK implements Serializable {
 
 	public ObjetivosHasEjercicioPK() {
 	}
+	
+	public ObjetivosHasEjercicioPK(int ejercicio, int objetivo) {
+		this.ejercicios_idEjercicios = ejercicio;
+		this.objetivos_idObjetivos = objetivo;
+	}
+	
 	public int getObjetivos_idObjetivos() {
 		return this.objetivos_idObjetivos;
 	}

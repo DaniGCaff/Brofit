@@ -202,5 +202,10 @@ public class Cliente implements Serializable {
 
 		return rutina;
 	}
+	
+	public float getEstresObjetivo() {
+		// TODO: @Borja, esto es pa ti.
+		return 0.0f;
+	}
 
 }
