@@ -36,12 +36,9 @@ class PlanificacionController {
 		this.objetivo = rutina.getObjetivo();
 		this.conf = conf;
 	}
-	
-/*	CONCLUSION: SE COMPRUEBA UNA VEZ SE TENGA LA SALIDA; 
- * SI NO NO SE PODRIA VER LO DE 1 MUSCULO O MAS POR DIA ETC
- */ 
+
 	private List<BrofitGene> planificarMusculoDia() throws InvalidConfigurationException{
-		List <BrofitGene> result =  new ArrayList();
+		List <BrofitGene> result = new ArrayList<BrofitGene>();
 		int minEjer, maxEjer;
 		if(rutina.getTipoRutina() == TipoRutina.tipoGrupoMuscular){
 			if ((objetivo.getNombre().equals("perdida_peso")) || objetivo.getNombre().equals("hipertrofia") 
@@ -88,24 +85,24 @@ class PlanificacionController {
 	}
  
 	public void run(){
-		// TODO: Si es hipert. para 5 días, en un día se hace 1 músculo grande u hombro o 2 especificos (biceps+triceps).
-		// TODO: Si es hipert. para 4 días, en un día se pueden hacerse <= 2 musculos (1 grande, 1 grande + 1 pequeño, B+T, NO SE PERMITE P+H) Resumen, h+x.
-		// TODO: Si es hipert. para 3 días, en un día se hacen 2 músculos (1 grande + 1 pequeño, B+T, NO SE PERMITE P+H).
+		// Si es hipert. para 5 días, en un día se hace 1 músculo grande u hombro o 2 especificos (biceps+triceps).
+		// Si es hipert. para 4 días, en un día se pueden hacerse <= 2 musculos (1 grande, 1 grande + 1 pequeño, B+T, NO SE PERMITE P+H) Resumen, h+x.
+		// Si es hipert. para 3 días, en un día se hacen 2 músculos (1 grande + 1 pequeño, B+T, NO SE PERMITE P+H).
 	
-		// TODO: Si es tonif. para rutina de t.circuito para 5 días:
+		// Si es tonif. para rutina de t.circuito para 5 días:
 		//		 - Primer día: tren superior
 	    //		 - Segundo día: tren inferior
 		//		 - tercer día: tren superior
 		// 	     - cuarto día: tren inferior
 		// 		 - quinto día: tren superior
-		// TODO: No se puede hacer un circuito de tonificacion de menos de 5 días?
+		// No se puede hacer un circuito de tonificacion de menos de 5 días?
 		
-		// TODO: Si es tonif para rutina de t.gmuscular para X días:
+		// Si es tonif para rutina de t.gmuscular para X días:
 		//	     - Mismo orden que para hipert. segun los días
-		// TODO: No se puede hacer tonif en 2 días o menos?
+		// No se puede hacer tonif en 2 días o menos?
 		
-		// TODO: Si es mtto. se siguen las reglas de tonificación para t.circuito.
-		// TODO: Si es perdida de peso, se siguen las reglas de hipertrofia.
+		// Si es mtto. se siguen las reglas de tonificación para t.circuito.
+		// Si es perdida de peso, se siguen las reglas de hipertrofia.
 		
 		try {
 			List<BrofitGene> results = planificarMusculoDia();
@@ -117,7 +114,6 @@ class PlanificacionController {
 			conf.setSampleChromosome(cromosoma);
 			conf.setPopulationSize(poblacionMaxima);
 		} catch (InvalidConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

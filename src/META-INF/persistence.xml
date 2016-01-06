@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="BroFit">
-		<class>model.Cliente</class>
-		<class>model.ClientesHasLesion</class>
-		<class>model.ClientesHasLesionePK</class>
-		<class>model.Ejercicio</class>
-		<class>model.EjerciciosHasLesione</class>
-		<class>model.EjerciciosHasLesionePK</class>
-		<class>model.Gmuscular</class>
-		<class>model.Lesion</class>
-		<class>model.Objetivo</class>
-		<class>model.ObjetivosHasEjercicio</class>
-		<class>model.ObjetivosHasEjercicioPK</class>
-		<class>model.Rutina</class>
-		<class>model.RutinasHasEjercicio</class>
-		<class>model.RutinasHasEjercicioPK</class>
-	</persistence-unit>
+ <persistence-unit name="BroFit" transaction-type="RESOURCE_LOCAL">
+  <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+  <class>model.Cliente</class>
+  <class>model.ClientesHasLesion</class>
+  <class>model.ClientesHasLesionePK</class>
+  <class>model.Ejercicio</class>
+  <class>model.EjerciciosHasLesione</class>
+  <class>model.EjerciciosHasLesionePK</class>
+  <class>model.Gmuscular</class>
+  <class>model.Lesion</class>
+  <class>model.Objetivo</class>
+  <class>model.ObjetivosHasEjercicio</class>
+  <class>model.ObjetivosHasEjercicioPK</class>
+  <class>model.Rutina</class>
+  <class>model.RutinasHasEjercicio</class>
+  <class>model.RutinasHasEjercicioPK</class>
+  <properties>
+   <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/brofit"/>
+   <property name="eclipselink.logging.level" value="INFO"/>
+   <property name="javax.persistence.jdbc.user" value="root"/>
+   <property name="javax.persistence.jdbc.password" value="123456789"/>
+  </properties>
+ </persistence-unit>
 </persistence>

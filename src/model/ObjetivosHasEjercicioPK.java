@@ -13,30 +13,52 @@ public class ObjetivosHasEjercicioPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
-	private int objetivos_idObjetivos;
+	private int idObjetivos;
 
 	@Column(insertable=false, updatable=false, unique=true, nullable=false)
-	private int ejercicios_idEjercicios;
+	private int idEjercicios;
+	
+	@Column(unique=true, nullable=false)
+	private int repeticiones;
+
+	@Column(unique=true, nullable=false)
+	private int series;
+
+	public int getSeries() {
+		return series;
+	}
+
+	public void setSeries(int series) {
+		this.series = series;
+	}
 
 	public ObjetivosHasEjercicioPK() {
 	}
 	
-	public ObjetivosHasEjercicioPK(int ejercicio, int objetivo) {
-		this.ejercicios_idEjercicios = ejercicio;
-		this.objetivos_idObjetivos = objetivo;
+	public ObjetivosHasEjercicioPK(int ejercicio, int objetivo, int repeticiones, int series) {
+		this.idEjercicios = ejercicio;
+		this.idObjetivos = objetivo;
+		this.repeticiones = repeticiones;
+		this.series = series;
 	}
 	
-	public int getObjetivos_idObjetivos() {
-		return this.objetivos_idObjetivos;
+	public int getidObjetivos() {
+		return this.idObjetivos;
 	}
-	public void setObjetivos_idObjetivos(int objetivos_idObjetivos) {
-		this.objetivos_idObjetivos = objetivos_idObjetivos;
+	public void setidObjetivos(int idObjetivos) {
+		this.idObjetivos = idObjetivos;
 	}
-	public int getEjercicios_idEjercicios() {
-		return this.ejercicios_idEjercicios;
+	public int getidEjercicios() {
+		return this.idEjercicios;
 	}
-	public void setEjercicios_idEjercicios(int ejercicios_idEjercicios) {
-		this.ejercicios_idEjercicios = ejercicios_idEjercicios;
+	public void setidEjercicios(int idEjercicios) {
+		this.idEjercicios = idEjercicios;
+	}
+	public int getRepeticiones() {
+		return this.repeticiones;
+	}
+	public void setRepeticiones(int repeticiones) {
+		this.repeticiones = repeticiones;
 	}
 
 	public boolean equals(Object other) {
@@ -48,15 +70,19 @@ public class ObjetivosHasEjercicioPK implements Serializable {
 		}
 		ObjetivosHasEjercicioPK castOther = (ObjetivosHasEjercicioPK)other;
 		return 
-			(this.objetivos_idObjetivos == castOther.objetivos_idObjetivos)
-			&& (this.ejercicios_idEjercicios == castOther.ejercicios_idEjercicios);
+			(this.idObjetivos == castOther.idObjetivos)
+			&& (this.idEjercicios == castOther.idEjercicios)
+			&& (this.repeticiones == castOther.repeticiones)
+			&& (this.series == castOther.series);
 	}
 
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + this.objetivos_idObjetivos;
-		hash = hash * prime + this.ejercicios_idEjercicios;
+		hash = hash * prime + this.idObjetivos;
+		hash = hash * prime + this.idEjercicios;
+		hash = hash * prime + this.repeticiones;
+		hash = hash * prime + this.series;
 		
 		return hash;
 	}
