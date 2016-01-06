@@ -15,6 +15,8 @@ import java.util.List;
 public class Objetivo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
+	private static EntityManager em = emf.createEntityManager();
 	@Id
 	@Column(unique=true, nullable=false)
 	private int idObjetivos;
@@ -231,6 +233,11 @@ public class Objetivo implements Serializable {
 		rutina.setObjetivo(null);
 
 		return rutina;
+	}
+	
+	public static  Objetivo findObjetive(int id){
+		
+		return em.find(Objetivo.class, id);
 	}
 
 }
