@@ -649,7 +649,8 @@ public class Formulario extends javax.swing.JFrame {
 
 	private boolean insertarLesiones(Cliente cliente) {
 		boolean result = true;
-		//TODO 0 = LEVE , 1 = GRAVE
+		// TODO 0 = LEVE , 1 = GRAVE
+		// tener en cuenta que grave elimina tren
 		try{
 			if(model2.getSize() >0){cliente.setClientesHasLesiones(new ArrayList<ClientesHasLesion>());}
 			for(int i =0; i<model2.getSize();i++){
@@ -780,7 +781,8 @@ public class Formulario extends javax.swing.JFrame {
 		int estres_an_sup=0;
 		int estres_an_ab=0;
 		int estres_ae=0;
-		
+		// leve superior regresion = 0,75
+		//leve inferior regresion = 0,75
 		int estres_global = (estres_an_inf+estres_an_sup+estres_an_ab+estres_ae)*(co_progreso.getSelectedIndex()+1);
 		
 	}
