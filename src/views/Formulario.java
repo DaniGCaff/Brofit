@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -18,7 +19,7 @@ import model.Cliente;
 import model.ClientesHasLesion;
 import model.Lesion;
 import model.Objetivo;
-import model.ObjetivosHasEjercicio;
+import model.EstresEjercicio;
 
 public class Formulario extends javax.swing.JFrame {
     
@@ -630,14 +631,16 @@ public class Formulario extends javax.swing.JFrame {
 
 				int index = objetivo.getSelectedIndex()+1;
 				try{
+					EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
+					EntityManager em = emf.createEntityManager();
+					Objetivo objetive = em.find(Objetivo.class, index);
+					mainController = new MainController(cliente,objetive,em).run();
+					//Resultado resultado = new Resultado();
+					//resultado.main(null);
 					
-					Objetivo objetive = new Objetivo();
-					objetive = objetive.findObjetive(index);
-					mainController = new MainController(cliente,objetive).run();
-					Resultado resultado = new Resultado();
-					resultado.main(null);
-					
-				}catch(NullPointerException ex ){System.out.println("nulo");}
+				}catch(NullPointerException ex ) {
+					ex.printStackTrace();
+				}
 			}
 			
 		}

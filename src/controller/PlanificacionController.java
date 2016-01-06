@@ -3,13 +3,14 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.jgap.Chromosome;
 import org.jgap.Configuration;
 import org.jgap.Gene;
 import org.jgap.InvalidConfigurationException;
-import org.jgap.impl.DefaultConfiguration;
 
-import genes.BrofitGene;
+import genes.EjercicioGene;
 import genes.GenBT;
 import genes.GenG;
 import genes.GenGB;
@@ -23,48 +24,49 @@ import model.Objetivo;
 import model.Rutina;
 import model.Rutina.TipoRutina;
 
-class PlanificacionController {
+class PlanificacionController extends Controller {
 	static final int poblacionMaxima = 500;
 	Cliente cliente;
 	Rutina rutina;
 	Objetivo objetivo;
 	Configuration conf;
 	
-	public PlanificacionController(Cliente cliente, Rutina rutina, Configuration conf){
+	public PlanificacionController(Cliente cliente, Rutina rutina, Configuration conf, EntityManager em){
+		super(em);
 		this.cliente = cliente;
 		this.rutina = rutina;
 		this.objetivo = rutina.getObjetivo();
 		this.conf = conf;
 	}
 
-	private List<BrofitGene> planificarMusculoDia() throws InvalidConfigurationException{
-		List <BrofitGene> result = new ArrayList<BrofitGene>();
+	private List<EjercicioGene> planificarMusculoDia() throws InvalidConfigurationException{
+		List <EjercicioGene> result = new ArrayList<EjercicioGene>();
 		int minEjer, maxEjer;
 		if(rutina.getTipoRutina() == TipoRutina.tipoGrupoMuscular){
 			if ((objetivo.getNombre().equals("perdida_peso")) || objetivo.getNombre().equals("hipertrofia") 
 					||(objetivo.getNombre().equals("tonificacion"))) {
 				if (cliente.getDiasSemana() == 5){
 					minEjer = 1; maxEjer = 1;
-					result.add(new GenG(this.conf, minEjer, maxEjer));
-					result.add(new GenG(this.conf, minEjer, maxEjer));
-					result.add(new GenH(this.conf, minEjer, maxEjer));
-					result.add(new GenG(this.conf, minEjer, maxEjer));
-					result.add(new GenBT(this.conf, minEjer, maxEjer));
+					result.add(new GenG(this.conf, minEjer, maxEjer, em));
+					result.add(new GenG(this.conf, minEjer, maxEjer, em));
+					result.add(new GenH(this.conf, minEjer, maxEjer, em));
+					result.add(new GenG(this.conf, minEjer, maxEjer, em));
+					result.add(new GenBT(this.conf, minEjer, maxEjer, em));
 				}
 				
 				else if (cliente.getDiasSemana() == 4){
 					minEjer = 1; maxEjer = 2;
-					result.add(new GenGH(this.conf, minEjer, maxEjer));
-					result.add(new GenG(this.conf, minEjer, maxEjer));
-					result.add(new GenG(this.conf, minEjer, maxEjer));
-					result.add(new GenBT(this.conf, minEjer, maxEjer));
+					result.add(new GenGH(this.conf, minEjer, maxEjer, em));
+					result.add(new GenG(this.conf, minEjer, maxEjer, em));
+					result.add(new GenG(this.conf, minEjer, maxEjer, em));
+					result.add(new GenBT(this.conf, minEjer, maxEjer, em));
 				}
 				
 				else if (cliente.getDiasSemana() == 3){
 					minEjer = 2; maxEjer = 2;
-					result.add(new GenGH(this.conf, minEjer, maxEjer));
-					result.add(new GenGB(this.conf, minEjer, maxEjer));
-					result.add(new GenGT(this.conf, minEjer, maxEjer));
+					result.add(new GenGH(this.conf, minEjer, maxEjer, em));
+					result.add(new GenGB(this.conf, minEjer, maxEjer, em));
+					result.add(new GenGT(this.conf, minEjer, maxEjer, em));
 				}
 			}
 		}
@@ -73,11 +75,11 @@ class PlanificacionController {
 			if(objetivo.getNombre().equals("tonificacion") || objetivo.getNombre().equals("mantenimiento")){
 				if (cliente.getDiasSemana() == 5){
 					minEjer = 1; maxEjer = 1;
-					result.add(new GenTS(this.conf, minEjer, maxEjer));
-					result.add(new GenTI(this.conf, minEjer, maxEjer));
-					result.add(new GenTS(this.conf, minEjer, maxEjer));
-					result.add(new GenTI(this.conf, minEjer, maxEjer));
-					result.add(new GenTS(this.conf, minEjer, maxEjer));
+					result.add(new GenTS(this.conf, minEjer, maxEjer, em));
+					result.add(new GenTI(this.conf, minEjer, maxEjer, em));
+					result.add(new GenTS(this.conf, minEjer, maxEjer, em));
+					result.add(new GenTI(this.conf, minEjer, maxEjer, em));
+					result.add(new GenTS(this.conf, minEjer, maxEjer, em));
 				}
 			}
 		}
@@ -105,8 +107,8 @@ class PlanificacionController {
 		// Si es perdida de peso, se siguen las reglas de hipertrofia.
 		
 		try {
-			List<BrofitGene> results = planificarMusculoDia();
-			Gene[] genes = new BrofitGene[results.size()];
+			List<EjercicioGene> results = planificarMusculoDia();
+			Gene[] genes = new EjercicioGene[results.size()];
 			for(int i = 0; i < results.size(); i++)
 				genes[i] = results.get(i);	
 			

@@ -1,6 +1,5 @@
 package algorithm;
 
-import org.jgap.Chromosome;
 import org.jgap.Configuration;
 import org.jgap.IChromosome;
 

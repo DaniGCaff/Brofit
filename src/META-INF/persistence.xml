@@ -4,23 +4,30 @@
   <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
   <class>model.Cliente</class>
   <class>model.ClientesHasLesion</class>
-  <class>model.ClientesHasLesionePK</class>
+  <class>model.ClientesHasLesionPK</class>
   <class>model.Ejercicio</class>
-  <class>model.EjerciciosHasLesione</class>
-  <class>model.EjerciciosHasLesionePK</class>
+  <class>model.EjerciciosHasLesion</class>
+  <class>model.EjerciciosHasLesionPK</class>
   <class>model.Gmuscular</class>
   <class>model.Lesion</class>
   <class>model.Objetivo</class>
-  <class>model.ObjetivosHasEjercicio</class>
-  <class>model.ObjetivosHasEjercicioPK</class>
+  <class>model.EstresEjercicio</class>
+  <class>model.EstresEjercicioPK</class>
   <class>model.Rutina</class>
   <class>model.RutinasHasEjercicio</class>
   <class>model.RutinasHasEjercicioPK</class>
   <properties>
-   <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/brofit"/>
-   <property name="eclipselink.logging.level" value="INFO"/>
+   <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/brofit"/>
    <property name="javax.persistence.jdbc.user" value="root"/>
    <property name="javax.persistence.jdbc.password" value="123456789"/>
+   <property name="eclipselink.logging.level" value="ALL" />
+	<property name="eclipselink.logging.level.sql" value="FINE"/>
+	<property name="eclipselink.logging.parameters" value="true" />
+	<property name="eclipselink.logging.connection" value="true" />
+	<property name="eclipselink.logging.session" value="true" />
+	<property name="eclipselink.logging.thread" value="true" />
+	<property name="eclipselink.logging.timestamp" value="true" />
+	<property name="javax.persistence.validation.mode" value="NONE" />
   </properties>
  </persistence-unit>
 </persistence>

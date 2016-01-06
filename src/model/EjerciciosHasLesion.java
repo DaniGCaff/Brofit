@@ -10,12 +10,12 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="ejercicios_has_lesiones")
-@NamedQuery(name="EjerciciosHasLesione.findAll", query="SELECT e FROM EjerciciosHasLesione e")
-public class EjerciciosHasLesione implements Serializable {
+@NamedQuery(name="EjerciciosHasLesion.findAll", query="SELECT e FROM EjerciciosHasLesion e")
+public class EjerciciosHasLesion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private EjerciciosHasLesionePK id;
+	private EjerciciosHasLesionPK id;
 
 	private int rehabilitador;
 
@@ -29,14 +29,14 @@ public class EjerciciosHasLesione implements Serializable {
 	@JoinColumn(name="Lesiones_idLesiones", nullable=false, insertable=false, updatable=false)
 	private Lesion lesione;
 
-	public EjerciciosHasLesione() {
+	public EjerciciosHasLesion() {
 	}
 
-	public EjerciciosHasLesionePK getId() {
+	public EjerciciosHasLesionPK getId() {
 		return this.id;
 	}
 
-	public void setId(EjerciciosHasLesionePK id) {
+	public void setId(EjerciciosHasLesionPK id) {
 		this.id = id;
 	}
 

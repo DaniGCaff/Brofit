@@ -8,17 +8,17 @@ import javax.persistence.*;
  * 
  */
 @Embeddable
-public class ClientesHasLesionePK implements Serializable {
+public class ClientesHasLesionPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(insertable=false, updatable=false, unique=true, nullable=false)
+	@Column(unique=true, nullable=false)
 	private int clientes_idClientes;
 
-	@Column(insertable=false, updatable=false, unique=true, nullable=false)
+	@Column(unique=true, nullable=false)
 	private int lesiones_idLesiones;
 
-	public ClientesHasLesionePK() {
+	public ClientesHasLesionPK() {
 	}
 	public int getClientes_idClientes() {
 		return this.clientes_idClientes;
@@ -37,10 +37,10 @@ public class ClientesHasLesionePK implements Serializable {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof ClientesHasLesionePK)) {
+		if (!(other instanceof ClientesHasLesionPK)) {
 			return false;
 		}
-		ClientesHasLesionePK castOther = (ClientesHasLesionePK)other;
+		ClientesHasLesionPK castOther = (ClientesHasLesionPK)other;
 		return 
 			(this.clientes_idClientes == castOther.clientes_idClientes)
 			&& (this.lesiones_idLesiones == castOther.lesiones_idLesiones);

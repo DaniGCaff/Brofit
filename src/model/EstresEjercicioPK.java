@@ -8,14 +8,14 @@ import javax.persistence.*;
  * 
  */
 @Embeddable
-public class ObjetivosHasEjercicioPK implements Serializable {
+public class EstresEjercicioPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(insertable=false, updatable=false, unique=true, nullable=false)
+	@Column(unique=true, nullable=false)
 	private int idObjetivos;
 
-	@Column(insertable=false, updatable=false, unique=true, nullable=false)
+	@Column(unique=true, nullable=false)
 	private int idEjercicios;
 	
 	@Column(unique=true, nullable=false)
@@ -32,10 +32,10 @@ public class ObjetivosHasEjercicioPK implements Serializable {
 		this.series = series;
 	}
 
-	public ObjetivosHasEjercicioPK() {
+	public EstresEjercicioPK() {
 	}
 	
-	public ObjetivosHasEjercicioPK(int ejercicio, int objetivo, int repeticiones, int series) {
+	public EstresEjercicioPK(int ejercicio, int objetivo, int repeticiones, int series) {
 		this.idEjercicios = ejercicio;
 		this.idObjetivos = objetivo;
 		this.repeticiones = repeticiones;
@@ -65,10 +65,10 @@ public class ObjetivosHasEjercicioPK implements Serializable {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof ObjetivosHasEjercicioPK)) {
+		if (!(other instanceof EstresEjercicioPK)) {
 			return false;
 		}
-		ObjetivosHasEjercicioPK castOther = (ObjetivosHasEjercicioPK)other;
+		EstresEjercicioPK castOther = (EstresEjercicioPK)other;
 		return 
 			(this.idObjetivos == castOther.idObjetivos)
 			&& (this.idEjercicios == castOther.idEjercicios)

@@ -1,14 +1,13 @@
 package algorithm;
 
 import org.jgap.FitnessFunction;
-import org.jgap.Gene;
 import org.jgap.IChromosome;
 
-import model.Ejercicio;
-import model.Objetivo;
+import genes.IBrofitGene;
 
 public class BroFitness extends FitnessFunction {
 
+	private static final long serialVersionUID = 1L;
 	private BroFitnessParams params;
 	
 	public BroFitness(BroFitnessParams params) {
@@ -17,13 +16,12 @@ public class BroFitness extends FitnessFunction {
 
 	@Override
 	protected double evaluate(IChromosome cromosoma) {
-		// TODO Auto-generated method stub
-		Gene[] genes = cromosoma.getGenes();
+		IBrofitGene[] genes = (IBrofitGene[]) cromosoma.getGenes();
 		float fitness = 0.0f;
-		for(Gene gen : genes) {
-			fitness += Ejercicio.findById((Integer) gen.getAllele()).getEstres(params.getObjetivo());
+		for(IBrofitGene gen : genes) {
+			fitness += gen.getEstresAsociado(this.params.getObjetivo());
 		}
-		return 1/fitness;
+		return fitness;
 	}
 
 }

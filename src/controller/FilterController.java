@@ -12,7 +12,7 @@ import model.Cliente;
 import model.ClientesHasLesion;
 import model.Ejercicio;
 import model.Objetivo;
-import model.ObjetivosHasEjercicio;
+import model.EstresEjercicio;
 import model.Rutina;
 import model.Rutina.TipoRutina;
 
@@ -63,7 +63,7 @@ class FilterController {
 		Iterator<Ejercicio> it = ejerciciosFiltrados.keySet().iterator();
 		while(it.hasNext()){
 			Ejercicio ejercicio=it.next();
-			List <ObjetivosHasEjercicio> objetivoEjercicio = ejercicio.getObjetivosHasEjercicios();
+			List <EstresEjercicio> objetivoEjercicio = ejercicio.getObjetivosHasEjercicios();
 			if (!objetivoEjercicio.get(0).equals(objetivo))
 				ejerciciosFiltrados.put(ejercicio,false);
 		}

@@ -17,7 +17,7 @@ public class ClientesHasLesion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private ClientesHasLesionePK id;
+	private ClientesHasLesionPK id;
 
 	private int gravedadLesion;
 
@@ -34,11 +34,11 @@ public class ClientesHasLesion implements Serializable {
 	public ClientesHasLesion() {
 	}
 
-	public ClientesHasLesionePK getId() {
+	public ClientesHasLesionPK getId() {
 		return this.id;
 	}
 
-	public void setId(ClientesHasLesionePK id) {
+	public void setId(ClientesHasLesionPK id) {
 		this.id = id;
 	}
 
@@ -67,7 +67,7 @@ public class ClientesHasLesion implements Serializable {
 	}
 	
 	public Ejercicio getEjercicio(){
-		List <EjerciciosHasLesione> ej= getLesione().getEjerciciosHasLesiones();
+		List <EjerciciosHasLesion> ej= getLesione().getEjerciciosHasLesiones();
 		if (!ej.isEmpty())
 			return ej.get(0).getEjercicio();
 		return null;

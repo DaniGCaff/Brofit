@@ -8,17 +8,17 @@ import javax.persistence.*;
  * 
  */
 @Embeddable
-public class EjerciciosHasLesionePK implements Serializable {
+public class EjerciciosHasLesionPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(insertable=false, updatable=false, unique=true, nullable=false)
+	@Column(unique=true, nullable=false)
 	private int ejercicios_idEjercicios;
 
-	@Column(insertable=false, updatable=false, unique=true, nullable=false)
+	@Column(unique=true, nullable=false)
 	private int lesiones_idLesiones;
 
-	public EjerciciosHasLesionePK() {
+	public EjerciciosHasLesionPK() {
 	}
 	public int getEjercicios_idEjercicios() {
 		return this.ejercicios_idEjercicios;
@@ -37,10 +37,10 @@ public class EjerciciosHasLesionePK implements Serializable {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof EjerciciosHasLesionePK)) {
+		if (!(other instanceof EjerciciosHasLesionPK)) {
 			return false;
 		}
-		EjerciciosHasLesionePK castOther = (EjerciciosHasLesionePK)other;
+		EjerciciosHasLesionPK castOther = (EjerciciosHasLesionPK)other;
 		return 
 			(this.ejercicios_idEjercicios == castOther.ejercicios_idEjercicios)
 			&& (this.lesiones_idLesiones == castOther.lesiones_idLesiones);

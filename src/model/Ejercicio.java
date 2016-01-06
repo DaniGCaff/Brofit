@@ -3,8 +3,6 @@ package model;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -14,12 +12,15 @@ import java.util.List;
  */
 @Entity
 @Table(name="ejercicios")
-@NamedQuery(name="Ejercicio.findAll", query="SELECT e FROM Ejercicio e")
+@NamedQueries({
+	@NamedQuery(name="Ejercicio.findAll", query="SELECT e FROM Ejercicio e"),
+	@NamedQuery(name="Ejercicio.findByGMuscular", query="SELECT e FROM Ejercicio e JOIN e.gmusculare g WHERE g.nombre LIKE ':gmuscular'"),
+	@NamedQuery(name="Ejercicio.findByTipo", query="SELECT e FROM Ejercicio e WHERE e.tipoEjercicio = :tipo"),
+	@NamedQuery(name="Ejercicio.findByTamano", query="SELECT e FROM Ejercicio e JOIN e.gmusculare g WHERE g.tamano = :tamano"),
+	@NamedQuery(name="Ejercicio.findByTren", query="SELECT e FROM Ejercicio e JOIN e.gmusculare g WHERE g.tipoTren = :tren"),
+})
 public class Ejercicio implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
-	private static EntityManager em = emf.createEntityManager();
 
 	@Id
 	@Column(unique=true, nullable=false)
@@ -46,11 +47,11 @@ public class Ejercicio implements Serializable {
 
 	//bi-directional many-to-one association to EjerciciosHasLesione
 	@OneToMany(mappedBy="ejercicio")
-	private List<EjerciciosHasLesione> ejerciciosHasLesiones;
+	private List<EjerciciosHasLesion> ejerciciosHasLesiones;
 
 	//bi-directional many-to-one association to ObjetivosHasEjercicio
 	@OneToMany(mappedBy="ejercicio")
-	private List<ObjetivosHasEjercicio> objetivosHasEjercicios;
+	private List<EstresEjercicio> objetivosHasEjercicios;
 
 	//bi-directional many-to-one association to RutinasHasEjercicio
 	@OneToMany(mappedBy="ejercicio")
@@ -107,44 +108,44 @@ public class Ejercicio implements Serializable {
 		this.gmusculare = gmusculare;
 	}
 
-	public List<EjerciciosHasLesione> getEjerciciosHasLesiones() {
+	public List<EjerciciosHasLesion> getEjerciciosHasLesiones() {
 		return this.ejerciciosHasLesiones;
 	}
 
-	public void setEjerciciosHasLesiones(List<EjerciciosHasLesione> ejerciciosHasLesiones) {
+	public void setEjerciciosHasLesiones(List<EjerciciosHasLesion> ejerciciosHasLesiones) {
 		this.ejerciciosHasLesiones = ejerciciosHasLesiones;
 	}
 
-	public EjerciciosHasLesione addEjerciciosHasLesione(EjerciciosHasLesione ejerciciosHasLesione) {
+	public EjerciciosHasLesion addEjerciciosHasLesione(EjerciciosHasLesion ejerciciosHasLesione) {
 		getEjerciciosHasLesiones().add(ejerciciosHasLesione);
 		ejerciciosHasLesione.setEjercicio(this);
 
 		return ejerciciosHasLesione;
 	}
 
-	public EjerciciosHasLesione removeEjerciciosHasLesione(EjerciciosHasLesione ejerciciosHasLesione) {
+	public EjerciciosHasLesion removeEjerciciosHasLesione(EjerciciosHasLesion ejerciciosHasLesione) {
 		getEjerciciosHasLesiones().remove(ejerciciosHasLesione);
 		ejerciciosHasLesione.setEjercicio(null);
 
 		return ejerciciosHasLesione;
 	}
 
-	public List<ObjetivosHasEjercicio> getObjetivosHasEjercicios() {
+	public List<EstresEjercicio> getObjetivosHasEjercicios() {
 		return this.objetivosHasEjercicios;
 	}
 
-	public void setObjetivosHasEjercicios(List<ObjetivosHasEjercicio> objetivosHasEjercicios) {
+	public void setObjetivosHasEjercicios(List<EstresEjercicio> objetivosHasEjercicios) {
 		this.objetivosHasEjercicios = objetivosHasEjercicios;
 	}
 
-	public ObjetivosHasEjercicio addObjetivosHasEjercicio(ObjetivosHasEjercicio objetivosHasEjercicio) {
+	public EstresEjercicio addObjetivosHasEjercicio(EstresEjercicio objetivosHasEjercicio) {
 		getObjetivosHasEjercicios().add(objetivosHasEjercicio);
 		objetivosHasEjercicio.setEjercicio(this);
 
 		return objetivosHasEjercicio;
 	}
 
-	public ObjetivosHasEjercicio removeObjetivosHasEjercicio(ObjetivosHasEjercicio objetivosHasEjercicio) {
+	public EstresEjercicio removeObjetivosHasEjercicio(EstresEjercicio objetivosHasEjercicio) {
 		getObjetivosHasEjercicios().remove(objetivosHasEjercicio);
 		objetivosHasEjercicio.setEjercicio(null);
 
@@ -172,54 +173,4 @@ public class Ejercicio implements Serializable {
 
 		return rutinasHasEjercicio;
 	}
-	
-	public static Collection findEjerciciosByType(int tipo_ejercicio) {
-        return em.createQuery("SELECT e FROM ejercicios e WHERE e.tipo_ejercicio = :tipo_ejercicio")
-        		 .setParameter("tipo_ejercicio", tipo_ejercicio)
-        		 .getResultList();
-    }
-	
-	public static Collection findEjerciciosByTamano(TamanoGMuscular tamano_ejercicio) {
-		TypedQuery<Ejercicio> query = em.createNamedQuery("Ejercicio.findAll", Ejercicio.class);
-		List<Ejercicio> ejercicios = query.getResultList();
-		List<Integer> ejerciciosFiltrados = new ArrayList<Integer>();
-		for(Ejercicio e : ejercicios) {
-			if(e.getGmuscular().getTamano() == tamano_ejercicio.valor)
-				ejerciciosFiltrados.add(e.getIdEjercicios());
-		}
-		return ejerciciosFiltrados;
-    }
-	
-	public static Collection findEjerciciosByGMuscular(String nombreMusculo) {
-		TypedQuery<Ejercicio> query = em.createNamedQuery("Ejercicio.findAll", Ejercicio.class);
-		List<Ejercicio> ejercicios = query.getResultList();
-		List<Integer> ejerciciosFiltrados = new ArrayList<Integer>();
-		for(Ejercicio e : ejercicios) {
-			if(e.getGmuscular().getNombre().equals(nombreMusculo))
-				ejerciciosFiltrados.add(e.getIdEjercicios());
-		}
-		return ejerciciosFiltrados;
-    }
-	
-	public static Collection findEjerciciosByTren(TrenCorporal tren) {
-		TypedQuery<Ejercicio> query = em.createNamedQuery("Ejercicio.findAll", Ejercicio.class);
-		List<Ejercicio> ejercicios = query.getResultList();
-		List<Integer> ejerciciosFiltrados = new ArrayList<Integer>();
-		for(Ejercicio e : ejercicios) {
-			if(e.getGmuscular().getTipoTren() == tren.valor)
-				ejerciciosFiltrados.add(e.getIdEjercicios());
-		}
-		return ejerciciosFiltrados;
-    }
-	
-	public static Ejercicio findById(int id) {
-		return (Ejercicio)em.find(Ejercicio.class, id);
-	}
-	
-	public float getEstres(Objetivo objetivo) {
-		ObjetivosHasEjercicioPK pk = new ObjetivosHasEjercicioPK(this.getIdEjercicios(), objetivo.getIdObjetivos());
-		ObjetivosHasEjercicio oHE = em.find(ObjetivosHasEjercicio.class, pk);
-		return oHE.getEstresEjercicio();
-	}
-
 }

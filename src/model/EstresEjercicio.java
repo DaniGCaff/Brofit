@@ -10,19 +10,15 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="objetivos_has_ejercicios")
-@NamedQuery(name="ObjetivosHasEjercicio.findAll", query="SELECT o FROM ObjetivosHasEjercicio o")
-public class ObjetivosHasEjercicio implements Serializable {
+@NamedQuery(name="EstresEjercicio.findAll", query="SELECT e FROM EstresEjercicio e")
+public class EstresEjercicio implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private ObjetivosHasEjercicioPK id;
+	private EstresEjercicioPK id;
 
 	@Column(name="estres_ejercicio")
 	private float estresEjercicio;
-
-	private int repeticiones;
-
-	private int series;
 
 	//bi-directional many-to-one association to Ejercicio
 	@ManyToOne
@@ -33,15 +29,21 @@ public class ObjetivosHasEjercicio implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="Objetivos_idObjetivos", nullable=false, insertable=false, updatable=false)
 	private Objetivo objetivo;
+	
+	@Column(name="repeticiones", nullable=false, insertable=false, updatable=false)
+	private int repeticiones;
 
-	public ObjetivosHasEjercicio() {
+	@Column(name="series", nullable=false, insertable=false, updatable=false)
+	private int series;
+
+	public EstresEjercicio() {
 	}
 
-	public ObjetivosHasEjercicioPK getId() {
+	public EstresEjercicioPK getId() {
 		return this.id;
 	}
 
-	public void setId(ObjetivosHasEjercicioPK id) {
+	public void setId(EstresEjercicioPK id) {
 		this.id = id;
 	}
 

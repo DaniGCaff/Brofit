@@ -28,7 +28,7 @@ public class Lesion implements Serializable {
 
 	//bi-directional many-to-one association to EjerciciosHasLesione
 	@OneToMany(mappedBy="lesione")
-	private List<EjerciciosHasLesione> ejerciciosHasLesiones;
+	private List<EjerciciosHasLesion> ejerciciosHasLesiones;
 
 	//bi-directional many-to-many association to Gmusculare
 	@ManyToMany
@@ -84,22 +84,22 @@ public class Lesion implements Serializable {
 		return clientesHasLesione;
 	}
 
-	public List<EjerciciosHasLesione> getEjerciciosHasLesiones() {
+	public List<EjerciciosHasLesion> getEjerciciosHasLesiones() {
 		return this.ejerciciosHasLesiones;
 	}
 
-	public void setEjerciciosHasLesiones(List<EjerciciosHasLesione> ejerciciosHasLesiones) {
+	public void setEjerciciosHasLesiones(List<EjerciciosHasLesion> ejerciciosHasLesiones) {
 		this.ejerciciosHasLesiones = ejerciciosHasLesiones;
 	}
 
-	public EjerciciosHasLesione addEjerciciosHasLesione(EjerciciosHasLesione ejerciciosHasLesione) {
+	public EjerciciosHasLesion addEjerciciosHasLesione(EjerciciosHasLesion ejerciciosHasLesione) {
 		getEjerciciosHasLesiones().add(ejerciciosHasLesione);
 		ejerciciosHasLesione.setLesione(this);
 
 		return ejerciciosHasLesione;
 	}
 
-	public EjerciciosHasLesione removeEjerciciosHasLesione(EjerciciosHasLesione ejerciciosHasLesione) {
+	public EjerciciosHasLesion removeEjerciciosHasLesione(EjerciciosHasLesion ejerciciosHasLesione) {
 		getEjerciciosHasLesiones().remove(ejerciciosHasLesione);
 		ejerciciosHasLesione.setLesione(null);
 

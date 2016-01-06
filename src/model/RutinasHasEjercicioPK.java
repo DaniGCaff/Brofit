@@ -12,10 +12,10 @@ public class RutinasHasEjercicioPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(insertable=false, updatable=false, unique=true, nullable=false)
+	@Column(unique=true, nullable=false)
 	private int rutinas_idRutinas;
 
-	@Column(insertable=false, updatable=false, unique=true, nullable=false)
+	@Column(unique=true, nullable=false)
 	private int ejercicios_idEjercicios;
 
 	@Column(name="dia_realizacion", unique=true, nullable=false)

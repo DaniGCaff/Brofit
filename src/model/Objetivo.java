@@ -15,8 +15,6 @@ import java.util.List;
 public class Objetivo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
-	private static EntityManager em = emf.createEntityManager();
 	@Id
 	@Column(unique=true, nullable=false)
 	private int idObjetivos;
@@ -54,13 +52,14 @@ public class Objetivo implements Serializable {
 
 	//bi-directional many-to-one association to ObjetivosHasEjercicio
 	@OneToMany(mappedBy="objetivo")
-	private List<ObjetivosHasEjercicio> objetivosHasEjercicios;
+	private List<EstresEjercicio> objetivosHasEjercicios;
 
 	//bi-directional many-to-one association to Rutina
 	@OneToMany(mappedBy="objetivo")
 	private List<Rutina> rutinas;
 
 	public Objetivo() {
+		super();
 	}
 
 	public int getIdObjetivos() {
@@ -191,22 +190,22 @@ public class Objetivo implements Serializable {
 		this.num_series_P = num_series_P;
 	}
 
-	public List<ObjetivosHasEjercicio> getObjetivosHasEjercicios() {
+	public List<EstresEjercicio> getObjetivosHasEjercicios() {
 		return this.objetivosHasEjercicios;
 	}
 
-	public void setObjetivosHasEjercicios(List<ObjetivosHasEjercicio> objetivosHasEjercicios) {
+	public void setObjetivosHasEjercicios(List<EstresEjercicio> objetivosHasEjercicios) {
 		this.objetivosHasEjercicios = objetivosHasEjercicios;
 	}
 
-	public ObjetivosHasEjercicio addObjetivosHasEjercicio(ObjetivosHasEjercicio objetivosHasEjercicio) {
+	public EstresEjercicio addObjetivosHasEjercicio(EstresEjercicio objetivosHasEjercicio) {
 		getObjetivosHasEjercicios().add(objetivosHasEjercicio);
 		objetivosHasEjercicio.setObjetivo(this);
 
 		return objetivosHasEjercicio;
 	}
 
-	public ObjetivosHasEjercicio removeObjetivosHasEjercicio(ObjetivosHasEjercicio objetivosHasEjercicio) {
+	public EstresEjercicio removeObjetivosHasEjercicio(EstresEjercicio objetivosHasEjercicio) {
 		getObjetivosHasEjercicios().remove(objetivosHasEjercicio);
 		objetivosHasEjercicio.setObjetivo(null);
 
@@ -233,11 +232,6 @@ public class Objetivo implements Serializable {
 		rutina.setObjetivo(null);
 
 		return rutina;
-	}
-	
-	public static  Objetivo findObjetive(int id){
-		
-		return em.find(Objetivo.class, id);
 	}
 
 }
