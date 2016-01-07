@@ -13,6 +13,8 @@
   <class>model.Objetivo</class>
   <class>model.EstresEjercicio</class>
   <class>model.EstresEjercicioPK</class>
+  <class>model.DatosObjetivo</class>
+  <class>model.DatosObjetivoPK</class>
   <class>model.Rutina</class>
   <class>model.RutinasHasEjercicio</class>
   <class>model.RutinasHasEjercicioPK</class>
