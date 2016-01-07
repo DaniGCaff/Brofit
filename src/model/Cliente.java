@@ -203,9 +203,19 @@ public class Cliente implements Serializable {
 		return rutina;
 	}
 	
-	public float getEstresObjetivo() {
-		// TODO: @Borja, esto es pa ti.
-		return 0.0f;
+	public float getEstresObjetivo() {	
+		//TODO  queda restar lesiones IF LESION LEVE = 0'75 SI NO LESION 1..... GRAVE MOSTRAR ERROR
+		int imc = Estres.calcularIMC(peso, altura);
+		float estres_an_inf=Estres.getEstresAnInf((int)this.anaerobicaI);
+		float estres_an_sup=Estres.getEstresAnSup((int)this.anaerobicaS);
+		float estres_an_ab=Estres.getEstresAnAb((int)this.anaerobicaA);
+		float estres_ae=Estres.getEstresAerobico(imc, (int)aerobica);
+		float co_progreso = Estres.getCoProgreso(imc,(int)aerobica);
+		
+		float co_regresion= 0.75f;
+		
+		return  (estres_an_inf*co_regresion+estres_an_sup*co_regresion+estres_an_ab*co_regresion+estres_ae)*co_progreso;	
 	}
+	
 
 }

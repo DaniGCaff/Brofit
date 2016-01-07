@@ -29,5 +29,22 @@ public class Estres{
 	public static int[] getPorcentajePulTiempo(int imc,int pAE){
 		return porcentajePulsaciones_tiempo[imc][pAE];
 	}
-	
+	public static  int calcularIMC(float peso , float altura) {
+		float IMC = peso / altura*altura;
+		if(IMC <= 18.5f){
+			return -1 ;
+		}
+		else if (IMC <= 24.9f){
+			return  0;
+		}
+		else if (IMC <= 29.9f){
+			return 1 ;
+		}
+		else if (IMC <= 39.9F){
+			return 2;
+		}else{
+			return 3;
+		}
+	}
+		
 }

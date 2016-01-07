@@ -53,7 +53,6 @@ public class Formulario extends javax.swing.JFrame {
     private javax.swing.JComboBox r_anaerobica_ab;
 	private DefaultListModel model2 ;
 	private DefaultListModel model1 ;
-	private float IMC ;
 	private int CategoriaIMC;
 	private JPanel jPanel1;
 	private JLabel jLabel1;
@@ -519,11 +518,10 @@ public class Formulario extends javax.swing.JFrame {
 
 		if(this.camposCompletos()){
 			try{
-				this.calcularIMC();
+				CategoriaIMC = Estres.calcularIMC(Float.valueOf(peso.getText()), Float.valueOf(altura.getText()));
 			}catch(Exception e ){
 				JOptionPane.showMessageDialog(this,"datos erroneos");
 				return;}
-			System.out.println(IMC);
 			if(objetivo.getSelectedItem().equals("Hipertrofia")&& dias.getSelectedIndex()+1<3){
 				JOptionPane.showMessageDialog(this,"No se pueden seleccionar menos de 3 días con el objetivo de Hipertrofia"+dias.getSelectedIndex());
 			}
@@ -538,24 +536,6 @@ public class Formulario extends javax.swing.JFrame {
 		}
 
     }
-
-    private void calcularIMC() {
-		IMC = Float.parseFloat(peso.getText()) / (Float.parseFloat(altura.getText())*Float.parseFloat(altura.getText()));
-		if(IMC <= 18.5f){
-			CategoriaIMC =-1 ;
-		}
-		else if (IMC <= 24.9f){
-			CategoriaIMC = 0;
-		}
-		else if (IMC <= 29.9f){
-			CategoriaIMC = 1 ;
-		}
-		else if (IMC <= 39.9F){
-			CategoriaIMC=2;
-		}else{
-			CategoriaIMC=3;
-		}
-	}
 
 
 	private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {
@@ -619,9 +599,7 @@ public class Formulario extends javax.swing.JFrame {
 		
 		Cliente cliente = new Cliente();
 		if(setCliente(cliente)){
-			
 			if(this.insertarLesiones(cliente)){
-				
 				int index = objetivo.getSelectedIndex()+1;
 				try{
 					EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
@@ -646,7 +624,6 @@ public class Formulario extends javax.swing.JFrame {
 	private boolean insertarLesiones(Cliente cliente) {
 		boolean result = true;
 		// TODO 0 = LEVE , 1 = GRAVE
-		// tener en cuenta que grave elimina tren
 		try{
 			if(model2.getSize() >0){cliente.setClientesHasLesiones(new ArrayList<ClientesHasLesion>());}
 			for(int i =0; i<model2.getSize();i++){
@@ -679,8 +656,8 @@ public class Formulario extends javax.swing.JFrame {
 		try{
 			cliente.setEdad(Integer.valueOf(edad.getText()));
 			cliente.setAerobica(r_aerobica.getSelectedIndex()+1);
-			cliente.setAltura(Integer.valueOf(altura.getText()));
-			cliente.setPeso(Integer.valueOf(peso.getText()));
+			cliente.setAltura(Float.valueOf(altura.getText()));
+			cliente.setPeso(Float.valueOf(peso.getText()));
 			cliente.setDiasSemana(dias.getSelectedIndex()+1);
 			cliente.setFr(Integer.valueOf(pulsaciones.getText()));
 			cliente.setAnaerobicaA(r_anaerobica_ab.getSelectedIndex()+1);
@@ -770,19 +747,7 @@ public class Formulario extends javax.swing.JFrame {
 		}catch(java.lang.ArrayIndexOutOfBoundsException ex){ex.printStackTrace();}
     }
 	
-	private void calcularEstresglobal(){
-		
-		float estres_an_inf=Estres.getEstresAnInf(r_anaerobica_inf.getSelectedIndex());
-		float estres_an_sup=Estres.getEstresAnSup(r_anaerobica_sup.getSelectedIndex());
-		float estres_an_ab=Estres.getEstresAnAb(r_anaerobica_ab.getSelectedIndex());
-		float estres_ae=Estres.getEstresAerobico(CategoriaIMC,r_aerobica.getSelectedIndex()+1 );
-		float co_progreso = Estres.getCoProgreso(CategoriaIMC,r_aerobica.getSelectedIndex()+1);
-		
-		float co_regresion= 0.75f;
-		
-		float estres_global = (estres_an_inf*co_regresion+estres_an_sup*co_regresion+estres_an_ab*co_regresion+estres_ae)*co_progreso;
-		
-	}
+	
 	
 	private void cargarDatos(){
 		
