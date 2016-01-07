@@ -17,6 +17,7 @@ import javax.swing.LayoutStyle;
 import controller.MainController;
 import model.Cliente;
 import model.ClientesHasLesion;
+import model.Estres;
 import model.Lesion;
 import model.Objetivo;
 import model.EstresEjercicio;
@@ -33,7 +34,6 @@ public class Formulario extends javax.swing.JFrame {
     private javax.swing.JButton cancelar;
     private javax.swing.JButton continuar;
     private javax.swing.JComboBox dias;
-    private javax.swing.JComboBox co_progreso;
     private javax.swing.JTextField dni;
     private javax.swing.JTextField edad;
     private javax.swing.JButton jButton1;
@@ -54,6 +54,7 @@ public class Formulario extends javax.swing.JFrame {
 	private DefaultListModel model2 ;
 	private DefaultListModel model1 ;
 	private float IMC ;
+	private int CategoriaIMC;
 	private JPanel jPanel1;
 	private JLabel jLabel1;
 	private JLabel jLabel2;
@@ -70,7 +71,6 @@ public class Formulario extends javax.swing.JFrame {
 	private JLabel jLabel14;
 	private JLabel jLabel15;
 	private JLabel jLabel16;
-	private JLabel jLabel17;
 	private JLabel jLabel7;
 	
 
@@ -109,9 +109,7 @@ public class Formulario extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         dias = new javax.swing.JComboBox();
-        co_progreso = new javax.swing.JComboBox();
         jLabel13 = new javax.swing.JLabel();
         r_aerobica = new javax.swing.JComboBox();
         jLabel14 = new javax.swing.JLabel();
@@ -222,37 +220,28 @@ public class Formulario extends javax.swing.JFrame {
             }
         });
         
-        jLabel17.setText("Coeficiente de progreso");
 
-        co_progreso.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5","6","7","8","9","10" }));
-        co_progreso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coProgresoActionPerformed(evt);
-            }
-        });
+        jLabel13.setText("Resultado prueba aeróbica");
 
-
-        jLabel13.setText("Resultado prueba aerÃ³bica");
-
-        r_aerobica.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy mala", "Mala", "Regular", "Buena", "Muy Buena" }));
+        r_aerobica.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy Buena", "Buena", "Regular" , "Mala","Muy mala" }));
         r_aerobica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 r_aerobicaActionPerformed(evt);
             }
         });
 
-        jLabel14.setText("Resultado prueba anaerÃ³bica sup.");
+        jLabel14.setText("Resultado prueba anaeróbica sup.");
 
-        r_anaerobica_sup.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy mala", "Mala", "Regular", "Buena", "Muy Buena" }));
+        r_anaerobica_sup.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy Buena", "Buena", "Regular" , "Mala","Muy mala" }));
         r_anaerobica_sup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 r_anaerobica_supActionPerformed(evt);
             }
         });
 
-        jLabel15.setText("Resultado prueba anaerÃ³bica inf.");
+        jLabel15.setText("Resultado prueba anaeróbica inf.");
 
-        r_anaerobica_inf.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy mala", "Mala", "Regular", "Buena", "Muy Buena" }));
+        r_anaerobica_inf.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy Buena", "Buena", "Regular" , "Mala","Muy mala" }));
         r_anaerobica_inf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 r_anaerobica_infActionPerformed(evt);
@@ -261,13 +250,12 @@ public class Formulario extends javax.swing.JFrame {
         
         jLabel16.setText("Resultado prueba anaeróbica Ab.");
 
-        r_anaerobica_ab.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy mala", "Mala", "Regular", "Buena", "Muy Buena" }));
+        r_anaerobica_ab.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy Buena", "Buena", "Regular" , "Mala","Muy mala" }));
         r_anaerobica_ab.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 r_anaerobica_abActionPerformed(evt);
             }
         });
-
 
         jButton3.setText("(Leve) -->");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -324,10 +312,6 @@ public class Formulario extends javax.swing.JFrame {
                         .addComponent(jLabel12,  GroupLayout.PREFERRED_SIZE, 150,  GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(dias,  GroupLayout.PREFERRED_SIZE, 45,  GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel17,  GroupLayout.PREFERRED_SIZE, 150,  GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(co_progreso,  GroupLayout.PREFERRED_SIZE, 45,  GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup( GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
@@ -417,9 +401,6 @@ public class Formulario extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
                             .addComponent(dias,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel17)
-                            .addComponent(co_progreso,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                         .addComponent(jLabel11)
                         .addGap(8, 8, 8)))
@@ -546,8 +527,8 @@ public class Formulario extends javax.swing.JFrame {
 			if(objetivo.getSelectedItem().equals("Hipertrofia")&& dias.getSelectedIndex()+1<3){
 				JOptionPane.showMessageDialog(this,"No se pueden seleccionar menos de 3 días con el objetivo de Hipertrofia"+dias.getSelectedIndex());
 			}
-			else if(!(objetivo.getSelectedItem().equals("Hipertrofia"))&& IMC<18.5){
-				JOptionPane.showMessageDialog(this,"IMC MENOR DE 18.5 , IMC ="+IMC);
+			else if(CategoriaIMC==-1){
+				JOptionPane.showMessageDialog(this,"IMC MENOR DE 18.5");
 			}
 			else{
 				this.ejecutarSystema();
@@ -560,6 +541,20 @@ public class Formulario extends javax.swing.JFrame {
 
     private void calcularIMC() {
 		IMC = Float.parseFloat(peso.getText()) / (Float.parseFloat(altura.getText())*Float.parseFloat(altura.getText()));
+		if(IMC <= 18.5f){
+			CategoriaIMC =-1 ;
+		}
+		else if (IMC <= 24.9f){
+			CategoriaIMC = 0;
+		}
+		else if (IMC <= 29.9f){
+			CategoriaIMC = 1 ;
+		}
+		else if (IMC <= 39.9F){
+			CategoriaIMC=2;
+		}else{
+			CategoriaIMC=3;
+		}
 	}
 
 
@@ -627,8 +622,6 @@ public class Formulario extends javax.swing.JFrame {
 			
 			if(this.insertarLesiones(cliente)){
 				
-				
-
 				int index = objetivo.getSelectedIndex()+1;
 				try{
 					EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
@@ -668,7 +661,6 @@ public class Formulario extends javax.swing.JFrame {
 				else{
 					clientesHasLesion.setGravedadLesion(0);
 				}
-				//TODO NO SE COMO SELECCIONAR LA LESION
 				clientesHasLesion.setLesione(new Lesion());
 				
 				cliente.addClientesHasLesione(clientesHasLesion);
@@ -690,11 +682,11 @@ public class Formulario extends javax.swing.JFrame {
 			cliente.setAltura(Integer.valueOf(altura.getText()));
 			cliente.setPeso(Integer.valueOf(peso.getText()));
 			cliente.setDiasSemana(dias.getSelectedIndex()+1);
-			cliente.getFr();
+			cliente.setFr(Integer.valueOf(pulsaciones.getText()));
 			cliente.setAnaerobicaA(r_anaerobica_ab.getSelectedIndex()+1);
 			cliente.setAnaerobicaI(r_anaerobica_inf.getSelectedIndex()+1);
 			cliente.setAnaerobicaS(r_anaerobica_sup.getSelectedIndex()+1);
-			cliente.setCoeficienteProgreso(Float.valueOf(co_progreso.getSelectedIndex()+1)*0.1f);
+			cliente.setCoeficienteProgreso(Estres.getCoProgreso(CategoriaIMC,r_aerobica.getSelectedIndex()+1 ));
 						
 		}catch(Exception ex ){
 			ex.printStackTrace();
@@ -779,14 +771,16 @@ public class Formulario extends javax.swing.JFrame {
     }
 	
 	private void calcularEstresglobal(){
-		//calcular extreses con las tablas inventadas por diego
-		int estres_an_inf=0;
-		int estres_an_sup=0;
-		int estres_an_ab=0;
-		int estres_ae=0;
-		// leve superior regresion = 0,75
-		//leve inferior regresion = 0,75
-		int estres_global = (estres_an_inf+estres_an_sup+estres_an_ab+estres_ae)*(co_progreso.getSelectedIndex()+1);
+		
+		float estres_an_inf=Estres.getEstresAnInf(r_anaerobica_inf.getSelectedIndex());
+		float estres_an_sup=Estres.getEstresAnSup(r_anaerobica_sup.getSelectedIndex());
+		float estres_an_ab=Estres.getEstresAnAb(r_anaerobica_ab.getSelectedIndex());
+		float estres_ae=Estres.getEstresAerobico(CategoriaIMC,r_aerobica.getSelectedIndex()+1 );
+		float co_progreso = Estres.getCoProgreso(CategoriaIMC,r_aerobica.getSelectedIndex()+1);
+		
+		float co_regresion= 0.75f;
+		
+		float estres_global = (estres_an_inf*co_regresion+estres_an_sup*co_regresion+estres_an_ab*co_regresion+estres_ae)*co_progreso;
 		
 	}
 	
