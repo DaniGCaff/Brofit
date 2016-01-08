@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -66,11 +67,15 @@ public class ClientesHasLesion implements Serializable {
 		this.lesione = lesione;
 	}
 	
-	public Ejercicio getEjercicio(){
-		List <EjerciciosHasLesion> ej= getLesione().getEjerciciosHasLesiones();
-		if (!ej.isEmpty())
-			return ej.get(0).getEjercicio();
-		return null;
-	}
+	public List<Ejercicio> getEjerciciosNoRehabilitadores(){
+		List <EjerciciosHasLesion> ejercicios= getLesione().getEjerciciosHasLesiones();
+		List<Ejercicio> result = new ArrayList<Ejercicio>();
+		  for(EjerciciosHasLesion ejercicio : ejercicios) {
+			  //Es rehabilitador
+			  if(ejercicio.getRehabilitador()==0)
+				  result.add(ejercicio.getEjercicio());
+		  }
+		  return result;
+		 }
 
 }

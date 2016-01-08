@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -11,8 +12,11 @@ import javax.persistence.TypedQuery;
 import model.Cliente;
 import model.ClientesHasLesion;
 import model.Ejercicio;
+import model.EjerciciosHasLesion;
 import model.Objetivo;
 import model.EstresEjercicio;
+import model.Gmuscular;
+import model.Lesion.TipoLesion;
 import model.Rutina;
 import model.Rutina.TipoRutina;
 
@@ -53,8 +57,26 @@ class FilterController {
 	private void filtradoLesion() {
 		List<ClientesHasLesion> lesiones=cliente.getClientesHasLesiones();
 		for(ClientesHasLesion lesion : lesiones) {
-			Ejercicio ejercicio = lesion.getEjercicio();
-			ejerciciosFiltrados.put(ejercicio, false);
+			//Lesion leve
+			if (lesion.getGravedadLesion()==TipoLesion.LEVE.ordinal()){
+				List<Ejercicio> ejercicios = lesion.getEjerciciosNoRehabilitadores();
+				for(Ejercicio ejer : ejercicios){
+					ejerciciosFiltrados.put(ejer, false);
+				}	
+			}
+			//Lesion grave
+			else{
+				List<Gmuscular> gmuscular = lesion.getLesione().getGmusculares();
+				List<Ejercicio> ejercicios=new ArrayList<Ejercicio>();
+				for(Gmuscular gm : gmuscular){
+					ejercicios =(List<Ejercicio>)em.createNamedQuery("Ejercicio.findByTren")
+											.setParameter("tren", gm.getTipoTren()).getResultList();
+				
+					for (Ejercicio ejer : ejercicios){
+						ejerciciosFiltrados.put(ejer, false);
+					}
+				}
+			}
 		}
 	}
 	

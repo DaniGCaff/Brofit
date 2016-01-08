@@ -21,7 +21,9 @@ public class Lesion implements Serializable {
 
 	@Column(length=45)
 	private String nombre;
-
+	public enum TipoLesion{
+		LEVE,GRAVE;
+	}
 	//bi-directional many-to-one association to ClientesHasLesione
 	@OneToMany(mappedBy="lesione")
 	private List<ClientesHasLesion> clientesHasLesiones;
