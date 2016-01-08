@@ -1,5 +1,7 @@
 package genes;
 
+import java.util.Collection;
+
 import javax.persistence.EntityManager;
 
 import org.jgap.Configuration;
@@ -26,6 +28,12 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 
 	public void setDuracionGene(DuracionGene duracionGene) {
 		DuracionGene = duracionGene;
+	}
+	
+	@Override
+	public void addAlleles(@SuppressWarnings("rawtypes") Collection alleles) {
+		super.addAlleles(alleles);
+		// TODO solo debe admitir lo que estan dentro de la tabla de filtrados.
 	}
 
 	public EjercicioGene(Configuration a_config, int minRepeticiones, int maxRepeticiones, EntityManager em)
