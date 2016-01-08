@@ -1,11 +1,16 @@
 package genes;
 
+import java.util.Collection;
+
 import javax.persistence.EntityManager;
 
 import org.jgap.Configuration;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.impl.SetGene;
 
+import model.DatosObjetivo;
+import model.DatosObjetivoPK;
+import model.Ejercicio;
 import model.EstresEjercicio;
 import model.EstresEjercicioPK;
 import model.Objetivo;
@@ -24,6 +29,12 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 	public void setDuracionGene(DuracionGene duracionGene) {
 		DuracionGene = duracionGene;
 	}
+	
+	@Override
+	public void addAlleles(@SuppressWarnings("rawtypes") Collection alleles) {
+		super.addAlleles(alleles);
+		// TODO solo debe admitir lo que estan dentro de la tabla de filtrados.
+	}
 
 	public EjercicioGene(Configuration a_config, int minRepeticiones, int maxRepeticiones, EntityManager em)
 			throws InvalidConfigurationException {
@@ -37,9 +48,11 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 	
 	public float getEstresAsociado(Objetivo objetivo) {
 		int idEjercicio = (int) this.getAllele();
+		int tamanoMuscular = em.find(Ejercicio.class, idEjercicio).getGmuscular().getTamano();
+		int tipoEjercicio = em.find(Ejercicio.class, idEjercicio).getTipoEjercicio();
 		int idObjetivo = objetivo.getIdObjetivos();
 		int repeticiones = (int) this.getDuracionGene().getAllele();
-		int series = 0; // TODO Refactorizar Objetivos tabla en 2 o incluso 3.
+		int series = em.find(DatosObjetivo.class, new DatosObjetivoPK(idObjetivo, tamanoMuscular, tipoEjercicio)).getNumeroSeries();
 		EstresEjercicioPK pk = new EstresEjercicioPK(idEjercicio, idObjetivo, repeticiones, series);
 		EstresEjercicio estres = em.find(EstresEjercicio.class, pk);
 		return estres.getSeries();

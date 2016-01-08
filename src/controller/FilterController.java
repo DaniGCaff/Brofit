@@ -11,6 +11,8 @@ import javax.persistence.TypedQuery;
 
 import model.Cliente;
 import model.ClientesHasLesion;
+import model.DatosObjetivo;
+import model.DatosObjetivoPK;
 import model.Ejercicio;
 import model.EjerciciosHasLesion;
 import model.Objetivo;
@@ -89,8 +91,8 @@ class FilterController {
 			if (!objetivoEjercicio.get(0).equals(objetivo))
 				ejerciciosFiltrados.put(ejercicio,false);
 		}
-		//TODO: Mirar el tema de las series.
 	}
+	
 	private int determinarTipoTabla(){
 		int result = cliente.getMotivacion();
 		if (cliente.getMotivacion() == -1){

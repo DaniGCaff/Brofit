@@ -21,6 +21,12 @@ public class DatosObjetivoPK implements Serializable {
 
 	public DatosObjetivoPK() {
 	}
+	
+	public DatosObjetivoPK(int idObjetivos, int tamanoMuscular, int tipoEjercicio) {
+		this.Objetivos_idObjetivos = idObjetivos;
+		this.tamanoMuscular = tamanoMuscular;
+		this.tipoEjercicio = tipoEjercicio;
+	}
 
 	public boolean equals(Object other) {
 		if (this == other) {
