@@ -10,6 +10,8 @@ import javax.persistence.TypedQuery;
 
 import model.Cliente;
 import model.ClientesHasLesion;
+import model.DatosObjetivo;
+import model.DatosObjetivoPK;
 import model.Ejercicio;
 import model.Objetivo;
 import model.EstresEjercicio;
@@ -67,8 +69,22 @@ class FilterController {
 			if (!objetivoEjercicio.get(0).equals(objetivo))
 				ejerciciosFiltrados.put(ejercicio,false);
 		}
-		//TODO: Mirar el tema de las series.
 	}
+	
+	private void filtradoSeries() {
+		int diasDedicados = cliente.getDiasSemana();
+		Iterator<Ejercicio> it = ejerciciosFiltrados.keySet().iterator();
+		int idObjetivo = rutina.getObjetivo().getIdObjetivos();
+		while(it.hasNext()){
+			Ejercicio ejercicio=it.next();
+			int tamanoMuscular = ejercicio.getGmuscular().getTamano();
+			int tipoEj = ejercicio.getTipoEjercicio();
+			int series = em.find(DatosObjetivo.class, new DatosObjetivoPK(idObjetivo, tamanoMuscular, tipoEj)).getNumeroSeries();
+			if (series > diasDedicados)
+				ejerciciosFiltrados.put(ejercicio,false);
+		}
+	}
+	
 	private int determinarTipoTabla(){
 		int result = cliente.getMotivacion();
 		if (cliente.getMotivacion() == -1){
@@ -82,6 +98,7 @@ class FilterController {
 		filtradoNivel();
 		filtradoLesion();
 		filtradoObjetivo();
+		filtradoSeries();
 		rutina.setEjerciciosFiltrados(ejerciciosFiltrados);
 		if (determinarTipoTabla() == 0)
 			rutina.setTipoRutina(TipoRutina.tipoCircuito);
