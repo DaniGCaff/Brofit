@@ -47,26 +47,26 @@ class PlanificacionController extends Controller {
 					||(objetivo.getNombre().equals("tonificacion"))) {
 				if (cliente.getDiasSemana() == 5){
 					minEjer = 1; maxEjer = 1;
-					result.add(new GenG(this.conf, minEjer, maxEjer, em));
-					result.add(new GenG(this.conf, minEjer, maxEjer, em));
-					result.add(new GenH(this.conf, minEjer, maxEjer, em));
-					result.add(new GenG(this.conf, minEjer, maxEjer, em));
-					result.add(new GenBT(this.conf, minEjer, maxEjer, em));
+					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
+					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
+					result.add(new GenH(rutina, this.conf, minEjer, maxEjer, em));
+					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
+					result.add(new GenBT(rutina, this.conf, minEjer, maxEjer, em));
 				}
 				
 				else if (cliente.getDiasSemana() == 4){
 					minEjer = 1; maxEjer = 2;
-					result.add(new GenGH(this.conf, minEjer, maxEjer, em));
-					result.add(new GenG(this.conf, minEjer, maxEjer, em));
-					result.add(new GenG(this.conf, minEjer, maxEjer, em));
-					result.add(new GenBT(this.conf, minEjer, maxEjer, em));
+					result.add(new GenGH(rutina, this.conf, minEjer, maxEjer, em));
+					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
+					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
+					result.add(new GenBT(rutina, this.conf, minEjer, maxEjer, em));
 				}
 				
 				else if (cliente.getDiasSemana() == 3){
 					minEjer = 2; maxEjer = 2;
-					result.add(new GenGH(this.conf, minEjer, maxEjer, em));
-					result.add(new GenGB(this.conf, minEjer, maxEjer, em));
-					result.add(new GenGT(this.conf, minEjer, maxEjer, em));
+					result.add(new GenGH(rutina, this.conf, minEjer, maxEjer, em));
+					result.add(new GenGB(rutina, this.conf, minEjer, maxEjer, em));
+					result.add(new GenGT(rutina, this.conf, minEjer, maxEjer, em));
 				}
 			}
 		}
@@ -75,11 +75,11 @@ class PlanificacionController extends Controller {
 			if(objetivo.getNombre().equals("tonificacion") || objetivo.getNombre().equals("mantenimiento")){
 				if (cliente.getDiasSemana() == 5){
 					minEjer = 1; maxEjer = 1;
-					result.add(new GenTS(this.conf, minEjer, maxEjer, em));
-					result.add(new GenTI(this.conf, minEjer, maxEjer, em));
-					result.add(new GenTS(this.conf, minEjer, maxEjer, em));
-					result.add(new GenTI(this.conf, minEjer, maxEjer, em));
-					result.add(new GenTS(this.conf, minEjer, maxEjer, em));
+					result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
+					result.add(new GenTI(rutina, this.conf, minEjer, maxEjer, em));
+					result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
+					result.add(new GenTI(rutina, this.conf, minEjer, maxEjer, em));
+					result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
 				}
 			}
 		}

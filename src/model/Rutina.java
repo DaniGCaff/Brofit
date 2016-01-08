@@ -91,6 +91,10 @@ public class Rutina implements Serializable {
 		this.ejerciciosFiltrados = ejerciciosFiltrados;
 	}
 	
+	public Boolean isEjercicioFiltrado(Ejercicio ejercicio) {
+		return this.ejerciciosFiltrados.get(ejercicio);
+	}
+	
 	public List<String> getMusculosDia(){
 		return this.musculosDia;
 	}

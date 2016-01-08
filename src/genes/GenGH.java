@@ -5,14 +5,15 @@ import javax.persistence.EntityManager;
 import org.jgap.Configuration;
 import org.jgap.InvalidConfigurationException;
 
+import model.Rutina;
 import model.TamanoGMuscular;
 
 public class GenGH extends EjercicioGene {
 
 	private static final long serialVersionUID = 1L;
 
-	public GenGH(Configuration a_config, int a_lowerBounds, int a_upperBounds, EntityManager em) throws InvalidConfigurationException {
-		super(a_config, a_lowerBounds, a_upperBounds, em);
+	public GenGH(Rutina rutina, Configuration a_config, int a_lowerBounds, int a_upperBounds, EntityManager em) throws InvalidConfigurationException {
+		super(rutina, a_config, a_lowerBounds, a_upperBounds, em);
 	}
 
 	@Override

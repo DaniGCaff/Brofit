@@ -14,6 +14,7 @@ import model.Ejercicio;
 import model.EstresEjercicio;
 import model.EstresEjercicioPK;
 import model.Objetivo;
+import model.Rutina;
 
 public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 
@@ -21,6 +22,7 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 
 	protected EntityManager em;
 	private DuracionGene DuracionGene;
+	private Rutina rutina;
 	
 	public DuracionGene getDuracionGene() {
 		return DuracionGene;
@@ -36,9 +38,10 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 		// TODO solo debe admitir lo que estan dentro de la tabla de filtrados.
 	}
 
-	public EjercicioGene(Configuration a_config, int minRepeticiones, int maxRepeticiones, EntityManager em)
+	public EjercicioGene(Rutina rutina, Configuration a_config, int minRepeticiones, int maxRepeticiones, EntityManager em)
 			throws InvalidConfigurationException {
 		super(a_config);
+		this.rutina = rutina;
 		this.DuracionGene = new DuracionGene(a_config, minRepeticiones, maxRepeticiones);
 		this.em = em;
 		poblarAlelos();
