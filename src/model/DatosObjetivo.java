@@ -27,7 +27,15 @@ public class DatosObjetivo implements Serializable {
 	private float numeroEjercicios;
 	
 	@Column(name="numeroSeries")
-	private float numeroSeries;
+	private int numeroSeries;
+
+	public int getNumeroSeries() {
+		return numeroSeries;
+	}
+
+	public void setNumeroSeries(int numeroSeries) {
+		this.numeroSeries = numeroSeries;
+	}
 
 	//bi-directional many-to-one association to Objetivo
 	@ManyToOne
