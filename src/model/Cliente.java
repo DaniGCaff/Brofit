@@ -14,6 +14,8 @@ import java.util.List;
 @NamedQuery(name="Cliente.findAll", query="SELECT c FROM Cliente c")
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
+	public static final int superior = 0;
+	public static final int inferior = 1;
 
 	@Id
 	@Column(unique=true, nullable=false)
@@ -212,9 +214,25 @@ public class Cliente implements Serializable {
 		float estres_ae=Estres.getEstresAerobico(imc, (int)aerobica);
 		float co_progreso = Estres.getCoProgreso(imc,(int)aerobica);
 		
-		float co_regresion= 0.75f;
+		float co_regresionSup= this.getCoRegresion(superior);
+		float co_regresionInf= this.getCoRegresion(inferior);
 		
-		return  (estres_an_inf*co_regresion+estres_an_sup*co_regresion+estres_an_ab*co_regresion+estres_ae)*co_progreso;	
+		return  (estres_an_inf*co_regresionInf+estres_an_sup*co_regresionSup+estres_an_ab+estres_ae)*co_progreso;	
+	}
+
+	private float getCoRegresion(int tipo) {
+		
+		//TODO falata obtener los tipo de trenes de cada lesion
+		float coRegresion=1.00f;
+		if(!clientesHasLesiones.isEmpty()){
+			for(ClientesHasLesion lesionCliente: clientesHasLesiones){
+				//Gmuscular gMuscular = Gmuscular.findGMuscular(clienteHasLesion);
+				//int tren = 
+				//if(tren==tipo){coRegresion=0.75f;}
+			}
+		}
+		
+		return coRegresion;
 	}
 	
 

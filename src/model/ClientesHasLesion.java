@@ -20,6 +20,8 @@ public class ClientesHasLesion implements Serializable {
 	@EmbeddedId
 	private ClientesHasLesionPK id;
 
+	public static final int GRAVE = 1;
+	public static final int LEVE = 0;
 	private int gravedadLesion;
 
 	//bi-directional many-to-one association to Cliente
