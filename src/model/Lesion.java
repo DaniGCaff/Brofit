@@ -13,6 +13,9 @@ import java.util.List;
 @Table(name="lesiones")
 @NamedQuery(name="Lesion.findAll", query="SELECT l FROM Lesion l")
 public class Lesion implements Serializable {
+	
+	protected EntityManager em;
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -116,4 +119,12 @@ public class Lesion implements Serializable {
 		this.gmusculares = gmusculares;
 	}
 
+	public static List ListarLesiones(EntityManager em){
+		 return  em.createQuery("SELECT nombre FROM LESION ").getResultList();
+	}
+
+	public static int findId(String lesion, EntityManager em) {
+		
+		return em.createQuery("SELECT idLesion FROM LESION WHERE nombre = "+lesion).getFirstResult();
+	}
 }

@@ -462,21 +462,10 @@ public class Formulario extends javax.swing.JFrame {
         pack();
     }
 
-    private void r_anaerobica_infActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_anaerobica_infActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_r_anaerobica_infActionPerformed
-    private void r_anaerobica_abActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_anaerobica_infActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_r_anaerobica_infActionPerformed
-
-    private void r_anaerobica_supActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_anaerobica_supActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_r_anaerobica_supActionPerformed
-
-    private void r_aerobicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_aerobicaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_r_aerobicaActionPerformed
-
+    private void r_anaerobica_infActionPerformed(java.awt.event.ActionEvent evt) {}
+    private void r_anaerobica_abActionPerformed(java.awt.event.ActionEvent evt) {}
+    private void r_anaerobica_supActionPerformed(java.awt.event.ActionEvent evt) {}
+    private void r_aerobicaActionPerformed(java.awt.event.ActionEvent evt) {}
     private void pulsacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pulsacionesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pulsacionesActionPerformed
@@ -503,9 +492,7 @@ public class Formulario extends javax.swing.JFrame {
 
     private void nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nombreActionPerformed
-
-    
+    }//GEN-LAST:event_nombreActionPerformed 
     
     private void diasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_diasActionPerformed
         // TODO add your handling code here:
@@ -514,6 +501,8 @@ public class Formulario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_diasActionPerformed
 
+    
+    
     private void continuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continuarActionPerformed
 
 		if(this.camposCompletos()){
@@ -623,22 +612,29 @@ public class Formulario extends javax.swing.JFrame {
 
 	private boolean insertarLesiones(Cliente cliente) {
 		boolean result = true;
-		// TODO 0 = LEVE , 1 = GRAVE
+		// TODO SUPERIOR - INFERIOR
 		try{
+			EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
+			EntityManager em = emf.createEntityManager();
 			if(model2.getSize() >0){cliente.setClientesHasLesiones(new ArrayList<ClientesHasLesion>());}
 			for(int i =0; i<model2.getSize();i++){
 				ClientesHasLesion clientesHasLesion = new ClientesHasLesion();
 				clientesHasLesion.setCliente(cliente);
+				
 				String aux = model2.getElementAt(i).toString();
 				String lesion = aux.substring(0,aux.indexOf("("));
 				String gravedad= aux.substring(aux.indexOf("("),aux.length());
-				if(gravedad=="(Grave)"){
-					clientesHasLesion.setGravedadLesion(1);
+				if(gravedad=="(GRAVE)"){
+					clientesHasLesion.setGravedadLesion(ClientesHasLesion.GRAVE);
 				}
 				else{
-					clientesHasLesion.setGravedadLesion(0);
+					clientesHasLesion.setGravedadLesion(ClientesHasLesion.LEVE);
 				}
-				clientesHasLesion.setLesione(new Lesion());
+
+				Lesion l = new Lesion();
+				l.setNombre(lesion);
+				l.setIdLesiones(Lesion.findId(lesion,em));
+				clientesHasLesion.setLesione(l);
 				
 				cliente.addClientesHasLesione(clientesHasLesion);
 			}
@@ -689,23 +685,43 @@ public class Formulario extends javax.swing.JFrame {
 		try{
 			int index = lesiones1.getSelectedIndex();
 			if(	!this.LesionSelect(model1.getElementAt(index).toString())){
-				model2.add(model2.getSize(), model1.getElementAt(index).toString()+"(Grave)");
+				model2.add(model2.getSize(), model1.getElementAt(index).toString()+"(GRAVE)");
 				this.removeLesion(index,true);
 			}
 		}catch(java.lang.ArrayIndexOutOfBoundsException ex){
 			ex.printStackTrace();
 		}
 		
-    }//GEN-LAST:event_addLesionGrave
+    }
     private void introducirLesiones() {
-		model1= new DefaultListModel();
-		model1.addElement("Pubalgia");
-		model1.addElement("Sobrecarga piramidal");
-		model1.addElement("Pubalgia1");
-		model1.addElement("Pubalgia2");
+    	
+    	model1= new DefaultListModel();
 		model2 = new DefaultListModel();
-		lesiones2.setModel(model2);
-		lesiones1.setModel(model1);
+    	try{
+        	EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
+    		EntityManager em = emf.createEntityManager();
+        	List<String> listado = Lesion.ListarLesiones(em);
+        	
+        	for( String lesion : listado){
+        		model1.addElement(lesion);
+        	}
+
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    		System.out.println("fallo en la BBDD añadir datos falsos");
+    		model1.addElement("Pubalgia");
+    		model1.addElement("Sobrecarga piramidal");
+    		model1.addElement("Pubalgia1");
+    		model1.addElement("Pubalgia2");
+    		
+    	}finally{
+    		lesiones2.setModel(model2);
+    		lesiones1.setModel(model1);    		
+    	}
+    	
+    	
+		
+		
 		
 		this.cargarDatos();
 
@@ -726,7 +742,7 @@ public class Formulario extends javax.swing.JFrame {
 
 			int index = lesiones1.getSelectedIndex();
 			if(	!this.LesionSelect(model1.getElementAt(index).toString())){
-				model2.add(model2.getSize(), model1.getElementAt(index).toString()+"(Grave)");
+				model2.add(model2.getSize(), model1.getElementAt(index).toString()+"(GRAVE)");
 				this.removeLesion(index,true);
 			}
 		}catch( java.lang.ArrayIndexOutOfBoundsException ex){
