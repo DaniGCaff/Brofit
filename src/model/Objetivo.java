@@ -22,11 +22,6 @@ public class Objetivo implements Serializable {
 	@Column(length=45)
 	private String nombre;
 
-
-	//bi-directional many-to-one association to ObjetivosHasEjercicio
-	@OneToMany(mappedBy="objetivo")
-	private List<EstresEjercicio> objetivosHasEjercicios;
-
 	//bi-directional many-to-one association to Rutina
 	@OneToMany(mappedBy="objetivo")
 	private List<Rutina> rutinas;
@@ -49,30 +44,6 @@ public class Objetivo implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	
-
-	public List<EstresEjercicio> getObjetivosHasEjercicios() {
-		return this.objetivosHasEjercicios;
-	}
-
-	public void setObjetivosHasEjercicios(List<EstresEjercicio> objetivosHasEjercicios) {
-		this.objetivosHasEjercicios = objetivosHasEjercicios;
-	}
-
-	public EstresEjercicio addObjetivosHasEjercicio(EstresEjercicio objetivosHasEjercicio) {
-		getObjetivosHasEjercicios().add(objetivosHasEjercicio);
-		objetivosHasEjercicio.setObjetivo(this);
-
-		return objetivosHasEjercicio;
-	}
-
-	public EstresEjercicio removeObjetivosHasEjercicio(EstresEjercicio objetivosHasEjercicio) {
-		getObjetivosHasEjercicios().remove(objetivosHasEjercicio);
-		objetivosHasEjercicio.setObjetivo(null);
-
-		return objetivosHasEjercicio;
 	}
 
 	public List<Rutina> getRutinas() {

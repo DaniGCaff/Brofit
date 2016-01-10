@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="objetivos_has_ejercicios")
+@Table(name="estres_ejercicios")
 @NamedQuery(name="EstresEjercicio.findAll", query="SELECT e FROM EstresEjercicio e")
 public class EstresEjercicio implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -24,11 +24,6 @@ public class EstresEjercicio implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="Ejercicios_idEjercicios", nullable=false, insertable=false, updatable=false)
 	private Ejercicio ejercicio;
-
-	//bi-directional many-to-one association to Objetivo
-	@ManyToOne
-	@JoinColumn(name="Objetivos_idObjetivos", nullable=false, insertable=false, updatable=false)
-	private Objetivo objetivo;
 	
 	@Column(name="repeticiones", nullable=false, insertable=false, updatable=false)
 	private int repeticiones;
@@ -77,14 +72,6 @@ public class EstresEjercicio implements Serializable {
 
 	public void setEjercicio(Ejercicio ejercicio) {
 		this.ejercicio = ejercicio;
-	}
-
-	public Objetivo getObjetivo() {
-		return this.objetivo;
-	}
-
-	public void setObjetivo(Objetivo objetivo) {
-		this.objetivo = objetivo;
 	}
 
 }
