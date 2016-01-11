@@ -26,7 +26,11 @@ public class Formulario extends javax.swing.JFrame {
     
 	// Variables declaration
 
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
+	EntityManager em = emf.createEntityManager();
  
+	List<ClientesHasLesion>lesionesCliente;
+	List<Lesion> listaLesiones = new ArrayList();
 	private MainController mainController ; 
     private javax.swing.JTextField altura;
     private javax.swing.JTextField apellidos;
@@ -518,7 +522,7 @@ public class Formulario extends javax.swing.JFrame {
 				JOptionPane.showMessageDialog(this,"IMC MENOR DE 18.5");
 			}
 			else{
-				this.ejecutarSystema();
+				this.ejecutarSistema();
 			}
 		}else{
 			JOptionPane.showMessageDialog(this,"Datos incompletos");
@@ -584,17 +588,29 @@ public class Formulario extends javax.swing.JFrame {
 	
 	}
 
-	private void ejecutarSystema() {
+	private void ejecutarSistema() {
 		
 		Cliente cliente = new Cliente();
 		if(setCliente(cliente)){
 			if(this.insertarLesiones(cliente)){
+				
+				//for(ClientesHasLesion x : cliente.getClientesHasLesiones()){
+				//	System.out.println("nombre lesion = "+ x.getLesione().getNombre());
+				//}
 				int index = objetivo.getSelectedIndex()+1;
+				em.getTransaction().begin();
+				em.persist(cliente);
+				for(ClientesHasLesion les : lesionesCliente){
+					em.persist(les);
+				}
+				em.getTransaction().commit();
+				
 				try{
-					EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
-					EntityManager em = emf.createEntityManager();
+					
 					Objetivo objetive = em.find(Objetivo.class, index);
+					
 					mainController = new MainController(cliente,objetive,em).run();
+					
 					//Resultado resultado = new Resultado();
 					//resultado.main(null);
 					
@@ -609,34 +625,34 @@ public class Formulario extends javax.swing.JFrame {
 		}
 		
 	}
+	public  void ListarLesiones(EntityManager em){
+	    listaLesiones= em.createNamedQuery("Lesion.findAll").getResultList();
+	}
 
 	private boolean insertarLesiones(Cliente cliente) {
 		boolean result = true;
 		// TODO SUPERIOR - INFERIOR
 		try{
-			EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
-			EntityManager em = emf.createEntityManager();
 			if(model2.getSize() >0){cliente.setClientesHasLesiones(new ArrayList<ClientesHasLesion>());}
-			for(int i =0; i<model2.getSize();i++){
-				ClientesHasLesion clientesHasLesion = new ClientesHasLesion();
-				clientesHasLesion.setCliente(cliente);
+			for(int i =1; i<model2.getSize();i++){
+				ClientesHasLesion clientesHasLesionAux = new ClientesHasLesion();
+				clientesHasLesionAux.setCliente(cliente);
 				
 				String aux = model2.getElementAt(i).toString();
 				String lesion = aux.substring(0,aux.indexOf("("));
 				String gravedad= aux.substring(aux.indexOf("("),aux.length());
 				if(gravedad=="(GRAVE)"){
-					clientesHasLesion.setGravedadLesion(ClientesHasLesion.GRAVE);
+					clientesHasLesionAux.setGravedadLesion(ClientesHasLesion.GRAVE);
 				}
 				else{
-					clientesHasLesion.setGravedadLesion(ClientesHasLesion.LEVE);
+					clientesHasLesionAux.setGravedadLesion(ClientesHasLesion.LEVE);
 				}
-
 				Lesion l = new Lesion();
 				l.setNombre(lesion);
-				l.setIdLesiones(Lesion.findId(lesion,em));
-				clientesHasLesion.setLesione(l);
-				
-				cliente.addClientesHasLesione(clientesHasLesion);
+				l.setIdLesiones(this.buscarIDlesion(lesion));
+				clientesHasLesionAux.setLesion(l);
+				lesionesCliente.add(clientesHasLesionAux);
+				cliente.addClientesHasLesione(clientesHasLesionAux);
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -645,7 +661,19 @@ public class Formulario extends javax.swing.JFrame {
 		
 		return result;
 	}
-
+	
+	public int buscarIDlesion(String nom){
+		int result = 0;
+		
+		for(Lesion l : this.listaLesiones){
+			if(l.getNombre()==nom){
+				return l.getIdLesiones();
+			}
+		}
+		return result;
+	}
+	
+	
 
 	private boolean setCliente(Cliente cliente) {
 		cliente.setIdCliente(1);//TODO: hallar id cliente al insertar el cliente
@@ -698,12 +726,12 @@ public class Formulario extends javax.swing.JFrame {
     	model1= new DefaultListModel();
 		model2 = new DefaultListModel();
     	try{
-        	EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
-    		EntityManager em = emf.createEntityManager();
-        	List<String> listado = Lesion.ListarLesiones(em);
         	
-        	for( String lesion : listado){
-        		model1.addElement(lesion);
+    		this.ListarLesiones(em);
+        	List<Lesion> listado = this.listaLesiones;
+        	
+        	for( Lesion lesion : listado){
+        		model1.addElement(lesion.getNombre());
         	}
 
     	}catch(Exception ex){
@@ -718,10 +746,6 @@ public class Formulario extends javax.swing.JFrame {
     		lesiones2.setModel(model2);
     		lesiones1.setModel(model1);    		
     	}
-    	
-    	
-		
-		
 		
 		this.cargarDatos();
 

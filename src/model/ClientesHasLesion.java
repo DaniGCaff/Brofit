@@ -65,7 +65,7 @@ public class ClientesHasLesion implements Serializable {
 		return this.lesione;
 	}
 
-	public void setLesione(Lesion lesione) {
+	public void setLesion(Lesion lesione) {
 		this.lesione = lesione;
 	}
 	

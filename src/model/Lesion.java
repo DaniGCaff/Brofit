@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -12,11 +14,10 @@ import java.util.List;
 @Entity
 @Table(name="lesiones")
 @NamedQueries({
-	@NamedQuery(name="Lesiones.findAll", query="SELECT e FROM lesiones e"),
+	@NamedQuery(name="Lesion.findAll", query="SELECT l FROM Lesion l"),	
+})
+public class Lesion implements Serializable {
 	
-})public class Lesion implements Serializable {
-	
-	protected EntityManager em;
 
 	private static final long serialVersionUID = 1L;
 
@@ -79,14 +80,14 @@ import java.util.List;
 
 	public ClientesHasLesion addClientesHasLesione(ClientesHasLesion clientesHasLesione) {
 		getClientesHasLesiones().add(clientesHasLesione);
-		clientesHasLesione.setLesione(this);
+		clientesHasLesione.setLesion(this);
 
 		return clientesHasLesione;
 	}
 
 	public ClientesHasLesion removeClientesHasLesione(ClientesHasLesion clientesHasLesione) {
 		getClientesHasLesiones().remove(clientesHasLesione);
-		clientesHasLesione.setLesione(null);
+		clientesHasLesione.setLesion(null);
 
 		return clientesHasLesione;
 	}
@@ -119,14 +120,5 @@ import java.util.List;
 
 	public void setGmusculares(List<Gmuscular> gmusculares) {
 		this.gmusculares = gmusculares;
-	}
-
-	public static List ListarLesiones(EntityManager em){
-		 return  em.createQuery("SELECT nombre FROM lesiones ").getResultList();
-	}
-
-	public static int findId(String lesion, EntityManager em) {
-		
-		return em.createQuery("SELECT idLesion FROM lesiones WHERE nombre = "+lesion).getFirstResult();
 	}
 }
