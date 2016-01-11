@@ -17,8 +17,8 @@ public class GenBT extends EjercicioGene {
 	
 	@Override
 	protected void poblarAlelos() {
-		this.addAlleles(em.createNamedQuery("Ejercicio.getByGMuscular").setParameter("gmuscular", "Biceps").getResultList());
-		this.addAlleles(em.createNamedQuery("Ejercicio.getByGMuscular").setParameter("gmuscular", "Triceps").getResultList());
+		this.addAlleles(em.createNamedQuery("Ejercicio.findByGMuscular").setParameter("gmuscular", "Biceps").getResultList());
+		this.addAlleles(em.createNamedQuery("Ejercicio.findByGMuscular").setParameter("gmuscular", "Triceps").getResultList());
 	}
 
 }

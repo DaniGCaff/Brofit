@@ -11,8 +11,10 @@ import java.util.List;
  */
 @Entity
 @Table(name="lesiones")
-@NamedQuery(name="Lesion.findAll", query="SELECT l FROM Lesion l")
-public class Lesion implements Serializable {
+@NamedQueries({
+	@NamedQuery(name="Lesiones.findAll", query="SELECT e FROM lesiones e"),
+	
+})public class Lesion implements Serializable {
 	
 	protected EntityManager em;
 
@@ -120,11 +122,11 @@ public class Lesion implements Serializable {
 	}
 
 	public static List ListarLesiones(EntityManager em){
-		 return  em.createQuery("SELECT nombre FROM LESION ").getResultList();
+		 return  em.createQuery("SELECT nombre FROM lesiones ").getResultList();
 	}
 
 	public static int findId(String lesion, EntityManager em) {
 		
-		return em.createQuery("SELECT idLesion FROM LESION WHERE nombre = "+lesion).getFirstResult();
+		return em.createQuery("SELECT idLesion FROM lesiones WHERE nombre = "+lesion).getFirstResult();
 	}
 }
