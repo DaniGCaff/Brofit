@@ -13,6 +13,12 @@ import java.util.List;
 @Entity
 @Table(name="ejercicios")
 @NamedQueries({
+	@NamedQuery(name="Ejercicio.findAllG", query="SELECT e.idEjercicios FROM Ejercicio e"),
+	@NamedQuery(name="Ejercicio.findByGMuscularG", query="SELECT e.idEjercicios FROM Ejercicio e JOIN e.gmusculare g WHERE g.nombre LIKE ':gmuscular'"),
+	@NamedQuery(name="Ejercicio.findByTipoG", query="SELECT e.idEjercicios FROM Ejercicio e WHERE e.tipoEjercicio = :tipo"),
+	@NamedQuery(name="Ejercicio.findByTamanoG", query="SELECT e.idEjercicios FROM Ejercicio e JOIN e.gmusculare g WHERE g.tamano = :tamano"),
+	@NamedQuery(name="Ejercicio.findByTrenG", query="SELECT e.idEjercicios FROM Ejercicio e JOIN e.gmusculare g WHERE g.tipoTren = :tren"),
+	
 	@NamedQuery(name="Ejercicio.findAll", query="SELECT e FROM Ejercicio e"),
 	@NamedQuery(name="Ejercicio.findByGMuscular", query="SELECT e FROM Ejercicio e JOIN e.gmusculare g WHERE g.nombre LIKE ':gmuscular'"),
 	@NamedQuery(name="Ejercicio.findByTipo", query="SELECT e FROM Ejercicio e WHERE e.tipoEjercicio = :tipo"),

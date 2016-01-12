@@ -1,5 +1,7 @@
 package genes;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.jgap.Configuration;
@@ -17,8 +19,8 @@ public class GenBT extends EjercicioGene {
 	
 	@Override
 	protected void poblarAlelos() {
-		this.addAlleles(em.createNamedQuery("Ejercicio.findByGMuscular").setParameter("gmuscular", "Biceps").getResultList());
-		this.addAlleles(em.createNamedQuery("Ejercicio.findByGMuscular").setParameter("gmuscular", "Triceps").getResultList());
+		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.findByGMuscularG").setParameter("gmuscular", "Biceps").getResultList());
+		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.findByGMuscularG").setParameter("gmuscular", "Triceps").getResultList());
 	}
 
 }

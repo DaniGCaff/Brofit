@@ -1,5 +1,7 @@
 package genes;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.jgap.Configuration;
@@ -17,7 +19,7 @@ public class GenH extends EjercicioGene {
 	
 	@Override
 	protected void poblarAlelos() {
-		this.addAlleles(em.createNamedQuery("Ejercicio.getByGMuscular").setParameter("gmuscular", "Hombros").getResultList());
+		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.getByGMuscularG").setParameter("gmuscular", "Hombros").getResultList());
 	}
 
 }

@@ -21,7 +21,7 @@ public class GenTS extends EjercicioGene {
 
 	@Override
 	protected void poblarAlelos() {
-		List<Ejercicio> ejercicios = em.createNamedQuery("Ejercicio.findByTren").setParameter("tren", TrenCorporal.SUPERIOR.valor).getResultList();
+		List<Integer> ejercicios = (List<Integer>)em.createNamedQuery("Ejercicio.findByTrenG").setParameter("tren", TrenCorporal.SUPERIOR.valor).getResultList();
 		this.addAlleles(ejercicios);
 	}
 	

@@ -1,5 +1,7 @@
 package genes;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.jgap.Configuration;
@@ -18,7 +20,7 @@ public class GenTI extends EjercicioGene {
 	
 	@Override
 	protected void poblarAlelos() {
-		this.addAlleles(em.createNamedQuery("Ejercicio.findByTren").setParameter("tren", TrenCorporal.SUPERIOR.valor).getResultList());
+		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.findByTrenG").setParameter("tren", TrenCorporal.SUPERIOR.valor).getResultList());
 	}
 
 }
