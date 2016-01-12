@@ -22,15 +22,16 @@ import model.Lesion.TipoLesion;
 import model.Rutina;
 import model.Rutina.TipoRutina;
 
-class FilterController {
+class FilterController extends Controller {
 	private HashMap<Ejercicio,Boolean> ejerciciosFiltrados;
 	private Cliente cliente;
 	private Rutina rutina;
-	private static EntityManager em;
 	
-	public FilterController(Rutina rutina, Cliente cliente) {
-		TypedQuery<Ejercicio> query = em.createNamedQuery("Ejercicio.findAll", Ejercicio.class);
-		List<Ejercicio> ejercicios = query.getResultList();
+	public FilterController(Rutina rutina, Cliente cliente,EntityManager em ) {
+		
+		super(em);	
+		ejerciciosFiltrados = new HashMap<Ejercicio,Boolean>();
+		List<Ejercicio> ejercicios = em.createNamedQuery("Ejercicio.findAll").getResultList();
 		for(Ejercicio e : ejercicios) {
 			ejerciciosFiltrados.put(e, true);
 		}
@@ -51,7 +52,7 @@ class FilterController {
 		Iterator<Ejercicio> it = ejerciciosFiltrados.keySet().iterator();
 		while(it.hasNext()){
 			Ejercicio ejercicio=it.next();
-			if (ejercicio.getNivelEjercicio()>nivel)
+			if (ejercicio.getDificultadTecnica()>nivel)
 				ejerciciosFiltrados.put(ejercicio,false);
 		}
 	}
@@ -105,7 +106,8 @@ class FilterController {
 	public void run(){
 		filtradoNivel();
 		filtradoLesion();
-		filtradoObjetivo();
+		//TODO: VER COMO HACEMOS ESTE FILTRADO
+		//filtradoObjetivo();
 		rutina.setEjerciciosFiltrados(ejerciciosFiltrados);
 		if (determinarTipoTabla() == 0)
 			rutina.setTipoRutina(TipoRutina.tipoCircuito);

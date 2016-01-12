@@ -24,7 +24,7 @@ class AlgorithmController extends Controller {
 		try {
 			FitnessFunction funcionObjetivo = new BroFitness(params);
 			params.getConf().setFitnessFunction(funcionObjetivo);
-			params.getConf().setSampleChromosome(params.getCromosoma());
+			//params.getConf().setSampleChromosome(params.);
 			
 			Genotype poblacion = Genotype.randomInitialGenotype(params.getConf());
 			

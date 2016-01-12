@@ -28,8 +28,6 @@ public class Ejercicio implements Serializable {
 
 	private int dificultadTecnica;
 
-	@Column(name="nivel_ejercicio")
-	private int nivelEjercicio;
 
 	@Column(length=45)
 	private String nombre;
@@ -74,14 +72,6 @@ public class Ejercicio implements Serializable {
 
 	public void setDificultadTecnica(int dificultadTecnica) {
 		this.dificultadTecnica = dificultadTecnica;
-	}
-
-	public int getNivelEjercicio() {
-		return this.nivelEjercicio;
-	}
-
-	public void setNivelEjercicio(int nivelEjercicio) {
-		this.nivelEjercicio = nivelEjercicio;
 	}
 
 	public String getNombre() {

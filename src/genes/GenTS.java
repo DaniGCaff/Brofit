@@ -1,10 +1,13 @@
 package genes;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.jgap.Configuration;
 import org.jgap.InvalidConfigurationException;
 
+import model.Ejercicio;
 import model.Rutina;
 import model.TrenCorporal;
 
@@ -18,7 +21,8 @@ public class GenTS extends EjercicioGene {
 
 	@Override
 	protected void poblarAlelos() {
-		this.addAlleles(em.createNamedQuery("Ejercicio.findByTren").setParameter("tren", TrenCorporal.INFERIOR.valor).getResultList());
+		List<Ejercicio> ejercicios = em.createNamedQuery("Ejercicio.findByTren").setParameter("tren", TrenCorporal.SUPERIOR.valor).getResultList();
+		this.addAlleles(ejercicios);
 	}
 	
 }

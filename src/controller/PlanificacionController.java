@@ -43,8 +43,8 @@ class PlanificacionController extends Controller {
 		List <EjercicioGene> result = new ArrayList<EjercicioGene>();
 		int minEjer, maxEjer;
 		if(rutina.getTipoRutina() == TipoRutina.tipoGrupoMuscular){
-			if ((objetivo.getNombre().equals("perdida_peso")) || objetivo.getNombre().equals("hipertrofia") 
-					||(objetivo.getNombre().equals("tonificacion"))) {
+			if ((objetivo.getNombre().equals("Tonificación")) || objetivo.getNombre().equals("Hipertrofia") 
+					||(objetivo.getNombre().equals("Pérdida de Peso"))) {
 				if (cliente.getDiasSemana() == 5){
 					minEjer = 1; maxEjer = 1;
 					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
@@ -72,7 +72,7 @@ class PlanificacionController extends Controller {
 		}
 		
 		else if (rutina.getTipoRutina() == TipoRutina.tipoCircuito){
-			if(objetivo.getNombre().equals("tonificacion") || objetivo.getNombre().equals("mantenimiento")){
+			if(objetivo.getNombre().equals("Tonificación") || objetivo.getNombre().equals("Mantenimiento")){
 				if (cliente.getDiasSemana() == 5){
 					minEjer = 1; maxEjer = 1;
 					result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));

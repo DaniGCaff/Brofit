@@ -180,7 +180,7 @@ public class Formulario extends javax.swing.JFrame {
 
         jLabel5.setText("Objetivo");
 
-        objetivo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tonificacion", "Hipertrofia", "Perdida de peso", "Mantenimiento" }));
+        objetivo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hipertrofia","Tonificación",  "Pérdida de Peso", "Mantenimiento" }));
         objetivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 objetivoActionPerformed(evt);
@@ -600,9 +600,9 @@ public class Formulario extends javax.swing.JFrame {
 				int index = objetivo.getSelectedIndex()+1;
 				em.getTransaction().begin();
 				em.persist(cliente);
-				for(ClientesHasLesion les : lesionesCliente){
-					em.persist(les);
-				}
+				//for(ClientesHasLesion les : lesionesCliente){
+				//	em.persist(les);
+				//}
 				em.getTransaction().commit();
 				
 				try{
@@ -676,7 +676,6 @@ public class Formulario extends javax.swing.JFrame {
 	
 
 	private boolean setCliente(Cliente cliente) {
-		cliente.setIdCliente(1);//TODO: hallar id cliente al insertar el cliente
 		try{
 			cliente.setEdad(Integer.valueOf(edad.getText()));
 			cliente.setAerobica(r_aerobica.getSelectedIndex()+1);
@@ -798,6 +797,9 @@ public class Formulario extends javax.swing.JFrame {
 		peso.setText("78");
 		altura.setText("1");
 		pulsaciones.setText("45");
+		this.objetivo.setSelectedIndex(1);
+		this.dias.setSelectedIndex(4);
+		
 	}
 
 }
