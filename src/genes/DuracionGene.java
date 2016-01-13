@@ -1,6 +1,7 @@
 package genes;
 
 import org.jgap.Configuration;
+import org.jgap.Gene;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.impl.IntegerGene;
 
@@ -19,6 +20,24 @@ public class DuracionGene extends IntegerGene implements IBrofitGene {
 	@Override
 	public float getEstresAsociado(Objetivo objetivo) {
 		return 0.0f;
+	}
+	
+	protected Gene newGeneInternal() {
+		try {
+			DuracionGene result = new DuracionGene(getConfiguration(), getLowerBounds(),getUpperBounds());
+			return result;
+		}
+		catch (InvalidConfigurationException iex) {
+			throw new IllegalStateException(iex.getMessage());
+		}
+	}
+	
+	public Boolean equals(DuracionGene other) {
+		return super.equals((IntegerGene) other);
+	}
+	
+	public int compareTo(DuracionGene other) {
+		return super.compareTo((IntegerGene) other);
 	}
 
 }

@@ -1,6 +1,7 @@
 package algorithm;
 
 import org.jgap.FitnessFunction;
+import org.jgap.Gene;
 import org.jgap.IChromosome;
 
 import genes.IBrofitGene;
@@ -16,10 +17,11 @@ public class BroFitness extends FitnessFunction {
 
 	@Override
 	protected double evaluate(IChromosome cromosoma) {
-		IBrofitGene[] genes = (IBrofitGene[]) cromosoma.getGenes();
+		Gene[] genes = (Gene[]) cromosoma.getGenes();
 		float fitness = 0.0f;
-		for(IBrofitGene gen : genes) {
-			fitness += gen.getEstresAsociado(this.params.getObjetivo());
+		for(Gene gen : genes) {
+			if(gen.getClass().isInstance(IBrofitGene.class))
+				fitness += ((IBrofitGene) gen).getEstresAsociado(this.params.getObjetivo());
 		}
 		return fitness;
 	}

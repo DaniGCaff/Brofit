@@ -9,6 +9,10 @@ import org.jgap.Chromosome;
 import org.jgap.Configuration;
 import org.jgap.Gene;
 import org.jgap.InvalidConfigurationException;
+import org.jgap.RandomGenerator;
+import org.jgap.impl.IntegerGene;
+import org.jgap.impl.SetGene;
+import org.jgap.impl.StockRandomGenerator;
 
 import genes.EjercicioGene;
 import genes.GenBT;
@@ -19,13 +23,14 @@ import genes.GenGT;
 import genes.GenH;
 import genes.GenTI;
 import genes.GenTS;
+import genes.IBrofitGene;
 import model.Cliente;
 import model.Objetivo;
 import model.Rutina;
 import model.Rutina.TipoRutina;
 
 class PlanificacionController extends Controller {
-	static final int poblacionMaxima = 500;
+	static final int poblacionMaxima = 5;
 	Cliente cliente;
 	Rutina rutina;
 	Objetivo objetivo;
@@ -40,7 +45,7 @@ class PlanificacionController extends Controller {
 	}
 
 	private List<EjercicioGene> planificarMusculoDia() throws InvalidConfigurationException{
-		List <EjercicioGene> result = new ArrayList<EjercicioGene>();
+		List<EjercicioGene> result = new ArrayList<EjercicioGene>();
 		int minEjer, maxEjer;
 		if(rutina.getTipoRutina() == TipoRutina.tipoGrupoMuscular){
 			if ((objetivo.getNombre().equals("Tonificación")) || objetivo.getNombre().equals("Hipertrofia") 
@@ -107,10 +112,15 @@ class PlanificacionController extends Controller {
 		// Si es perdida de peso, se siguen las reglas de hipertrofia.
 		
 		try {
+			RandomGenerator a_numberGenerator = new StockRandomGenerator();
 			List<EjercicioGene> results = planificarMusculoDia();
-			Gene[] genes = new EjercicioGene[results.size()];
-			for(int i = 0; i < results.size(); i++)
-				genes[i] = results.get(i);	
+			IBrofitGene[] genes = new IBrofitGene[results.size()*2];
+			for(int i = 0; i < results.size(); i++) {
+				genes[i] = results.get(i).getDuracionGene();
+				genes[i].setToRandomValue(a_numberGenerator);
+				genes[i+results.size()] = results.get(i);
+				genes[i+results.size()].setToRandomValue(a_numberGenerator);
+			}
 			
 			Chromosome cromosoma = new Chromosome(conf, genes);
 			conf.setSampleChromosome(cromosoma);

@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.persistence.EntityManager;
 
 import org.jgap.Configuration;
+import org.jgap.Gene;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.impl.SetGene;
 
@@ -21,8 +22,10 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 	protected static final long serialVersionUID = 1L;
 
 	protected EntityManager em;
-	private DuracionGene DuracionGene;
-	private Rutina rutina;
+	protected DuracionGene DuracionGene;
+	protected Rutina rutina;
+	protected int minRepeticiones;
+	protected int maxRepeticiones;
 	
 	public DuracionGene getDuracionGene() {
 		return DuracionGene;
@@ -35,13 +38,20 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 	@Override
 	public void addAlleles(@SuppressWarnings("rawtypes") Collection alleles) {
 		super.addAlleles(alleles);
-		// TODO solo debe admitir lo que estan dentro de la tabla de filtrados.
+	}
+	
+	public void addAllele(Object allele) {
+		Ejercicio ejercicio = em.find(Ejercicio.class,(Integer)allele);
+		if(rutina.isEjercicioFiltrado(ejercicio))
+			super.addAllele(allele);
 	}
 
 	public EjercicioGene(Rutina rutina, Configuration a_config, int minRepeticiones, int maxRepeticiones, EntityManager em)
 			throws InvalidConfigurationException {
 		super(a_config);
 		this.rutina = rutina;
+		this.minRepeticiones = minRepeticiones;
+		this.maxRepeticiones = maxRepeticiones;
 		this.DuracionGene = new DuracionGene(a_config, minRepeticiones, maxRepeticiones);
 		this.em = em;
 		poblarAlelos();
