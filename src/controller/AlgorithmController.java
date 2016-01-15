@@ -14,7 +14,7 @@ import algorithm.BroFitnessParams;
 
 class AlgorithmController extends Controller {
 
-	public static final int MAX_ALLOWED_EVOLUTIONS = 2;
+	public static final int MAX_ALLOWED_EVOLUTIONS = 20;
 	private BroFitnessParams params;
 	
 	public AlgorithmController(BroFitnessParams params, EntityManager em) {
@@ -32,7 +32,17 @@ class AlgorithmController extends Controller {
 			
 			IChromosome mejorSolucion = null;
 			int i = 0;
-			while(i < MAX_ALLOWED_EVOLUTIONS) {
+			while(i <= MAX_ALLOWED_EVOLUTIONS) {
+				System.out.println("Generando generación número " + i + " de cromosomas.");
+				mejorSolucion = poblacion.getFittestChromosome();
+				params.setCromosoma(mejorSolucion);
+				System.out.println("Fitness de la mejor solucion: " + mejorSolucion.getFitnessValue());
+				System.out.println("Edad de la solucion: " + mejorSolucion.getAge());
+				Gene[] genes = mejorSolucion.getGenes();
+				for(int g = 0; g < (mejorSolucion.size()/2); g++) {
+					Ejercicio ejercicio = (Ejercicio) em.find(Ejercicio.class, genes[g + (mejorSolucion.size()/2)].getAllele());
+					System.out.println(g+1 + " - " + ejercicio.getNombre() + " - " + genes[g].getAllele() + " repeticiones.");
+				}
 				poblacion.evolve();
 				i++;
 			}

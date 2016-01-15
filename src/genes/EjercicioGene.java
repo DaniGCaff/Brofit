@@ -59,15 +59,15 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 
 	protected abstract void poblarAlelos();
 	
-	public float getEstresAsociado(Objetivo objetivo) {
+	public float getEstresAsociado(Objetivo objetivo, DuracionGene duracion) {
 		int idEjercicio = (int) this.getAllele();
 		int tamanoMuscular = em.find(Ejercicio.class, idEjercicio).getGmuscular().getTamano();
 		int tipoEjercicio = em.find(Ejercicio.class, idEjercicio).getTipoEjercicio();
 		int idObjetivo = objetivo.getIdObjetivos();
-		int repeticiones = (int) this.getDuracionGene().getAllele();
+		int repeticiones = (int) duracion.getAllele();
 		int series = em.find(DatosObjetivo.class, new DatosObjetivoPK(idObjetivo, tamanoMuscular, tipoEjercicio)).getNumeroSeries();
-		EstresEjercicioPK pk = new EstresEjercicioPK(idEjercicio, idObjetivo, repeticiones, series);
+		EstresEjercicioPK pk = new EstresEjercicioPK(idEjercicio, repeticiones, series);
 		EstresEjercicio estres = em.find(EstresEjercicio.class, pk);
-		return estres.getSeries();
+		return estres.getEstresEjercicio();
 	}
 }

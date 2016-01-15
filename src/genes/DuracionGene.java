@@ -18,7 +18,7 @@ public class DuracionGene extends IntegerGene implements IBrofitGene {
 	}
 
 	@Override
-	public float getEstresAsociado(Objetivo objetivo) {
+	public float getEstresAsociado(Objetivo objetivo, DuracionGene duracion) {
 		return 0.0f;
 	}
 	

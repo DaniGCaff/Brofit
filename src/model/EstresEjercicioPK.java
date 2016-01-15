@@ -12,16 +12,13 @@ public class EstresEjercicioPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(unique=true, nullable=false)
-	private int idObjetivos;
-
-	@Column(unique=true, nullable=false)
+	@Column(name="Ejercicios_idEjercicios", unique=true, nullable=false)
 	private int idEjercicios;
 	
-	@Column(unique=true, nullable=false)
+	@Column(name="repeticiones", unique=true, nullable=false)
 	private int repeticiones;
 
-	@Column(unique=true, nullable=false)
+	@Column(name="series", unique=true, nullable=false)
 	private int series;
 
 	public int getSeries() {
@@ -35,19 +32,12 @@ public class EstresEjercicioPK implements Serializable {
 	public EstresEjercicioPK() {
 	}
 	
-	public EstresEjercicioPK(int ejercicio, int objetivo, int repeticiones, int series) {
+	public EstresEjercicioPK(int ejercicio, int repeticiones, int series) {
 		this.idEjercicios = ejercicio;
-		this.idObjetivos = objetivo;
 		this.repeticiones = repeticiones;
 		this.series = series;
 	}
 	
-	public int getidObjetivos() {
-		return this.idObjetivos;
-	}
-	public void setidObjetivos(int idObjetivos) {
-		this.idObjetivos = idObjetivos;
-	}
 	public int getidEjercicios() {
 		return this.idEjercicios;
 	}
@@ -70,8 +60,7 @@ public class EstresEjercicioPK implements Serializable {
 		}
 		EstresEjercicioPK castOther = (EstresEjercicioPK)other;
 		return 
-			(this.idObjetivos == castOther.idObjetivos)
-			&& (this.idEjercicios == castOther.idEjercicios)
+			(this.idEjercicios == castOther.idEjercicios)
 			&& (this.repeticiones == castOther.repeticiones)
 			&& (this.series == castOther.series);
 	}
@@ -79,7 +68,6 @@ public class EstresEjercicioPK implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + this.idObjetivos;
 		hash = hash * prime + this.idEjercicios;
 		hash = hash * prime + this.repeticiones;
 		hash = hash * prime + this.series;

@@ -30,7 +30,7 @@ import model.Rutina;
 import model.Rutina.TipoRutina;
 
 class PlanificacionController extends Controller {
-	static final int poblacionMaxima = 5;
+	static final int poblacionMaxima = 10;
 	Cliente cliente;
 	Rutina rutina;
 	Objetivo objetivo;
@@ -51,7 +51,7 @@ class PlanificacionController extends Controller {
 			if ((objetivo.getNombre().equals("Tonificación")) || objetivo.getNombre().equals("Hipertrofia") 
 					||(objetivo.getNombre().equals("Pérdida de Peso"))) {
 				if (cliente.getDiasSemana() == 5){
-					minEjer = 1; maxEjer = 1;
+					minEjer = 9; maxEjer = 9;
 					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
 					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
 					result.add(new GenH(rutina, this.conf, minEjer, maxEjer, em));
@@ -60,7 +60,7 @@ class PlanificacionController extends Controller {
 				}
 				
 				else if (cliente.getDiasSemana() == 4){
-					minEjer = 1; maxEjer = 2;
+					minEjer = 9; maxEjer = 9;
 					result.add(new GenGH(rutina, this.conf, minEjer, maxEjer, em));
 					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
 					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
@@ -68,7 +68,7 @@ class PlanificacionController extends Controller {
 				}
 				
 				else if (cliente.getDiasSemana() == 3){
-					minEjer = 2; maxEjer = 2;
+					minEjer = 9; maxEjer = 9;
 					result.add(new GenGH(rutina, this.conf, minEjer, maxEjer, em));
 					result.add(new GenGB(rutina, this.conf, minEjer, maxEjer, em));
 					result.add(new GenGT(rutina, this.conf, minEjer, maxEjer, em));
@@ -79,7 +79,7 @@ class PlanificacionController extends Controller {
 		else if (rutina.getTipoRutina() == TipoRutina.tipoCircuito){
 			if(objetivo.getNombre().equals("Tonificación") || objetivo.getNombre().equals("Mantenimiento")){
 				if (cliente.getDiasSemana() == 5){
-					minEjer = 1; maxEjer = 1;
+					minEjer = 9; maxEjer = 9;
 					result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
 					result.add(new GenTI(rutina, this.conf, minEjer, maxEjer, em));
 					result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
