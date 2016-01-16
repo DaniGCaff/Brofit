@@ -14,16 +14,16 @@ import java.util.List;
 @Table(name="ejercicios")
 @NamedQueries({
 	@NamedQuery(name="Ejercicio.findAllG", query="SELECT e.idEjercicios FROM Ejercicio e"),
-	@NamedQuery(name="Ejercicio.findByGMuscularG", query="SELECT e.idEjercicios FROM Ejercicio e JOIN e.gmusculare g WHERE g.nombre LIKE ':gmuscular'"),
+	@NamedQuery(name="Ejercicio.findByGMuscularG", query="SELECT e.idEjercicios FROM Ejercicio e JOIN e.gmuscular g WHERE g.nombre LIKE :gmuscular"),
 	@NamedQuery(name="Ejercicio.findByTipoG", query="SELECT e.idEjercicios FROM Ejercicio e WHERE e.tipoEjercicio = :tipo"),
-	@NamedQuery(name="Ejercicio.findByTamanoG", query="SELECT e.idEjercicios FROM Ejercicio e JOIN e.gmusculare g WHERE g.tamano = :tamano"),
-	@NamedQuery(name="Ejercicio.findByTrenG", query="SELECT e.idEjercicios FROM Ejercicio e JOIN e.gmusculare g WHERE g.tipoTren = :tren"),
+	@NamedQuery(name="Ejercicio.findByTamanoG", query="SELECT e.idEjercicios FROM Ejercicio e JOIN e.gmuscular g WHERE g.tamano = :tamano"),
+	@NamedQuery(name="Ejercicio.findByTrenG", query="SELECT e.idEjercicios FROM Ejercicio e JOIN e.gmuscular g WHERE g.tipoTren = :tren"),
 	
 	@NamedQuery(name="Ejercicio.findAll", query="SELECT e FROM Ejercicio e"),
-	@NamedQuery(name="Ejercicio.findByGMuscular", query="SELECT e FROM Ejercicio e JOIN e.gmusculare g WHERE g.nombre LIKE ':gmuscular'"),
+	@NamedQuery(name="Ejercicio.findByGMuscular", query="SELECT e FROM Ejercicio e JOIN e.gmuscular g WHERE g.nombre LIKE :gmuscular"),
 	@NamedQuery(name="Ejercicio.findByTipo", query="SELECT e FROM Ejercicio e WHERE e.tipoEjercicio = :tipo"),
-	@NamedQuery(name="Ejercicio.findByTamano", query="SELECT e FROM Ejercicio e JOIN e.gmusculare g WHERE g.tamano = :tamano"),
-	@NamedQuery(name="Ejercicio.findByTren", query="SELECT e FROM Ejercicio e JOIN e.gmusculare g WHERE g.tipoTren = :tren"),
+	@NamedQuery(name="Ejercicio.findByTamano", query="SELECT e FROM Ejercicio e JOIN e.gmuscular g WHERE g.tamano = :tamano"),
+	@NamedQuery(name="Ejercicio.findByTren", query="SELECT e FROM Ejercicio e JOIN e.gmuscular g WHERE g.tipoTren = :tren"),
 })
 public class Ejercicio implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -47,7 +47,7 @@ public class Ejercicio implements Serializable {
 	//bi-directional many-to-one association to Gmusculare
 	@ManyToOne
 	@JoinColumn(name="GMusculares_idGMusculares", nullable=false)
-	private Gmuscular gmusculare;
+	private Gmuscular gmuscular;
 
 	//bi-directional many-to-one association to EjerciciosHasLesione
 	@OneToMany(mappedBy="ejercicio")
@@ -97,11 +97,11 @@ public class Ejercicio implements Serializable {
 	}
 
 	public Gmuscular getGmuscular() {
-		return this.gmusculare;
+		return this.gmuscular;
 	}
 
 	public void setGmusculare(Gmuscular gmusculare) {
-		this.gmusculare = gmusculare;
+		this.gmuscular = gmusculare;
 	}
 
 	public List<EjerciciosHasLesion> getEjerciciosHasLesiones() {

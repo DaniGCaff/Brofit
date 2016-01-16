@@ -10,17 +10,17 @@ import org.jgap.InvalidConfigurationException;
 
 import model.Rutina;
 
-public class GenH extends EjercicioGene {
+public class GenAbd extends EjercicioGene {
 
 	private static final long serialVersionUID = 1L;
 
-	public GenH(Rutina rutina, Configuration a_config, int a_lowerBounds, int a_upperBounds, EntityManager em) throws InvalidConfigurationException {
+	public GenAbd(Rutina rutina, Configuration a_config, int a_lowerBounds, int a_upperBounds, EntityManager em) throws InvalidConfigurationException {
 		super(rutina, a_config, a_lowerBounds, a_upperBounds, em);
 	}
 	
 	protected Gene newGeneInternal() {
 	    try {
-	      return new GenH(rutina, getConfiguration(), minRepeticiones, maxRepeticiones, em);
+	      return new GenAbd(rutina, getConfiguration(), minRepeticiones, maxRepeticiones, em);
 	    }
 	    catch (InvalidConfigurationException iex) {
 	      throw new IllegalStateException(iex.getMessage());
@@ -30,7 +30,7 @@ public class GenH extends EjercicioGene {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void poblarAlelos() {
-		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.findByGMuscularG").setParameter("gmuscular", "Hombro").getResultList());
+		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.findByGMuscularG").setParameter("gmuscular", "%").getResultList());
 	}
 
 }

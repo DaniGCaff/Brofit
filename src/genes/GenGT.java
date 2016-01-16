@@ -31,7 +31,7 @@ public class GenGT extends EjercicioGene {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void poblarAlelos() {
-		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.getByGMuscularG").setParameter("gmuscular", "Triceps").getResultList());
+		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.findByGMuscularG").setParameter("gmuscular", "Triceps").getResultList());
 		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.findByTamanoG").setParameter("tamano", TamanoGMuscular.GRANDE.valor).getResultList());
 	}
 }

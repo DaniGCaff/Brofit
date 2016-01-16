@@ -15,6 +15,7 @@ import org.jgap.impl.SetGene;
 import org.jgap.impl.StockRandomGenerator;
 
 import genes.EjercicioGene;
+import genes.GenAbd;
 import genes.GenBT;
 import genes.GenG;
 import genes.GenGB;
@@ -46,80 +47,72 @@ class PlanificacionController extends Controller {
 
 	private List<EjercicioGene> planificarMusculoDia() throws InvalidConfigurationException{
 		List<EjercicioGene> result = new ArrayList<EjercicioGene>();
-		int minEjer, maxEjer;
+		int minEjer = 0, maxEjer = 0;
 		if(rutina.getTipoRutina() == TipoRutina.tipoGrupoMuscular){
-			if ((objetivo.getNombre().equals("Tonificación")) || objetivo.getNombre().equals("Hipertrofia") 
-					||(objetivo.getNombre().equals("Pérdida de Peso"))) {
-				if (cliente.getDiasSemana() == 5){
-					minEjer = 9; maxEjer = 9;
-					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
-					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
-					result.add(new GenH(rutina, this.conf, minEjer, maxEjer, em));
-					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
-					result.add(new GenBT(rutina, this.conf, minEjer, maxEjer, em));
-				}
-				
-				else if (cliente.getDiasSemana() == 4){
-					minEjer = 9; maxEjer = 9;
-					result.add(new GenGH(rutina, this.conf, minEjer, maxEjer, em));
-					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
-					result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
-					result.add(new GenBT(rutina, this.conf, minEjer, maxEjer, em));
-				}
-				
-				else if (cliente.getDiasSemana() == 3){
-					minEjer = 9; maxEjer = 9;
-					result.add(new GenGH(rutina, this.conf, minEjer, maxEjer, em));
-					result.add(new GenGB(rutina, this.conf, minEjer, maxEjer, em));
-					result.add(new GenGT(rutina, this.conf, minEjer, maxEjer, em));
-				}
+			if (objetivo.getNombre().equals("Tonificación")) {
+				minEjer = 12; maxEjer = 15;
+			}
+			if (objetivo.getNombre().equals("Hipertrofia")) {
+				minEjer = 8; maxEjer = 12;
+			}
+			if (objetivo.getNombre().equals("Pérdida de Peso")) {
+				minEjer = 6; maxEjer = 12;
+			}
+			
+			if (cliente.getDiasSemana() == 5){
+				result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
+				result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
+				result.add(new GenH(rutina, this.conf, minEjer, maxEjer, em));
+				result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
+				result.add(new GenBT(rutina, this.conf, minEjer, maxEjer, em));
+			}
+			
+			else if (cliente.getDiasSemana() == 4){
+				result.add(new GenGH(rutina, this.conf, minEjer, maxEjer, em));
+				result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
+				result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
+				result.add(new GenBT(rutina, this.conf, minEjer, maxEjer, em));
+			}
+			
+			else if (cliente.getDiasSemana() == 3){
+				result.add(new GenGH(rutina, this.conf, minEjer, maxEjer, em));
+				result.add(new GenGB(rutina, this.conf, minEjer, maxEjer, em));
+				result.add(new GenGT(rutina, this.conf, minEjer, maxEjer, em));
 			}
 		}
 		
 		else if (rutina.getTipoRutina() == TipoRutina.tipoCircuito){
-			if(objetivo.getNombre().equals("Tonificación") || objetivo.getNombre().equals("Mantenimiento")){
-				if (cliente.getDiasSemana() == 5){
-					minEjer = 9; maxEjer = 9;
-					result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
-					result.add(new GenTI(rutina, this.conf, minEjer, maxEjer, em));
-					result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
-					result.add(new GenTI(rutina, this.conf, minEjer, maxEjer, em));
-					result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
-				}
+			if(objetivo.getNombre().equals("Tonificación")){
+				minEjer = 12; maxEjer = 15;
+			} else if(objetivo.getNombre().equals("Mantenimiento")) {
+				minEjer = 8; maxEjer = 12;
 			}
+			result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
+			result.add(new GenTI(rutina, this.conf, minEjer, maxEjer, em));
+			result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
+			result.add(new GenTI(rutina, this.conf, minEjer, maxEjer, em));
+			result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
+		}
+		
+		int numAbdominales = cliente.getDiasSemana() / 2;
+		if(cliente.getDiasSemana() % 2 != 0) {
+			numAbdominales ++;
+		}
+		for(int i = 0; i < numAbdominales; i++) {
+			result.add(new GenAbd(rutina, this.conf, 6, 15, em));
 		}
 		return result;
 	}
  
 	public void run(){
-		// Si es hipert. para 5 días, en un día se hace 1 músculo grande u hombro o 2 especificos (biceps+triceps).
-		// Si es hipert. para 4 días, en un día se pueden hacerse <= 2 musculos (1 grande, 1 grande + 1 pequeño, B+T, NO SE PERMITE P+H) Resumen, h+x.
-		// Si es hipert. para 3 días, en un día se hacen 2 músculos (1 grande + 1 pequeño, B+T, NO SE PERMITE P+H).
-	
-		// Si es tonif. para rutina de t.circuito para 5 días:
-		//		 - Primer día: tren superior
-	    //		 - Segundo día: tren inferior
-		//		 - tercer día: tren superior
-		// 	     - cuarto día: tren inferior
-		// 		 - quinto día: tren superior
-		// No se puede hacer un circuito de tonificacion de menos de 5 días?
-		
-		// Si es tonif para rutina de t.gmuscular para X días:
-		//	     - Mismo orden que para hipert. segun los días
-		// No se puede hacer tonif en 2 días o menos?
-		
-		// Si es mtto. se siguen las reglas de tonificación para t.circuito.
-		// Si es perdida de peso, se siguen las reglas de hipertrofia.
-		
 		try {
-			RandomGenerator a_numberGenerator = new StockRandomGenerator();
 			List<EjercicioGene> results = planificarMusculoDia();
 			IBrofitGene[] genes = new IBrofitGene[results.size()*2];
 			for(int i = 0; i < results.size(); i++) {
 				genes[i] = results.get(i).getDuracionGene();
-				genes[i].setToRandomValue(a_numberGenerator);
+				genes[i].setToRandomValue(conf.getRandomGenerator());
 				genes[i+results.size()] = results.get(i);
-				genes[i+results.size()].setToRandomValue(a_numberGenerator);
+				genes[i+results.size()].setToRandomValue(conf.getRandomGenerator());
 			}
 			
 			Chromosome cromosoma = new Chromosome(conf, genes);

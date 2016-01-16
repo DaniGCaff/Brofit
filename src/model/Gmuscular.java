@@ -28,7 +28,7 @@ public class Gmuscular implements Serializable {
 	private int tipoTren;
 
 	//bi-directional many-to-one association to Ejercicio
-	@OneToMany(mappedBy="gmusculare")
+	@OneToMany(mappedBy="gmuscular")
 	private List<Ejercicio> ejercicios;
 
 	//bi-directional many-to-many association to Lesione

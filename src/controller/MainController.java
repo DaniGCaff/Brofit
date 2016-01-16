@@ -3,6 +3,7 @@ package controller;
 import javax.persistence.EntityManager;
 
 import org.jgap.Configuration;
+import org.jgap.InvalidConfigurationException;
 import org.jgap.impl.DefaultConfiguration;
 
 import algorithm.BroFitnessParams;
@@ -24,13 +25,16 @@ public class MainController extends Controller {
 	}
 	
 	public MainController run() {
-		BroFitnessParams params = new BroFitnessParams(mainRutina.getObjetivo(), cliente.getEstresObjetivo(), conf);
-		
-		new FilterController(mainRutina, cliente,em).run();
-		new PlanificacionController(cliente, mainRutina, conf, em).run();
-		new AlgorithmController(params, em).run();
-		
-		this.mainRutina.setMejorSolucion(params.getCromosoma());
+		BroFitnessParams params;
+		try {
+			params = new BroFitnessParams(mainRutina.getObjetivo(), cliente.getEstresObjetivo(), conf);
+			new FilterController(mainRutina, cliente,em).run();
+			new PlanificacionController(cliente, mainRutina, conf, em).run();
+			new AlgorithmController(params, em).run();
+			this.mainRutina.setMejorSolucion(params.getCromosoma());
+		} catch (InvalidConfigurationException e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
