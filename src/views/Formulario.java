@@ -49,6 +49,7 @@ public class Formulario extends javax.swing.JFrame {
     private javax.swing.JList lesiones2;
     private javax.swing.JTextField nombre;
     private javax.swing.JComboBox objetivo;
+    private javax.swing.JComboBox motivacion;
     private javax.swing.JTextField peso;
     private javax.swing.JTextField pulsaciones;
     private javax.swing.JComboBox r_aerobica;
@@ -75,6 +76,7 @@ public class Formulario extends javax.swing.JFrame {
 	private JLabel jLabel15;
 	private JLabel jLabel16;
 	private JLabel jLabel7;
+	private JLabel jLabel17;
 	
 
     
@@ -103,7 +105,9 @@ public class Formulario extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         objetivo = new javax.swing.JComboBox();
+        motivacion = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         pulsaciones = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -184,6 +188,14 @@ public class Formulario extends javax.swing.JFrame {
         objetivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 objetivoActionPerformed(evt);
+            }
+        });
+        jLabel17.setText("Motivacion");
+
+        motivacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "No", "Si" }));
+        motivacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                motivacionActionPerformed(evt);
             }
         });
 
@@ -289,6 +301,10 @@ public class Formulario extends javax.swing.JFrame {
                                                 .addComponent(jLabel5)
                                                 .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(objetivo,  GroupLayout.PREFERRED_SIZE, 139,  GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addComponent(jLabel17)
+                                                    .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(motivacion,  GroupLayout.PREFERRED_SIZE, 139,  GroupLayout.PREFERRED_SIZE))
                                             .addGroup( GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel6)
                                                 .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED)
@@ -386,12 +402,14 @@ public class Formulario extends javax.swing.JFrame {
                     .addComponent(jLabel13)
                     .addComponent(r_aerobica,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel17)
+                        .addComponent(motivacion,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel14)
+                        .addComponent(r_anaerobica_sup,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup( GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel14)
-                            .addComponent(r_anaerobica_sup,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup( GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
                             .addComponent(r_anaerobica_inf,  GroupLayout.PREFERRED_SIZE,  GroupLayout.DEFAULT_SIZE,  GroupLayout.PREFERRED_SIZE))
@@ -470,45 +488,28 @@ public class Formulario extends javax.swing.JFrame {
     private void r_anaerobica_abActionPerformed(java.awt.event.ActionEvent evt) {}
     private void r_anaerobica_supActionPerformed(java.awt.event.ActionEvent evt) {}
     private void r_aerobicaActionPerformed(java.awt.event.ActionEvent evt) {}
-    private void pulsacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pulsacionesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pulsacionesActionPerformed
+    private void pulsacionesActionPerformed(java.awt.event.ActionEvent evt) {}
 
-    private void objetivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objetivoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_objetivoActionPerformed
+    private void objetivoActionPerformed(java.awt.event.ActionEvent evt) {}
 
-    private void alturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alturaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_alturaActionPerformed
-
-    private void pesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pesoActionPerformed
-
-    private void dniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dniActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dniActionPerformed
-
-    private void edadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edadActionPerformed
-
-    private void nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nombreActionPerformed 
+    private void motivacionActionPerformed(java.awt.event.ActionEvent evt){}
     
-    private void diasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_diasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_diasActionPerformed
-    private void coProgresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_diasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_diasActionPerformed
+    private void alturaActionPerformed(java.awt.event.ActionEvent evt) {}
 
+    private void pesoActionPerformed(java.awt.event.ActionEvent evt) {}
+
+    private void dniActionPerformed(java.awt.event.ActionEvent evt) {}
+
+    private void edadActionPerformed(java.awt.event.ActionEvent evt) {}
+
+    private void nombreActionPerformed(java.awt.event.ActionEvent evt) {}
+    
+    private void diasActionPerformed(java.awt.event.ActionEvent evt) {}
+    private void coProgresoActionPerformed(java.awt.event.ActionEvent evt) {}
     
     
-    private void continuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continuarActionPerformed
-
+    private void continuarActionPerformed(java.awt.event.ActionEvent evt) {
+    	
 		if(this.camposCompletos()){
 			try{
 				CategoriaIMC = Estres.calcularIMC(Float.valueOf(peso.getText()), Float.valueOf(altura.getText()));
@@ -687,7 +688,8 @@ public class Formulario extends javax.swing.JFrame {
 			cliente.setAnaerobicaI(r_anaerobica_inf.getSelectedIndex()+1);
 			cliente.setAnaerobicaS(r_anaerobica_sup.getSelectedIndex()+1);
 			cliente.setCoeficienteProgreso(Estres.getCoProgreso(CategoriaIMC,r_aerobica.getSelectedIndex()+1 ));
-						
+			cliente.setMotivacion(motivacion.getSelectedIndex());
+			
 		}catch(Exception ex ){
 			ex.printStackTrace();
 			JOptionPane.showConfirmDialog(this,"datos con formato incorrecto");
