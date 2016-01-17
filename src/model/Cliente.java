@@ -217,7 +217,12 @@ public class Cliente implements Serializable {
 		float co_regresionSup= this.getCoRegresion(superior);
 		float co_regresionInf= this.getCoRegresion(inferior);
 		
-		return  (estres_an_inf*co_regresionInf+estres_an_sup*co_regresionSup+estres_an_ab+estres_ae)*co_progreso;	
+		float coeficienteDias = 1.0f;
+		if(diasSemana == 3) coeficienteDias = 0.9f;
+		else if(diasSemana == 4) coeficienteDias = 0.875f;
+		else if(diasSemana == 5) coeficienteDias = 0.85f;
+		
+		return  ((estres_an_inf*co_regresionInf+estres_an_sup*co_regresionSup+estres_an_ab+estres_ae)*co_progreso)*coeficienteDias;	
 	}
 
 	private float getCoRegresion(int tipo) {

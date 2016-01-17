@@ -21,7 +21,7 @@ import genes.EjercicioGene;
 
 class AlgorithmController extends Controller {
 
-	public static final int MAX_ALLOWED_EVOLUTIONS = 200;
+	public static final int MAX_ALLOWED_EVOLUTIONS = 500;
 	private BroFitnessParams params;
 	
 	public AlgorithmController(BroFitnessParams params, EntityManager em) {
@@ -55,10 +55,14 @@ class AlgorithmController extends Controller {
 			Genotype poblacion = Genotype.randomInitialGenotype(params.getConf());
 			IChromosome mejorSolucion = null;
 			int i = 0;
-			while(i <= MAX_ALLOWED_EVOLUTIONS) {
+			Boolean stop = false;
+			while(i <= MAX_ALLOWED_EVOLUTIONS && !stop) {
 				System.out.println("Generando generación número " + i + " de cromosomas.");
-				mejorSolucion = poblacion.getFittestChromosome();
-				params.setCromosoma(mejorSolucion);
+				IChromosome auxSolucion = poblacion.getFittestChromosome();
+				if(auxSolucion.getFitnessValue() <= params.getEstresObjetivo()) {
+					mejorSolucion = auxSolucion;
+					params.setCromosoma(mejorSolucion);
+				} else stop = true;
 				resultado.insertarDatosSolucion(i,mejorSolucion,params,em);
 				imprimirDatosSolucion(mejorSolucion);
 				poblacion.evolve();

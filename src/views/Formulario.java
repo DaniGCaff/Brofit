@@ -672,7 +672,7 @@ public class Formulario extends javax.swing.JFrame {
 			cliente.setAerobica(r_aerobica.getSelectedIndex());
 			cliente.setAltura(Float.valueOf(altura.getText()));
 			cliente.setPeso(Float.valueOf(peso.getText()));
-			cliente.setDiasSemana(dias.getSelectedIndex());
+			cliente.setDiasSemana(dias.getSelectedIndex()+1);
 			cliente.setFr(Integer.valueOf(pulsaciones.getText()));
 			cliente.setAnaerobicaA(r_anaerobica_ab.getSelectedIndex());
 			cliente.setAnaerobicaI(r_anaerobica_inf.getSelectedIndex());
