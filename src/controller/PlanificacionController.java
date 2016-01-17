@@ -16,19 +16,23 @@ import org.jgap.impl.StockRandomGenerator;
 
 import genes.EjercicioGene;
 import genes.GenAbd;
-import genes.GenBT;
-import genes.GenG;
-import genes.GenGB;
-import genes.GenGH;
-import genes.GenGT;
-import genes.GenH;
-import genes.GenTI;
-import genes.GenTS;
+
+import genes.GenGDorsal;
+import genes.GenPBiceps;
+import genes.GenGHombro;
+import genes.GenGPectoral;
+import genes.GenMGPierna;
+import genes.GenPTriceps;
+import genes.GenMHombro;
+
 import genes.IBrofitGene;
 import model.Cliente;
+import model.DatosObjetivo;
+import model.DatosObjetivoPK;
 import model.Objetivo;
 import model.Rutina;
 import model.Rutina.TipoRutina;
+import model.TamanoGMuscular;
 
 class PlanificacionController extends Controller {
 	static final int poblacionMaxima = 10;
@@ -47,59 +51,113 @@ class PlanificacionController extends Controller {
 
 	private List<EjercicioGene> planificarMusculoDia() throws InvalidConfigurationException{
 		List<EjercicioGene> result = new ArrayList<EjercicioGene>();
-		int minEjer = 0, maxEjer = 0;
+		int minRep = 0, maxRep = 0, numEjercicio;
+		DatosObjetivoPK pk;
+		/* 
+		 * Pectoral +
+		 * Dorsal +
+		 * Hombro +
+		 * Biceps +
+		 * Triceps +
+		 * Pierna+
+		 * Abdomen +
+		 */
 		if(rutina.getTipoRutina() == TipoRutina.tipoGrupoMuscular){
 			if (objetivo.getNombre().equals("Tonificación")) {
-				minEjer = 12; maxEjer = 15;
+				minRep = 12; maxRep = 15;
 			}
 			if (objetivo.getNombre().equals("Hipertrofia")) {
-				minEjer = 8; maxEjer = 12;
+				minRep = 8; maxRep = 12;
 			}
 			if (objetivo.getNombre().equals("Pérdida de Peso")) {
-				minEjer = 6; maxEjer = 12;
+				minRep = 6; maxRep = 12;
 			}
 			
 			if (cliente.getDiasSemana() == 5){
-				result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
-				result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
-				result.add(new GenH(rutina, this.conf, minEjer, maxEjer, em));
-				result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
-				result.add(new GenBT(rutina, this.conf, minEjer, maxEjer, em));
+
 			}
-			
 			else if (cliente.getDiasSemana() == 4){
-				result.add(new GenGH(rutina, this.conf, minEjer, maxEjer, em));
-				result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
-				result.add(new GenG(rutina, this.conf, minEjer, maxEjer, em));
-				result.add(new GenBT(rutina, this.conf, minEjer, maxEjer, em));
+
 			}
-			
 			else if (cliente.getDiasSemana() == 3){
-				result.add(new GenGH(rutina, this.conf, minEjer, maxEjer, em));
-				result.add(new GenGB(rutina, this.conf, minEjer, maxEjer, em));
-				result.add(new GenGT(rutina, this.conf, minEjer, maxEjer, em));
+
 			}
 		}
-		
 		else if (rutina.getTipoRutina() == TipoRutina.tipoCircuito){
 			if(objetivo.getNombre().equals("Tonificación")){
-				minEjer = 12; maxEjer = 15;
+				minRep = 12; maxRep = 15;
 			} else if(objetivo.getNombre().equals("Mantenimiento")) {
-				minEjer = 8; maxEjer = 12;
+				minRep = 8; maxRep = 12;
 			}
-			result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
-			result.add(new GenTI(rutina, this.conf, minEjer, maxEjer, em));
-			result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
-			result.add(new GenTI(rutina, this.conf, minEjer, maxEjer, em));
-			result.add(new GenTS(rutina, this.conf, minEjer, maxEjer, em));
-		}
-		
-		int numAbdominales = cliente.getDiasSemana() / 2;
-		if(cliente.getDiasSemana() % 2 != 0) {
-			numAbdominales ++;
-		}
-		for(int i = 0; i < numAbdominales; i++) {
-			result.add(new GenAbd(rutina, this.conf, 6, 15, em));
+			if(cliente.getDiasSemana() >= 2) {
+				
+				int dia = 1;
+				while(dia <= cliente.getDiasSemana()) {
+					if(dia % 2 == 1) {
+						//Tren superior
+						pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.GRANDE.valor, 0);
+						numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
+						for(int i = 0; i < numEjercicio; i++) {
+							result.add(new GenGDorsal(rutina, this.conf, minRep, maxRep, em, dia));
+						}
+						
+						pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.GRANDE.valor, 0);
+						numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
+						for(int i = 0; i < numEjercicio; i++) {
+							result.add(new GenGPectoral(rutina, this.conf, minRep, maxRep, em, dia));
+						}
+						
+						pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.PEQUEÑO.valor, 0);
+						numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
+						for(int i = 0; i < numEjercicio; i++) {
+							result.add(new GenPBiceps(rutina, this.conf, minRep, maxRep, em, dia));
+						}
+						
+						pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.PEQUEÑO.valor, 0);
+						numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
+						for(int i = 0; i < numEjercicio; i++) {
+							result.add(new GenPTriceps(rutina, this.conf, minRep, maxRep, em, dia));
+						}
+						
+						pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.MEDIANO.valor, 0);
+						numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
+						for(int i = 0; i < numEjercicio; i++) {
+							result.add(new GenMHombro(rutina, this.conf, minRep, maxRep, em, dia));
+						}
+					} else {
+						//Tren inferior
+						pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.MUY_GRANDE.valor, 1);
+						numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
+						for(int i = 0; i < numEjercicio; i++) {
+							result.add(new GenMGPierna(rutina, this.conf, minRep, maxRep, em, dia));
+						}
+						pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.MUY_GRANDE.valor, 0);
+						numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
+						for(int i = 0; i < numEjercicio; i++) {
+							result.add(new GenMGPierna(rutina, this.conf, minRep, maxRep, em, dia));
+						}
+						pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.NEUTRO.valor, 0);
+						numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
+						for(int i = 0; i < numEjercicio; i++) {
+							result.add(new GenAbd(rutina, this.conf, minRep, maxRep, em, dia));
+						}
+					}
+					dia++;
+				}
+			} else {
+				int dia = 1;
+				pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.NEUTRO.valor, 0);
+				numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
+				for(int i = 0; i < numEjercicio; i++) {
+					result.add(new GenAbd(rutina, this.conf, minRep, maxRep, em, dia));
+				}
+				result.add(new GenGDorsal(rutina, this.conf, minRep, maxRep, em, dia));
+				result.add(new GenMHombro(rutina, this.conf, minRep, maxRep, em, dia));
+				result.add(new GenGPectoral(rutina, this.conf, minRep, maxRep, em, dia));
+				result.add(new GenMGPierna(rutina, this.conf, minRep, maxRep, em, dia));
+				result.add(new GenPBiceps(rutina, this.conf, minRep, maxRep, em, dia));
+				result.add(new GenPTriceps(rutina, this.conf, minRep, maxRep, em, dia));
+			}
 		}
 		return result;
 	}

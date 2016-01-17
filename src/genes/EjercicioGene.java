@@ -16,22 +16,24 @@ import model.EstresEjercicio;
 import model.EstresEjercicioPK;
 import model.Objetivo;
 import model.Rutina;
+import model.TamanoGMuscular;
 
 public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 
 	protected static final long serialVersionUID = 1L;
 
 	protected EntityManager em;
-	protected DuracionGene DuracionGene;
+	protected RepeticionesGene DuracionGene;
 	protected Rutina rutina;
 	protected int minRepeticiones;
 	protected int maxRepeticiones;
+	protected int diaRutina;
 	
-	public DuracionGene getDuracionGene() {
+	public RepeticionesGene getDuracionGene() {
 		return DuracionGene;
 	}
 
-	public void setDuracionGene(DuracionGene duracionGene) {
+	public void setDuracionGene(RepeticionesGene duracionGene) {
 		DuracionGene = duracionGene;
 	}
 	
@@ -45,21 +47,22 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 		if(rutina.isEjercicioFiltrado(ejercicio))
 			super.addAllele(allele);
 	}
-
-	public EjercicioGene(Rutina rutina, Configuration a_config, int minRepeticiones, int maxRepeticiones, EntityManager em)
+	
+	public EjercicioGene(Rutina rutina, Configuration a_config, int minRepeticiones, int maxRepeticiones, EntityManager em, int diaRutina)
 			throws InvalidConfigurationException {
 		super(a_config);
 		this.rutina = rutina;
 		this.minRepeticiones = minRepeticiones;
 		this.maxRepeticiones = maxRepeticiones;
-		this.DuracionGene = new DuracionGene(a_config, minRepeticiones, maxRepeticiones);
+		this.DuracionGene = new RepeticionesGene(a_config, minRepeticiones, maxRepeticiones);
 		this.em = em;
+		this.diaRutina = diaRutina;
 		poblarAlelos();
 	}
 
 	protected abstract void poblarAlelos();
 	
-	public float getEstresAsociado(Objetivo objetivo, DuracionGene duracion) {
+	public float getEstresAsociado(Objetivo objetivo, RepeticionesGene duracion) {
 		int idEjercicio = (int) this.getAllele();
 		int tamanoMuscular = em.find(Ejercicio.class, idEjercicio).getGmuscular().getTamano();
 		int tipoEjercicio = em.find(Ejercicio.class, idEjercicio).getTipoEjercicio();
@@ -70,4 +73,45 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 		EstresEjercicio estres = em.find(EstresEjercicio.class, pk);
 		return estres.getEstresEjercicio();
 	}
+
+	public int getDiaRutina() {
+		return diaRutina;
+	}
+
+	public void setDiaRutina(int diaRutina) {
+		this.diaRutina = diaRutina;
+	}
+
+	public EntityManager getEm() {
+		return em;
+	}
+
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
+
+	public Rutina getRutina() {
+		return rutina;
+	}
+
+	public void setRutina(Rutina rutina) {
+		this.rutina = rutina;
+	}
+
+	public int getMinRepeticiones() {
+		return minRepeticiones;
+	}
+
+	public void setMinRepeticiones(int minRepeticiones) {
+		this.minRepeticiones = minRepeticiones;
+	}
+
+	public int getMaxRepeticiones() {
+		return maxRepeticiones;
+	}
+
+	public void setMaxRepeticiones(int maxRepeticiones) {
+		this.maxRepeticiones = maxRepeticiones;
+	}
+	
 }

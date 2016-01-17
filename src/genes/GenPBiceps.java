@@ -11,17 +11,17 @@ import org.jgap.InvalidConfigurationException;
 import model.Rutina;
 import model.TamanoGMuscular;
 
-public class GenGB extends EjercicioGene {
+public class GenPBiceps extends EjercicioGene {
 
 	private static final long serialVersionUID = 1L;
 
-	public GenGB(Rutina rutina, Configuration a_config, int a_lowerBounds, int a_upperBounds, EntityManager em) throws InvalidConfigurationException {
-		super(rutina, a_config, a_lowerBounds, a_upperBounds, em);
+	public GenPBiceps(Rutina rutina, Configuration a_config, int a_lowerBounds, int a_upperBounds, EntityManager em, int diaRutina) throws InvalidConfigurationException {
+		super(rutina, a_config, a_lowerBounds, a_upperBounds, em, diaRutina);
 	}
 
 	protected Gene newGeneInternal() {
 	    try {
-	      return new GenGB(rutina, getConfiguration(), minRepeticiones, maxRepeticiones, em);
+	      return new GenPBiceps(rutina, getConfiguration(), minRepeticiones, maxRepeticiones, em, diaRutina);
 	    }
 	    catch (InvalidConfigurationException iex) {
 	      throw new IllegalStateException(iex.getMessage());
@@ -31,7 +31,6 @@ public class GenGB extends EjercicioGene {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void poblarAlelos() {
-		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.findByTamanoG").setParameter("tamano", TamanoGMuscular.GRANDE.valor).getResultList());
 		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.findByGMuscularG").setParameter("gmuscular", "Biceps").getResultList());
 	}
 	

@@ -22,6 +22,7 @@ public class MainController extends Controller {
 		this.conf = new DefaultConfiguration();
 		this.cliente = cliente;
 		this.mainRutina = new Rutina().setObjetivo(objetivo);
+		this.mainRutina.setCliente(this.cliente);
 	}
 	
 	public MainController run() {
@@ -30,6 +31,7 @@ public class MainController extends Controller {
 			params = new BroFitnessParams(mainRutina.getObjetivo(), cliente.getEstresObjetivo(), conf);
 			new FilterController(mainRutina, cliente,em).run();
 			new PlanificacionController(cliente, mainRutina, conf, em).run();
+			new AerobicoController(params, mainRutina, em).run();
 			new AlgorithmController(params, em).run();
 			this.mainRutina.setMejorSolucion(params.getCromosoma());
 		} catch (InvalidConfigurationException e) {

@@ -22,21 +22,15 @@ public class BroFitnessParams {
 	private float estresObjetivo;
 	private Configuration conf;
 	private IChromosome cromosoma;
+	private int frecuenciaCardiacaFinal;
+	private int minutosAerobica;
+	private float estresAerobico;
 	
 	public BroFitnessParams(Objetivo objetivo, float estresObjetivo, Configuration conf) throws InvalidConfigurationException {
 		this.objetivo = objetivo;
 		this.estresObjetivo = estresObjetivo;
 		this.conf = conf;
 		this.cromosoma = conf.getSampleChromosome();
-		
-	/*	this.conf.addNaturalSelector(new BestChromosomesSelector(this.conf), false);
-		RandomGenerator a_numberGenerator = new StockRandomGenerator();
-		this.conf.setRandomGenerator(a_numberGenerator);
-		this.conf.setEventManager(new EventManager());
-		
-		this.conf.addGeneticOperator(new CrossoverOperator(this.conf)); // TODO: Determinar indice de crossover
-		this.conf.addGeneticOperator(new InversionOperator(this.conf));
-		this.conf.addGeneticOperator(new MutationOperator(this.conf)); // TODO: Determinar indice de mutacion */
 	}
 	
 	public Objetivo getObjetivo() {
@@ -59,6 +53,29 @@ public class BroFitnessParams {
 	public IChromosome getCromosoma() {
 		return this.cromosoma;
 	}
+	
+	public int getFrecuenciaCardiacaFinal() {
+		return frecuenciaCardiacaFinal;
+	}
 
+	public void setFrecuenciaCardiacaFinal(int frecuenciaCardiacaFinal) {
+		this.frecuenciaCardiacaFinal = frecuenciaCardiacaFinal;
+	}
 
+	public float getEstresAerobico() {
+		return estresAerobico;
+	}
+
+	public void setEstresAerobico(float estresAerobico) {
+		this.estresAerobico = estresAerobico;
+	}
+
+	public int getMinutosAerobica() {
+		return minutosAerobica;
+	}
+
+	public void setMinutosAerobica(int minutosAerobica) {
+		this.minutosAerobica = minutosAerobica;
+	}
+	
 }

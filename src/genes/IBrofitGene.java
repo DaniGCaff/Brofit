@@ -5,5 +5,5 @@ import org.jgap.Gene;
 import model.Objetivo;
 
 public interface IBrofitGene extends Gene {
-	public float getEstresAsociado(Objetivo objetivo, DuracionGene duracion);
+	public float getEstresAsociado(Objetivo objetivo, RepeticionesGene duracion);
 }

@@ -24,8 +24,16 @@ public class DatosObjetivo implements Serializable {
 	private DatosObjetivoPK id;
 
 	@Column(name="numeroEjercicios")
-	private float numeroEjercicios;
-	
+	private int numeroEjercicios;
+
+	public int getNumeroEjercicios() {
+		return numeroEjercicios;
+	}
+
+	public void setNumeroEjercicios(int numeroEjercicios) {
+		this.numeroEjercicios = numeroEjercicios;
+	}
+
 	@Column(name="numeroSeries")
 	private int numeroSeries;
 

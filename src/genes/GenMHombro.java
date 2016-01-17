@@ -10,17 +10,17 @@ import org.jgap.InvalidConfigurationException;
 
 import model.Rutina;
 
-public class GenH extends EjercicioGene {
+public class GenMHombro extends EjercicioGene {
 
 	private static final long serialVersionUID = 1L;
 
-	public GenH(Rutina rutina, Configuration a_config, int a_lowerBounds, int a_upperBounds, EntityManager em) throws InvalidConfigurationException {
-		super(rutina, a_config, a_lowerBounds, a_upperBounds, em);
+	public GenMHombro(Rutina rutina, Configuration a_config, int a_lowerBounds, int a_upperBounds, EntityManager em, int diaRutina) throws InvalidConfigurationException {
+		super(rutina, a_config, a_lowerBounds, a_upperBounds, em, diaRutina);
 	}
 	
 	protected Gene newGeneInternal() {
 	    try {
-	      return new GenH(rutina, getConfiguration(), minRepeticiones, maxRepeticiones, em);
+	      return new GenMHombro(rutina, getConfiguration(), minRepeticiones, maxRepeticiones, em, diaRutina);
 	    }
 	    catch (InvalidConfigurationException iex) {
 	      throw new IllegalStateException(iex.getMessage());

@@ -16,6 +16,7 @@ import model.Ejercicio;
 import algorithm.BroEvaluator;
 import algorithm.BroFitness;
 import algorithm.BroFitnessParams;
+import genes.EjercicioGene;
 
 class AlgorithmController extends Controller {
 
@@ -32,10 +33,12 @@ class AlgorithmController extends Controller {
 		System.out.println("Fitness de la mejor solucion: " + solucion.getFitnessValue());
 		System.out.println("Fitness objetivo: " + params.getEstresObjetivo());
 		System.out.println("Edad de la solucion: " + solucion.getAge());
+		System.out.println("Ejercicio aerobico (diario): " + params.getFrecuenciaCardiacaFinal() + " pulsaciones a " + params.getMinutosAerobica() + "minutos");
 		Gene[] genes = solucion.getGenes();
 		for(int g = 0; g < (solucion.size()/2); g++) {
+			int diaRutina = ((EjercicioGene)genes[g + (solucion.size()/2)]).getDiaRutina();
 			Ejercicio ejercicio = (Ejercicio) em.find(Ejercicio.class, genes[g + (solucion.size()/2)].getAllele());
-			System.out.println(g+1 + " - " + ejercicio.getNombre() + " - " + genes[g].getAllele() + " repeticiones.");
+			System.out.println("Día #" + diaRutina + " - " + genes[g + (solucion.size()/2)].getClass().toGenericString() + " - " + ejercicio.getNombre() + " - " + genes[g].getAllele() + " repeticiones.");
 		}
 	}
 	

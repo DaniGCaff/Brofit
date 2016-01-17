@@ -7,24 +7,24 @@ import org.jgap.impl.IntegerGene;
 
 import model.Objetivo;
 
-public class DuracionGene extends IntegerGene implements IBrofitGene {
+public class RepeticionesGene extends IntegerGene implements IBrofitGene {
 
 	protected static final long serialVersionUID = 1L;
 
-	public DuracionGene(Configuration a_config, int a_lowerBounds, int a_upperBounds)
+	public RepeticionesGene(Configuration a_config, int a_lowerBounds, int a_upperBounds)
 			throws InvalidConfigurationException {
 		super(a_config, a_lowerBounds, a_upperBounds);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public float getEstresAsociado(Objetivo objetivo, DuracionGene duracion) {
+	public float getEstresAsociado(Objetivo objetivo, RepeticionesGene duracion) {
 		return 0.0f;
 	}
 	
 	protected Gene newGeneInternal() {
 		try {
-			DuracionGene result = new DuracionGene(getConfiguration(), getLowerBounds(),getUpperBounds());
+			RepeticionesGene result = new RepeticionesGene(getConfiguration(), getLowerBounds(),getUpperBounds());
 			return result;
 		}
 		catch (InvalidConfigurationException iex) {
@@ -32,11 +32,11 @@ public class DuracionGene extends IntegerGene implements IBrofitGene {
 		}
 	}
 	
-	public Boolean equals(DuracionGene other) {
+	public Boolean equals(RepeticionesGene other) {
 		return super.equals((IntegerGene) other);
 	}
 	
-	public int compareTo(DuracionGene other) {
+	public int compareTo(RepeticionesGene other) {
 		return super.compareTo((IntegerGene) other);
 	}
 
