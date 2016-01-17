@@ -22,9 +22,12 @@ import model.Lesion;
 import model.Objetivo;
 import model.EstresEjercicio;
 
+/**
+*
+* @author borja
+*/
 public class Formulario extends javax.swing.JFrame {
     
-	// Variables declaration
 
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("BroFit");
 	EntityManager em = emf.createEntityManager();
@@ -77,12 +80,13 @@ public class Formulario extends javax.swing.JFrame {
 	private JLabel jLabel16;
 	private JLabel jLabel7;
 	private JLabel jLabel17;
-	
+	Resultado resultado;
 
     
     public Formulario() {
         initComponents();
 		this.introducirLesiones();
+		
     }
     
 	
@@ -238,7 +242,7 @@ public class Formulario extends javax.swing.JFrame {
 
         jLabel13.setText("Resultado prueba aeróbica");
 
-        r_aerobica.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy Buena", "Buena", "Regular" , "Mala","Muy mala" }));
+        r_aerobica.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy mala","Mala","Regular","Buena" , "Muy Buena" }));
         r_aerobica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 r_aerobicaActionPerformed(evt);
@@ -247,7 +251,7 @@ public class Formulario extends javax.swing.JFrame {
 
         jLabel14.setText("Resultado prueba anaeróbica sup.");
 
-        r_anaerobica_sup.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy Buena", "Buena", "Regular" , "Mala","Muy mala" }));
+        r_anaerobica_sup.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy mala","Mala","Regular","Buena" , "Muy Buena" }));
         r_anaerobica_sup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 r_anaerobica_supActionPerformed(evt);
@@ -256,7 +260,7 @@ public class Formulario extends javax.swing.JFrame {
 
         jLabel15.setText("Resultado prueba anaeróbica inf.");
 
-        r_anaerobica_inf.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy Buena", "Buena", "Regular" , "Mala","Muy mala" }));
+        r_anaerobica_inf.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy mala","Mala","Regular","Buena" , "Muy Buena" }));
         r_anaerobica_inf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 r_anaerobica_infActionPerformed(evt);
@@ -265,7 +269,7 @@ public class Formulario extends javax.swing.JFrame {
         
         jLabel16.setText("Resultado prueba anaeróbica Ab.");
 
-        r_anaerobica_ab.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy Buena", "Buena", "Regular" , "Mala","Muy mala" }));
+        r_anaerobica_ab.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Muy mala","Mala","Regular","Buena" , "Muy Buena" }));
         r_anaerobica_ab.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 r_anaerobica_abActionPerformed(evt);
@@ -489,21 +493,13 @@ public class Formulario extends javax.swing.JFrame {
     private void r_anaerobica_supActionPerformed(java.awt.event.ActionEvent evt) {}
     private void r_aerobicaActionPerformed(java.awt.event.ActionEvent evt) {}
     private void pulsacionesActionPerformed(java.awt.event.ActionEvent evt) {}
-
     private void objetivoActionPerformed(java.awt.event.ActionEvent evt) {}
-
     private void motivacionActionPerformed(java.awt.event.ActionEvent evt){}
-    
     private void alturaActionPerformed(java.awt.event.ActionEvent evt) {}
-
     private void pesoActionPerformed(java.awt.event.ActionEvent evt) {}
-
     private void dniActionPerformed(java.awt.event.ActionEvent evt) {}
-
     private void edadActionPerformed(java.awt.event.ActionEvent evt) {}
-
     private void nombreActionPerformed(java.awt.event.ActionEvent evt) {}
-    
     private void diasActionPerformed(java.awt.event.ActionEvent evt) {}
     private void coProgresoActionPerformed(java.awt.event.ActionEvent evt) {}
     
@@ -521,6 +517,10 @@ public class Formulario extends javax.swing.JFrame {
 			}
 			else if(CategoriaIMC==-1){
 				JOptionPane.showMessageDialog(this,"IMC MENOR DE 18.5");
+			}else if(objetivo.getSelectedItem().equals("Hipertrofia")&& motivacion.getSelectedIndex()==0){
+				JOptionPane.showMessageDialog(this,"Con Hipertrofia es necesario tener motivación");				
+			}else if((objetivo.getSelectedItem().equals("Pérdida de Peso")||objetivo.getSelectedItem().equals("Mantenimiento"))&& motivacion.getSelectedIndex()==0){
+				JOptionPane.showMessageDialog(this,"Con perdida de peso o mantenimiento es necesario tener motivación");								
 			}
 			else{
 				this.ejecutarSistema();
@@ -564,8 +564,6 @@ public class Formulario extends javax.swing.JFrame {
     }
     
     
-
-	
 	private void removeLesion(int index,boolean derecha) {
 		if(derecha){
 			model1.remove(index);
@@ -595,25 +593,17 @@ public class Formulario extends javax.swing.JFrame {
 		if(setCliente(cliente)){
 			if(this.insertarLesiones(cliente)){
 				
-				//for(ClientesHasLesion x : cliente.getClientesHasLesiones()){
-				//	System.out.println("nombre lesion = "+ x.getLesione().getNombre());
-				//}
+				
 				int index = objetivo.getSelectedIndex()+1;
 				em.getTransaction().begin();
 				em.persist(cliente);
-				//for(ClientesHasLesion les : lesionesCliente){
-				//	em.persist(les);
-				//}
 				em.getTransaction().commit();
 				
 				try{
-					
 					Objetivo objetive = em.find(Objetivo.class, index);
-					
 					mainController = new MainController(cliente,objetive,em).run();
 					
-					Resultado resultado = new Resultado();
-					resultado.main(null);
+					this.setVisible(false);
 					
 				}catch(NullPointerException ex ) {
 					ex.printStackTrace();
@@ -679,15 +669,15 @@ public class Formulario extends javax.swing.JFrame {
 	private boolean setCliente(Cliente cliente) {
 		try{
 			cliente.setEdad(Integer.valueOf(edad.getText()));
-			cliente.setAerobica(r_aerobica.getSelectedIndex()+1);
+			cliente.setAerobica(r_aerobica.getSelectedIndex());
 			cliente.setAltura(Float.valueOf(altura.getText()));
 			cliente.setPeso(Float.valueOf(peso.getText()));
-			cliente.setDiasSemana(dias.getSelectedIndex()+1);
+			cliente.setDiasSemana(dias.getSelectedIndex());
 			cliente.setFr(Integer.valueOf(pulsaciones.getText()));
-			cliente.setAnaerobicaA(r_anaerobica_ab.getSelectedIndex()+1);
-			cliente.setAnaerobicaI(r_anaerobica_inf.getSelectedIndex()+1);
-			cliente.setAnaerobicaS(r_anaerobica_sup.getSelectedIndex()+1);
-			cliente.setCoeficienteProgreso(Estres.getCoProgreso(CategoriaIMC,r_aerobica.getSelectedIndex()+1 ));
+			cliente.setAnaerobicaA(r_anaerobica_ab.getSelectedIndex());
+			cliente.setAnaerobicaI(r_anaerobica_inf.getSelectedIndex());
+			cliente.setAnaerobicaS(r_anaerobica_sup.getSelectedIndex());
+			cliente.setCoeficienteProgreso(Estres.getCoProgreso(CategoriaIMC,r_aerobica.getSelectedIndex()));
 			cliente.setMotivacion(motivacion.getSelectedIndex());
 			
 		}catch(Exception ex ){

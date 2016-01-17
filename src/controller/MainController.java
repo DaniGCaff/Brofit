@@ -10,6 +10,7 @@ import algorithm.BroFitnessParams;
 import model.Cliente;
 import model.Objetivo;
 import model.Rutina;
+import views.Resultado;
 
 public class MainController extends Controller {
 
@@ -32,7 +33,8 @@ public class MainController extends Controller {
 			new FilterController(mainRutina, cliente,em).run();
 			new PlanificacionController(cliente, mainRutina, conf, em).run();
 			new AerobicoController(params, mainRutina, em).run();
-			new AlgorithmController(params, em).run();
+			AlgorithmController algorithmController = new AlgorithmController(params, em);
+			algorithmController.run();
 			this.mainRutina.setMejorSolucion(params.getCromosoma());
 		} catch (InvalidConfigurationException e) {
 			e.printStackTrace();

@@ -13,6 +13,7 @@ import org.jgap.impl.BestChromosomesSelector;
 import org.jgap.impl.StockRandomGenerator;
 
 import model.Ejercicio;
+import views.Resultado;
 import algorithm.BroEvaluator;
 import algorithm.BroFitness;
 import algorithm.BroFitnessParams;
@@ -30,6 +31,7 @@ class AlgorithmController extends Controller {
 	
 	// TODO: @Borja, esto hay que llevarselo a las vistas
 	public void imprimirDatosSolucion(IChromosome solucion) {
+		
 		System.out.println("Fitness de la mejor solucion: " + solucion.getFitnessValue());
 		System.out.println("Fitness objetivo: " + params.getEstresObjetivo());
 		System.out.println("Edad de la solucion: " + solucion.getAge());
@@ -44,6 +46,8 @@ class AlgorithmController extends Controller {
 	
 	public void run() {
 		try {
+			Resultado resultado = new Resultado();
+			resultado.main();
 			FitnessFunction funcionObjetivo = new BroFitness(params);
 			//FitnessEvaluator evaluadorFitness = new BroEvaluator(params.getEstresObjetivo());
 			//params.getConf().setFitnessEvaluator(evaluadorFitness);
@@ -55,6 +59,7 @@ class AlgorithmController extends Controller {
 				System.out.println("Generando generación número " + i + " de cromosomas.");
 				mejorSolucion = poblacion.getFittestChromosome();
 				params.setCromosoma(mejorSolucion);
+				resultado.insertarDatosSolucion(i,mejorSolucion,params,em);
 				imprimirDatosSolucion(mejorSolucion);
 				poblacion.evolve();
 				i++;
