@@ -319,7 +319,7 @@ public class Formulario extends javax.swing.JFrame {
                                         .addComponent(jLabel9)))
                                 .addGap(62, 62, 62))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1,  GroupLayout.PREFERRED_SIZE, 135,  GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane1,  GroupLayout.PREFERRED_SIZE, 180,  GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jButton1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -612,8 +612,8 @@ public class Formulario extends javax.swing.JFrame {
 					
 					mainController = new MainController(cliente,objetive,em).run();
 					
-					//Resultado resultado = new Resultado();
-					//resultado.main(null);
+					Resultado resultado = new Resultado();
+					resultado.main(null);
 					
 				}catch(NullPointerException ex ) {
 					ex.printStackTrace();
@@ -792,13 +792,13 @@ public class Formulario extends javax.swing.JFrame {
 	
 	private void cargarDatos(){
 		
-		nombre.setText("dsasad");
-		apellidos.setText("jdaskl");
-		edad.setText("12");
+		nombre.setText("Diego");
+		apellidos.setText("Gonzalez Bahamonde");
+		edad.setText("27");
 		dni.setText("jasld");
-		peso.setText("78");
-		altura.setText("1");
-		pulsaciones.setText("45");
+		peso.setText("75");
+		altura.setText("1.73");
+		pulsaciones.setText("60");
 		this.objetivo.setSelectedIndex(1);
 		this.dias.setSelectedIndex(4);
 		
