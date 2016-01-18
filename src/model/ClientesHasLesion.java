@@ -25,14 +25,14 @@ public class ClientesHasLesion implements Serializable {
 	private int gravedadLesion;
 
 	//bi-directional many-to-one association to Cliente
-	@ManyToOne
-	@JoinColumn(name="Clientes_idClientes", nullable=false, insertable=false, updatable=false)
+	@ManyToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name="Clientes_idClientes")
 	private Cliente cliente;
 
 	//bi-directional many-to-one association to Lesione
 	@ManyToOne
-	@JoinColumn(name="Lesiones_idLesiones", nullable=false, insertable=false, updatable=false)
-	private Lesion lesione;
+	@JoinColumn(name="Lesiones_idLesiones")
+	private Lesion lesion;
 
 	public ClientesHasLesion() {
 	}
@@ -62,11 +62,11 @@ public class ClientesHasLesion implements Serializable {
 	}
 
 	public Lesion getLesione() {
-		return this.lesione;
+		return this.lesion;
 	}
 
 	public void setLesion(Lesion lesione) {
-		this.lesione = lesione;
+		this.lesion = lesione;
 	}
 	
 	public List<Ejercicio> getEjerciciosNoRehabilitadores(){

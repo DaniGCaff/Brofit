@@ -18,6 +18,7 @@ public class Cliente implements Serializable {
 	public static final int inferior = 1;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int idCliente;
 
@@ -32,7 +33,9 @@ public class Cliente implements Serializable {
 	private float anaerobicaS;
 
 	private float coeficienteProgreso;
+	@Transient
 	private float coeficienteRegresionS = 1.00f;
+	@Transient
 	private float coeficienteRegresionI = 1.00f;
 
 	@Column(name="dias_semana")
@@ -49,7 +52,7 @@ public class Cliente implements Serializable {
 	private float peso;
 
 	//bi-directional many-to-one association to ClientesHasLesione
-	@OneToMany(mappedBy="cliente")
+	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)
 	private List<ClientesHasLesion> clientesHasLesiones;
 
 	//bi-directional many-to-one association to Rutina
