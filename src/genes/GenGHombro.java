@@ -32,6 +32,5 @@ public class GenGHombro extends EjercicioGene {
 	@Override
 	protected void poblarAlelos() {
 		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.findByGMuscularG").setParameter("gmuscular", "Hombro").getResultList());
-		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.findByTamanoG").setParameter("tamano", TamanoGMuscular.GRANDE.valor).getResultList());
 	}
 }

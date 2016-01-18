@@ -14,7 +14,6 @@ import org.jgap.impl.StockRandomGenerator;
 
 import model.Ejercicio;
 import views.Resultado;
-import algorithm.BroEvaluator;
 import algorithm.BroFitness;
 import algorithm.BroFitnessParams;
 import genes.EjercicioGene;
@@ -49,8 +48,6 @@ class AlgorithmController extends Controller {
 			Resultado resultado = new Resultado();
 			resultado.main();
 			FitnessFunction funcionObjetivo = new BroFitness(params);
-			//FitnessEvaluator evaluadorFitness = new BroEvaluator(params.getEstresObjetivo());
-			//params.getConf().setFitnessEvaluator(evaluadorFitness);
 			params.getConf().setFitnessFunction(funcionObjetivo);
 			Genotype poblacion = Genotype.randomInitialGenotype(params.getConf());
 			IChromosome mejorSolucion = null;

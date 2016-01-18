@@ -23,19 +23,11 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 	protected static final long serialVersionUID = 1L;
 
 	protected EntityManager em;
-	protected RepeticionesGene DuracionGene;
+	protected RepeticionesGene repeticionGene;
 	protected Rutina rutina;
 	protected int minRepeticiones;
 	protected int maxRepeticiones;
 	protected int diaRutina;
-	
-	public RepeticionesGene getDuracionGene() {
-		return DuracionGene;
-	}
-
-	public void setDuracionGene(RepeticionesGene duracionGene) {
-		DuracionGene = duracionGene;
-	}
 	
 	@Override
 	public void addAlleles(@SuppressWarnings("rawtypes") Collection alleles) {
@@ -54,7 +46,7 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 		this.rutina = rutina;
 		this.minRepeticiones = minRepeticiones;
 		this.maxRepeticiones = maxRepeticiones;
-		this.DuracionGene = new RepeticionesGene(a_config, minRepeticiones, maxRepeticiones);
+		this.repeticionGene = new RepeticionesGene(a_config, minRepeticiones, maxRepeticiones);
 		this.em = em;
 		this.diaRutina = diaRutina;
 		poblarAlelos();
@@ -112,6 +104,14 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 
 	public void setMaxRepeticiones(int maxRepeticiones) {
 		this.maxRepeticiones = maxRepeticiones;
+	}
+	
+	public RepeticionesGene getDuracionGene() {
+		return repeticionGene;
+	}
+
+	public void setDuracionGene(RepeticionesGene duracionGene) {
+		repeticionGene = duracionGene;
 	}
 	
 }

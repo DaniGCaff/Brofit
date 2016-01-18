@@ -14,7 +14,6 @@ public class RepeticionesGene extends IntegerGene implements IBrofitGene {
 	public RepeticionesGene(Configuration a_config, int a_lowerBounds, int a_upperBounds)
 			throws InvalidConfigurationException {
 		super(a_config, a_lowerBounds, a_upperBounds);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
