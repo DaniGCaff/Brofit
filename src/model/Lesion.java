@@ -2,7 +2,13 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.JoinFetch;
+import org.eclipse.persistence.annotations.JoinFetchType;
+
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -38,7 +44,7 @@ public class Lesion implements Serializable {
 	private List<EjerciciosHasLesion> ejerciciosHasLesiones;
 
 	//bi-directional many-to-many association to Gmusculare
-	@ManyToMany
+	@ManyToMany (fetch = FetchType.EAGER)
 	@JoinTable(
 		name="gmusculares_has_lesiones"
 		, joinColumns={

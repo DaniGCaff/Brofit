@@ -9,6 +9,7 @@ import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import model.Lesion;
 import model.Cliente;
 import model.ClientesHasLesion;
 import model.DatosObjetivo;
@@ -60,11 +61,14 @@ class FilterController extends Controller {
 	
 	private void filtradoLesion() {
 		List<ClientesHasLesion> lesiones=cliente.getClientesHasLesiones();
-		for(ClientesHasLesion lesion : lesiones) {
+		for(ClientesHasLesion lesionCliente : lesiones) {
 			//Lesion leve
-			if (lesion.getGravedadLesion()==TipoLesion.LEVE.ordinal()){
-				List<Gmuscular> gmuscular = lesion.getLesione().getGmusculares();
-				List<Ejercicio> ejercicios = lesion.getEjerciciosNoRehabilitadores();
+			em.refresh(lesionCliente);
+			Lesion lesion = (Lesion)em.find(Lesion.class, lesionCliente.getLesione().getIdLesiones());
+			if (lesionCliente.getGravedadLesion()==TipoLesion.LEVE.ordinal()){
+				em.merge(lesion);
+				List<Gmuscular> gmuscular = lesion.getGmusculares();
+				List<Ejercicio> ejercicios = lesionCliente.getEjerciciosNoRehabilitadores();
 				for(Ejercicio ejer : ejercicios){
 					for (Gmuscular gm : gmuscular){
 						if(ejer.getGmuscular()==gm)
@@ -82,7 +86,7 @@ class FilterController extends Controller {
 			}
 			//Lesion grave
 			else{
-				List<Gmuscular> gmuscular = lesion.getLesione().getGmusculares();
+				List<Gmuscular> gmuscular = lesion.getGmusculares();
 				List<Ejercicio> ejercicios=new ArrayList<Ejercicio>();
 				for(Gmuscular gm : gmuscular){
 					ejercicios =(List<Ejercicio>)em.createNamedQuery("Ejercicio.findByTren")

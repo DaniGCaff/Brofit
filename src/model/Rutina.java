@@ -27,9 +27,13 @@ public class Rutina implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int idRutinas;
 	
+	@Transient
 	private List<String> musculosDia;
+	@Transient
 	private HashMap<Ejercicio,Boolean> ejerciciosFiltrados;
+	@Transient
 	private TipoRutina tipoRutina;
+	@Transient
 	private IChromosome mejorSolucion;
 
 	@Column(name="estres_resultante")
