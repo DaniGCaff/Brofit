@@ -624,19 +624,20 @@ public class Formulario extends javax.swing.JFrame {
 		boolean result = true;
 		// TODO SUPERIOR - INFERIOR
 		try{
-			if(model2.getSize() >0){cliente.setClientesHasLesiones(new ArrayList<ClientesHasLesion>());}
-			for(int i =1; i<model2.getSize();i++){
-				ClientesHasLesion clientesHasLesionAux = new ClientesHasLesion();
-				clientesHasLesionAux.setCliente(cliente);
+			if(model2.getSize() > 0){
+				cliente.setClientesHasLesiones(new ArrayList<ClientesHasLesion>());}
+				for(int i =0; i<model2.getSize();i++){
+					ClientesHasLesion clientesHasLesionAux = new ClientesHasLesion();
+					clientesHasLesionAux.setCliente(cliente);
 				
-				String aux = model2.getElementAt(i).toString();
-				String lesion = aux.substring(0,aux.indexOf("("));
-				String gravedad= aux.substring(aux.indexOf("("),aux.length());
-				if(gravedad=="(GRAVE)"){
-					clientesHasLesionAux.setGravedadLesion(ClientesHasLesion.GRAVE);
-				}
-				else{
-					clientesHasLesionAux.setGravedadLesion(ClientesHasLesion.LEVE);
+					String aux = model2.getElementAt(i).toString();
+					String lesion = aux.substring(0,aux.indexOf("("));
+					String gravedad= aux.substring(aux.indexOf("("),aux.length());
+					if(gravedad.equals("(GRAVE)")){
+						clientesHasLesionAux.setGravedadLesion(ClientesHasLesion.GRAVE);
+					}
+					else{
+						clientesHasLesionAux.setGravedadLesion(ClientesHasLesion.LEVE);
 				}
 				Lesion l = new Lesion();
 				l.setNombre(lesion);

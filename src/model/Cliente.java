@@ -32,6 +32,8 @@ public class Cliente implements Serializable {
 	private float anaerobicaS;
 
 	private float coeficienteProgreso;
+	private float coeficienteRegresionS = 1.00f;
+	private float coeficienteRegresionI = 1.00f;
 
 	@Column(name="dias_semana")
 	private int diasSemana;
@@ -214,30 +216,28 @@ public class Cliente implements Serializable {
 		float estres_ae=Estres.getEstresAerobico(imc, (int)aerobica);
 		float co_progreso = Estres.getCoProgreso(imc,(int)aerobica);
 		
-		float co_regresionSup= this.getCoRegresion(superior);
-		float co_regresionInf= this.getCoRegresion(inferior);
-		
 		float coeficienteDias = 1.0f;
 		if(diasSemana == 3) coeficienteDias = 0.9f;
 		else if(diasSemana == 4) coeficienteDias = 0.875f;
 		else if(diasSemana == 5) coeficienteDias = 0.85f;
 		
-		return  ((estres_an_inf*co_regresionInf+estres_an_sup*co_regresionSup+estres_an_ab+estres_ae)*co_progreso)*coeficienteDias;	
+		return  ((estres_an_inf*coeficienteRegresionI+estres_an_sup*coeficienteRegresionS+estres_an_ab+estres_ae)*co_progreso)*coeficienteDias;	
 	}
 
-	private float getCoRegresion(int tipo) {
-		
-		//TODO falata obtener los tipo de trenes de cada lesion
-		float coRegresion=1.00f;
-		if(!clientesHasLesiones.isEmpty()){
-			for(ClientesHasLesion lesionCliente: clientesHasLesiones){
-				//Gmuscular gMuscular = Gmuscular.findGMuscular(clienteHasLesion);
-				//int tren = 
-				//if(tren==tipo){coRegresion=0.75f;}
-			}
-		}
-		
-		return coRegresion;
+	public float getCoRegresionS() {		
+		return coeficienteRegresionS;
+	}
+	
+	public float getCoRegresionI() {		
+		return coeficienteRegresionI;
+	}
+	
+	public void setCoRegresionS(float coeficienteRegresionS){
+		this.coeficienteRegresionS=coeficienteRegresionS;
+	}
+	
+	public void setCoRegresionI(float coeficienteRegresionI){
+		this.coeficienteRegresionI=coeficienteRegresionI;
 	}
 	
 

@@ -21,6 +21,7 @@ import model.Gmuscular;
 import model.Lesion.TipoLesion;
 import model.Rutina;
 import model.Rutina.TipoRutina;
+import model.TrenCorporal;
 
 class FilterController extends Controller {
 	private HashMap<Ejercicio,Boolean> ejerciciosFiltrados;
@@ -62,9 +63,21 @@ class FilterController extends Controller {
 		for(ClientesHasLesion lesion : lesiones) {
 			//Lesion leve
 			if (lesion.getGravedadLesion()==TipoLesion.LEVE.ordinal()){
+				List<Gmuscular> gmuscular = lesion.getLesione().getGmusculares();
 				List<Ejercicio> ejercicios = lesion.getEjerciciosNoRehabilitadores();
 				for(Ejercicio ejer : ejercicios){
-					ejerciciosFiltrados.put(ejer, false);
+					for (Gmuscular gm : gmuscular){
+						if(ejer.getGmuscular()==gm)
+							ejerciciosFiltrados.put(ejer, false);
+						//Superior
+						if(gm.getTipoTren()==TrenCorporal.SUPERIOR.valor){
+							cliente.setCoRegresionS(0.75f);
+						}
+						//Inferior
+						else if(gm.getTipoTren()==TrenCorporal.INFERIOR.valor){
+							cliente.setCoRegresionI(0.75f);
+						}
+					}
 				}	
 			}
 			//Lesion grave
@@ -74,9 +87,18 @@ class FilterController extends Controller {
 				for(Gmuscular gm : gmuscular){
 					ejercicios =(List<Ejercicio>)em.createNamedQuery("Ejercicio.findByTren")
 											.setParameter("tren", gm.getTipoTren()).getResultList();
-				
+					
 					for (Ejercicio ejer : ejercicios){
+						
 						ejerciciosFiltrados.put(ejer, false);
+						//Superior
+						if(gm.getTipoTren()==TrenCorporal.SUPERIOR.valor){
+							cliente.setCoRegresionS(0.00f);
+						}
+						//Inferior
+						else if(gm.getTipoTren()==TrenCorporal.INFERIOR.valor){
+							cliente.setCoRegresionI(0.00f);
+						}
 					}
 				}
 			}

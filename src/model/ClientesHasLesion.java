@@ -73,8 +73,7 @@ public class ClientesHasLesion implements Serializable {
 		List <EjerciciosHasLesion> ejercicios= getLesione().getEjerciciosHasLesiones();
 		List<Ejercicio> result = new ArrayList<Ejercicio>();
 		  for(EjerciciosHasLesion ejercicio : ejercicios) {
-			  //Es rehabilitador
-			  if(ejercicio.getRehabilitador()==0)
+			  //Todos los de la tabla no son rehabilitadores
 				  result.add(ejercicio.getEjercicio());
 		  }
 		  return result;
