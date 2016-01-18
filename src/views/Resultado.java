@@ -216,7 +216,7 @@ public class Resultado extends javax.swing.JFrame {
 			}
 			else {
 				if(diaRutina>diatxt){
-					text2=text2+ "<br><br>Día #" + diaRutina+ "<br>";
+					text2=text2+ "<br><br>Día #" + diaRutina;
 					diatxt = diaRutina;
 				}
 				Ejercicio ejercicio = (Ejercicio) em.find(Ejercicio.class, genes[g + (solucion.size()/2)].getAllele());
