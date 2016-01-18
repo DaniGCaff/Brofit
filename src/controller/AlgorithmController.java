@@ -20,12 +20,13 @@ import genes.EjercicioGene;
 
 class AlgorithmController extends Controller {
 
-	public static final int MAX_ALLOWED_EVOLUTIONS = 500;
+	public static final int MAX_ALLOWED_EVOLUTIONS = 1;
 	private BroFitnessParams params;
-	
+	private Resultado resultado ;
 	public AlgorithmController(BroFitnessParams params, EntityManager em) {
 		super(em);
 		this.params = params;
+		resultado = new Resultado();
 	}
 	
 	// TODO: @Borja, esto hay que llevarselo a las vistas
@@ -45,8 +46,7 @@ class AlgorithmController extends Controller {
 	
 	public void run() {
 		try {
-			Resultado resultado = new Resultado();
-			resultado.main();
+			
 			FitnessFunction funcionObjetivo = new BroFitness(params);
 			params.getConf().setFitnessFunction(funcionObjetivo);
 			Genotype poblacion = Genotype.randomInitialGenotype(params.getConf());
@@ -60,11 +60,11 @@ class AlgorithmController extends Controller {
 					mejorSolucion = auxSolucion;
 					params.setCromosoma(mejorSolucion);
 				} else stop = true;
-				resultado.insertarDatosSolucion(i,mejorSolucion,params,em);
 				imprimirDatosSolucion(mejorSolucion);
 				poblacion.evolve();
 				i++;
 			}
+			resultado.insertarDatosSolucion(mejorSolucion, params, em);
 			mejorSolucion = poblacion.getFittestChromosome();
 			params.setCromosoma(mejorSolucion);
 			imprimirDatosSolucion(mejorSolucion);
