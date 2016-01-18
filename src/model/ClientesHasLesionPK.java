@@ -12,10 +12,10 @@ public class ClientesHasLesionPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(unique=true, nullable=false)
+	@Column(unique=true, nullable=false, insertable=false, updatable=false)
 	private int clientes_idClientes;
 
-	@Column(unique=true, nullable=false)
+	@Column(unique=true, nullable=false, insertable=false, updatable=false)
 	private int lesiones_idLesiones;
 
 	public ClientesHasLesionPK() {

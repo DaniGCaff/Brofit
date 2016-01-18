@@ -2,8 +2,6 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,7 +12,8 @@ import java.util.List;
 @Entity
 @Table(name="lesiones")
 @NamedQueries({
-	@NamedQuery(name="Lesion.findAll", query="SELECT l FROM Lesion l"),	
+	@NamedQuery(name="Lesion.findAll", query="SELECT l FROM Lesion l"),
+	@NamedQuery(name="Lesion.findByName", query="SELECT l FROM Lesion l WHERE l.nombre = :nombreLesion")	
 })
 public class Lesion implements Serializable {
 	
@@ -25,13 +24,13 @@ public class Lesion implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int idLesiones;
 
-	@Column(length=45)
+	@Column(name="nombre", length=45)
 	private String nombre;
 	public enum TipoLesion{
 		LEVE,GRAVE;
 	}
 	//bi-directional many-to-one association to ClientesHasLesione
-	@OneToMany(mappedBy="lesione")
+	@OneToMany(mappedBy="lesion")
 	private List<ClientesHasLesion> clientesHasLesiones;
 
 	//bi-directional many-to-one association to EjerciciosHasLesione

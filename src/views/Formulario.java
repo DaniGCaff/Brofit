@@ -590,16 +590,19 @@ public class Formulario extends javax.swing.JFrame {
 	private void ejecutarSistema() {
 		
 		Cliente cliente = new Cliente();
+		
 		if(setCliente(cliente)){
+			em.getTransaction().begin();
+			em.persist(cliente);
+			em.flush();
+			em.getTransaction().commit();
 			if(this.insertarLesiones(cliente)){
 				
-				
-				int index = objetivo.getSelectedIndex()+1;
-				em.getTransaction().begin();
-				em.persist(cliente);
-				em.getTransaction().commit();
-				
 				try{
+					int index = objetivo.getSelectedIndex()+1;
+					em.getTransaction().begin();
+					em.persist(cliente);
+					em.getTransaction().commit();
 					Objetivo objetive = em.find(Objetivo.class, index);
 					mainController = new MainController(cliente,objetive,em).run();
 					
@@ -622,30 +625,29 @@ public class Formulario extends javax.swing.JFrame {
 
 	private boolean insertarLesiones(Cliente cliente) {
 		boolean result = true;
-		// TODO SUPERIOR - INFERIOR
 		try{
 			if(model2.getSize() >0){cliente.setClientesHasLesiones(new ArrayList<ClientesHasLesion>());}
-			for(int i =1; i<model2.getSize();i++){
+			for(int i =0; i<model2.getSize();i++){
 				ClientesHasLesion clientesHasLesionAux = new ClientesHasLesion();
 				clientesHasLesionAux.setCliente(cliente);
 				
 				String aux = model2.getElementAt(i).toString();
-				String lesion = aux.substring(0,aux.indexOf("("));
+				String nombreLesion = aux.substring(0,aux.indexOf("("));
 				String gravedad= aux.substring(aux.indexOf("("),aux.length());
-				if(gravedad=="(GRAVE)"){
+				if(gravedad.equals("(GRAVE)")){
 					clientesHasLesionAux.setGravedadLesion(ClientesHasLesion.GRAVE);
 				}
 				else{
 					clientesHasLesionAux.setGravedadLesion(ClientesHasLesion.LEVE);
 				}
-				Lesion l = new Lesion();
-				l.setNombre(lesion);
-				l.setIdLesiones(this.buscarIDlesion(lesion));
-				clientesHasLesionAux.setLesion(l);
-				lesionesCliente.add(clientesHasLesionAux);
+				Lesion lesion = (Lesion)em.createNamedQuery("Lesion.findByName").setParameter("nombreLesion", nombreLesion.trim()).getSingleResult();
+				clientesHasLesionAux.setLesion(lesion);
+				/*em.getTransaction().begin();
+				em.persist(clientesHasLesionAux);
+				em.getTransaction().commit();*/
 				cliente.addClientesHasLesione(clientesHasLesionAux);
 			}
-		}catch(Exception ex){
+		}catch(NullPointerException ex){
 			ex.printStackTrace();
 			result = false;
 		}
