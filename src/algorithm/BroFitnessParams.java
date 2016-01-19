@@ -31,6 +31,7 @@ public class BroFitnessParams {
 		this.estresObjetivo = estresObjetivo;
 		this.conf = conf;
 		this.cromosoma = conf.getSampleChromosome();
+		this.conf.setRandomGenerator(new StockRandomGenerator());
 	}
 	
 	public Objetivo getObjetivo() {

@@ -1,6 +1,8 @@
 package genes;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -9,11 +11,13 @@ import org.jgap.Gene;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.impl.SetGene;
 
+import model.ClientesHasLesion;
 import model.DatosObjetivo;
 import model.DatosObjetivoPK;
 import model.Ejercicio;
 import model.EstresEjercicio;
 import model.EstresEjercicioPK;
+import model.Lesion;
 import model.Objetivo;
 import model.Rutina;
 import model.TamanoGMuscular;
@@ -28,16 +32,23 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 	protected int minRepeticiones;
 	protected int maxRepeticiones;
 	protected int diaRutina;
+	protected int numAlelos;
+	protected List<Integer> alelosInternos;
 	
 	@Override
 	public void addAlleles(@SuppressWarnings("rawtypes") Collection alleles) {
 		super.addAlleles(alleles);
+		alelosInternos.clear();
+		alelosInternos.addAll(alleles);
+		numAlelos += alleles.size();
 	}
 	
-	public void addAllele(Object allele) {
-		Ejercicio ejercicio = em.find(Ejercicio.class,(Integer)allele);
-		if(rutina.isEjercicioFiltrado(ejercicio))
-			super.addAllele(allele);
+	public void removeAlleles(Object key) {
+		super.removeAlleles(key);
+		if(key instanceof Collection)
+			numAlelos -= ((Collection)key).size();
+		else 
+			numAlelos --;
 	}
 	
 	public EjercicioGene(Rutina rutina, Configuration a_config, int minRepeticiones, int maxRepeticiones, EntityManager em, int diaRutina)
@@ -49,10 +60,15 @@ public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 		this.repeticionGene = new RepeticionesGene(a_config, minRepeticiones, maxRepeticiones);
 		this.em = em;
 		this.diaRutina = diaRutina;
+		numAlelos = 0;
+		alelosInternos = new ArrayList<Integer>();
 		poblarAlelos();
 	}
 
 	protected abstract void poblarAlelos();
+	public boolean meAfectaLesion(ClientesHasLesion lesionCliente) {
+		return false;
+	}
 	
 	public float getEstresAsociado(Objetivo objetivo, RepeticionesGene duracion) {
 		int idEjercicio = (int) this.getAllele();

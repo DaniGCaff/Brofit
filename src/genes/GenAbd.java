@@ -8,6 +8,7 @@ import org.jgap.Configuration;
 import org.jgap.Gene;
 import org.jgap.InvalidConfigurationException;
 
+import model.ClientesHasLesion;
 import model.Rutina;
 
 public class GenAbd extends EjercicioGene {
@@ -31,6 +32,10 @@ public class GenAbd extends EjercicioGene {
 	@Override
 	protected void poblarAlelos() {
 		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.findByGMuscularG").setParameter("gmuscular", "Abdomen").getResultList());
+	}
+	
+	public boolean meAfectaLesion(ClientesHasLesion lesionCliente) {
+		return false;
 	}
 
 }

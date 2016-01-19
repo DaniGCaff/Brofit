@@ -1,5 +1,7 @@
 package controller;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import javax.persistence.EntityManager;
 
 import org.jgap.Chromosome;
 import org.jgap.Configuration;
+import org.jgap.Gene;
 import org.jgap.InvalidConfigurationException;
 
 import genes.EjercicioGene;
@@ -20,8 +23,12 @@ import genes.GenPBiceps;
 import genes.GenPTriceps;
 import genes.IBrofitGene;
 import model.Cliente;
+import model.ClientesHasLesion;
 import model.DatosObjetivo;
 import model.DatosObjetivoPK;
+import model.Gmuscular;
+import model.Lesion;
+import model.Lesion.TipoLesion;
 import model.Objetivo;
 import model.Rutina;
 import model.Rutina.TipoRutina;
@@ -433,7 +440,14 @@ class PlanificacionController extends Controller {
  
 	public void run(){
 		try {
-			List<EjercicioGene> results = planificarMusculoDia();
+			List<EjercicioGene> aEliminar = planificarMusculoDia();
+			List<EjercicioGene> results = new ArrayList<EjercicioGene>();
+			for(int i = 0; i < aEliminar.size(); i++) {
+				if(!afectaLesiones(aEliminar.get(i))) {
+					results.add(aEliminar.get(i));
+				}
+			}
+			
 			IBrofitGene[] genes = new IBrofitGene[results.size()*2];
 			for(int i = 0; i < results.size(); i++) {
 				genes[i] = results.get(i).getDuracionGene();
@@ -448,5 +462,26 @@ class PlanificacionController extends Controller {
 		} catch (InvalidConfigurationException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private boolean afectaLesiones(EjercicioGene gen) {
+		boolean afecta = false;
+		List<ClientesHasLesion> lesionesCliente = this.cliente.getClientesHasLesiones();
+		Method metodo;
+		try {
+			metodo = gen.getClass().getMethod("meAfectaLesion", ClientesHasLesion.class);
+			for(ClientesHasLesion lesionCliente : lesionesCliente) {
+				try {
+					afecta = afecta || (Boolean)metodo.invoke(gen, lesionCliente);
+				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} catch (NoSuchMethodException | SecurityException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return afecta;
 	}
 }

@@ -30,7 +30,7 @@ public class Rutina implements Serializable {
 	@Transient
 	private List<String> musculosDia;
 	@Transient
-	private HashMap<Ejercicio,Boolean> ejerciciosFiltrados;
+	private HashMap<Integer,Boolean> ejerciciosFiltrados;
 	@Transient
 	private TipoRutina tipoRutina;
 	@Transient
@@ -87,15 +87,15 @@ public class Rutina implements Serializable {
 		this.cliente = cliente;
 	}
 
-	public HashMap<Ejercicio,Boolean> getEjerciciosFiltrados() {
+	public HashMap<Integer,Boolean> getEjerciciosFiltrados() {
 		return this.ejerciciosFiltrados;
 	}
 
-	public void setEjerciciosFiltrados(HashMap<Ejercicio,Boolean> ejerciciosFiltrados) {
+	public void setEjerciciosFiltrados(HashMap<Integer,Boolean> ejerciciosFiltrados) {
 		this.ejerciciosFiltrados = ejerciciosFiltrados;
 	}
 	
-	public Boolean isEjercicioFiltrado(Ejercicio ejercicio) {
+	public Boolean isEjercicioPermitido(int ejercicio) {
 		return this.ejerciciosFiltrados.get(ejercicio);
 	}
 	

@@ -8,8 +8,13 @@ import org.jgap.Configuration;
 import org.jgap.Gene;
 import org.jgap.InvalidConfigurationException;
 
+import model.ClientesHasLesion;
+import model.Ejercicio;
+import model.Gmuscular;
 import model.Rutina;
 import model.TamanoGMuscular;
+import model.TrenCorporal;
+import model.Lesion.TipoLesion;
 
 public class GenPBiceps extends EjercicioGene {
 
@@ -32,6 +37,30 @@ public class GenPBiceps extends EjercicioGene {
 	@Override
 	protected void poblarAlelos() {
 		this.addAlleles((List<Integer>)em.createNamedQuery("Ejercicio.findByGMuscularG").setParameter("gmuscular", "Biceps").getResultList());
+	}
+
+	public boolean meAfectaLesion(ClientesHasLesion lesionCliente) {
+		List<Gmuscular> gmusculares = lesionCliente.getLesione().getGmusculares();
+		// Si es una lesion grave, y está ubicada en mi tren corporal, es decir el superior... me afecta.
+		if(lesionCliente.getGravedadLesion() == TipoLesion.GRAVE.ordinal()) {
+			for(Gmuscular gmuscular : gmusculares) {
+				if(gmuscular.getTipoTren() == TrenCorporal.SUPERIOR.valor) {
+					return true;
+				}
+			}
+		} else {
+			List<Ejercicio> ejercicios = lesionCliente.getEjerciciosNoRehabilitadores();
+			for(Ejercicio ejercicio : ejercicios)
+				this.removeAlleles(ejercicio.getIdEjercicios());
+			
+			if(super.numAlelos <= 0) {
+				for(Gmuscular gmuscular : gmusculares) {
+					if(gmuscular.getNombre().equals("Biceps"))
+						return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 }

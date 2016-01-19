@@ -25,17 +25,17 @@ import model.Rutina.TipoRutina;
 import model.TrenCorporal;
 
 class FilterController extends Controller {
-	private HashMap<Ejercicio,Boolean> ejerciciosFiltrados;
+	private HashMap<Integer, Boolean> ejerciciosFiltrados;
 	private Cliente cliente;
 	private Rutina rutina;
 	
 	public FilterController(Rutina rutina, Cliente cliente,EntityManager em ) {
 		
 		super(em);	
-		ejerciciosFiltrados = new HashMap<Ejercicio,Boolean>();
+		ejerciciosFiltrados = new HashMap<Integer,Boolean>();
 		List<Ejercicio> ejercicios = em.createNamedQuery("Ejercicio.findAll").getResultList();
 		for(Ejercicio e : ejercicios) {
-			ejerciciosFiltrados.put(e, true);
+			ejerciciosFiltrados.put(e.getIdEjercicios(), true);
 		}
 		this.cliente = cliente;
 		this.rutina = rutina;
@@ -51,11 +51,11 @@ class FilterController extends Controller {
 	
 	private void filtradoNivel(){
 		int nivel=cliente.getNivelDeportivo();
-		Iterator<Ejercicio> it = ejerciciosFiltrados.keySet().iterator();
+		Iterator<Integer> it = ejerciciosFiltrados.keySet().iterator();
 		while(it.hasNext()){
-			Ejercicio ejercicio=it.next();
+			Ejercicio ejercicio= em.find(Ejercicio.class, it.next());
 			if (ejercicio.getDificultadTecnica()>nivel)
-				ejerciciosFiltrados.put(ejercicio,false);
+				ejerciciosFiltrados.put(ejercicio.getIdEjercicios(),false);
 		}
 	}
 	
@@ -72,7 +72,7 @@ class FilterController extends Controller {
 				for(Ejercicio ejer : ejercicios){
 					for (Gmuscular gm : gmuscular){
 						if(ejer.getGmuscular()==gm)
-							ejerciciosFiltrados.put(ejer, false);
+							ejerciciosFiltrados.put(ejer.getIdEjercicios(), false);
 						//Superior
 						if(gm.getTipoTren()==TrenCorporal.SUPERIOR.valor){
 							cliente.setCoRegresionS(0.75f);
@@ -94,7 +94,7 @@ class FilterController extends Controller {
 					
 					for (Ejercicio ejer : ejercicios){
 						
-						ejerciciosFiltrados.put(ejer, false);
+						ejerciciosFiltrados.put(ejer.getIdEjercicios(), false);
 						//Superior
 						if(gm.getTipoTren()==TrenCorporal.SUPERIOR.valor){
 							cliente.setCoRegresionS(0.00f);
@@ -109,16 +109,16 @@ class FilterController extends Controller {
 		}
 	}
 	
-	private void filtradoObjetivo(){
+	/*private void filtradoObjetivo(){
 		Objetivo objetivo=rutina.getObjetivo();
-		Iterator<Ejercicio> it = ejerciciosFiltrados.keySet().iterator();
+		Iterator<Integer> it = ejerciciosFiltrados.keySet().iterator();
 		while(it.hasNext()){
 			Ejercicio ejercicio=it.next();
 			List <EstresEjercicio> objetivoEjercicio = ejercicio.getObjetivosHasEjercicios();
 			if (!objetivoEjercicio.get(0).equals(objetivo))
 				ejerciciosFiltrados.put(ejercicio,false);
 		}
-	}
+	}*/
 	
 	private int determinarTipoTabla(){
 		int result = cliente.getMotivacion();
@@ -130,10 +130,10 @@ class FilterController extends Controller {
 	}
 
 	public void run(){
-		filtradoNivel();
-		filtradoLesion();
+		//filtradoNivel(); -- A LA ESPERA DE BORJA
+		//filtradoLesion(); -- REESCRITO
 		//TODO: VER COMO HACEMOS ESTE FILTRADO
-		//filtradoObjetivo();
+		//filtradoObjetivo(); -- DESCARTADO
 		rutina.setEjerciciosFiltrados(ejerciciosFiltrados);
 		if (determinarTipoTabla() == 0)
 			rutina.setTipoRutina(TipoRutina.tipoCircuito);

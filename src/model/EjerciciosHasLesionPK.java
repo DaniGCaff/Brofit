@@ -20,6 +20,12 @@ public class EjerciciosHasLesionPK implements Serializable {
 
 	public EjerciciosHasLesionPK() {
 	}
+	
+	public EjerciciosHasLesionPK(int ejercicioId, int lesionesId) {
+		this.ejercicios_idEjercicios = ejercicioId;
+		this.lesiones_idLesiones = lesionesId;
+	}
+	
 	public int getEjercicios_idEjercicios() {
 		return this.ejercicios_idEjercicios;
 	}
