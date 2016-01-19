@@ -15,7 +15,7 @@ import org.jgap.InvalidConfigurationException;
 import genes.EjercicioGene;
 import genes.GenAbd;
 import genes.GenGDorsal;
-import genes.GenGHombro;
+import genes.GenMHombro;
 import genes.GenGPectoral;
 import genes.GenMGPierna;
 import genes.GenMHombro;
@@ -113,7 +113,7 @@ class PlanificacionController extends Controller {
 				pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.GRANDE.valor, 0);
 				numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
 				for(int i = 0; i < numEjercicio; i++) {
-					result.add(new GenGHombro(rutina, this.conf, minRep, maxRep, em, dia));
+					result.add(new GenMHombro(rutina, this.conf, minRep, maxRep, em, dia));
 				}
 			}
 			else if (cliente.getDiasSemana() == 4){
@@ -152,7 +152,7 @@ class PlanificacionController extends Controller {
 				pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.GRANDE.valor, 0);
 				numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
 				for(int i = 0; i < numEjercicio; i++) {
-					result.add(new GenGHombro(rutina, this.conf, minRep, maxRep, em, dia));
+					result.add(new GenMHombro(rutina, this.conf, minRep, maxRep, em, dia));
 				}
 			}
 			else if (cliente.getDiasSemana() == 3){
@@ -189,7 +189,7 @@ class PlanificacionController extends Controller {
 				pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.GRANDE.valor, 0);
 				numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
 				for(int i = 0; i < numEjercicio; i++) {
-					result.add(new GenGHombro(rutina, this.conf, minRep, maxRep, em, dia));
+					result.add(new GenMHombro(rutina, this.conf, minRep, maxRep, em, dia));
 				}
 			} else if(cliente.getDiasSemana() <= 2) {
 				for(dia = 1; dia <= cliente.getDiasSemana(); dia++) {
@@ -246,7 +246,7 @@ class PlanificacionController extends Controller {
 					pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.GRANDE.valor, 1);
 					numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
 					for(int i = 0; i < numEjercicio; i++) {
-						result.add(new GenGHombro(rutina, this.conf, minRep, maxRep, em, dia));
+						result.add(new GenMHombro(rutina, this.conf, minRep, maxRep, em, dia));
 					}
 				}
 				else if (cliente.getDiasSemana() == 4){
@@ -285,7 +285,7 @@ class PlanificacionController extends Controller {
 					pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.GRANDE.valor, 1);
 					numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
 					for(int i = 0; i < numEjercicio; i++) {
-						result.add(new GenGHombro(rutina, this.conf, minRep, maxRep, em, dia));
+						result.add(new GenMHombro(rutina, this.conf, minRep, maxRep, em, dia));
 					}
 				}
 				else if (cliente.getDiasSemana() == 3){
@@ -322,7 +322,7 @@ class PlanificacionController extends Controller {
 					pk = new DatosObjetivoPK(this.rutina.getObjetivo().getIdObjetivos(), TamanoGMuscular.GRANDE.valor, 1);
 					numEjercicio = em.find(DatosObjetivo.class, pk).getNumeroEjercicios();
 					for(int i = 0; i < numEjercicio; i++) {
-						result.add(new GenGHombro(rutina, this.conf, minRep, maxRep, em, dia));
+						result.add(new GenMHombro(rutina, this.conf, minRep, maxRep, em, dia));
 					}
 				} else if(cliente.getDiasSemana() <= 2) {
 					for(dia = 1; dia <= cliente.getDiasSemana(); dia++) {

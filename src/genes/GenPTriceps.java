@@ -1,5 +1,6 @@
 package genes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -49,17 +50,19 @@ public class GenPTriceps extends EjercicioGene {
 				}
 			}
 		} else {
-			List<Ejercicio> ejercicios = lesionCliente.getEjerciciosNoRehabilitadores();
-			for(Ejercicio ejercicio : ejercicios)
-				this.removeAlleles(ejercicio.getIdEjercicios());
-			
-			if(super.numAlelos <= 0) {
-				for(Gmuscular gmuscular : gmusculares) {
-					if(gmuscular.getNombre().equals("Triceps"))
-						return true;
-				}
-			}
-		}
+			   for(Gmuscular gmuscular : lesionCliente.getLesione().getGmusculares()) {
+				   if(gmuscular.getNombre().equals("Triceps")) {
+				    List<Ejercicio> ejercicios = lesionCliente.getEjerciciosNoRehabilitadores();
+				       List<Integer>idEjercicios = new ArrayList<Integer>();
+				       for (Ejercicio ej: ejercicios){
+				     if(ej.getGmuscular().getNombre().equals("Triceps"))
+				          idEjercicios.add(ej.getIdEjercicios());
+				       }
+				       this.removeAlleles(alelosInternos);
+				       this.addAlleles(idEjercicios);
+				   }
+				     }  
+				  }
 		return false;
 	}
 }

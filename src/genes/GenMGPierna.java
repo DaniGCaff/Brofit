@@ -1,5 +1,6 @@
 package genes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -48,17 +49,19 @@ public class GenMGPierna extends EjercicioGene {
 				}
 			}
 		} else {
-			List<Ejercicio> ejercicios = lesionCliente.getEjerciciosNoRehabilitadores();
-			for(Ejercicio ejercicio : ejercicios)
-				this.removeAlleles(ejercicio.getIdEjercicios());
-			
-			if(super.numAlelos <= 0) {
-				for(Gmuscular gmuscular : gmusculares) {
-					if(gmuscular.getNombre().equals("Pierna"))
-						return true;
-				}
-			}
-		}
+			   for(Gmuscular gmuscular : lesionCliente.getLesione().getGmusculares()) {
+				   if(gmuscular.getNombre().equals("Pierna")) {
+				    List<Ejercicio> ejercicios = lesionCliente.getEjerciciosNoRehabilitadores();
+				       List<Integer>idEjercicios = new ArrayList<Integer>();
+				       for (Ejercicio ej: ejercicios){
+				     if(ej.getGmuscular().getNombre().equals("Pierna"))
+				          idEjercicios.add(ej.getIdEjercicios());
+				       }
+				       this.removeAlleles(alelosInternos);
+				       this.addAlleles(idEjercicios);
+				   }
+				     }  
+				  }
 		return false;
 	}
 

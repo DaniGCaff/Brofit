@@ -51,23 +51,19 @@ public class GenGHombro extends EjercicioGene {
 				}
 			}
 		} else {
-			List<Ejercicio> ejercicios = lesionCliente.getEjerciciosNoRehabilitadores();
-			List<Integer> alelosAux = new ArrayList<Integer>(alelosInternos);
-			ListIterator<Integer> iterador = alelosAux.listIterator();
-			while(iterador.hasNext()) {
-				iterador.next();
-				iterador.remove();
-			}
-			this.removeAlleles(alelosInternos);
-			this.addAlleles(alelosAux);
-			
-			if(super.numAlelos <= 0) {
-				for(Gmuscular gmuscular : gmusculares) {
-					if(gmuscular.getNombre() == "Hombro")
-						return true;
-				}
-			}
-		}
+			   for(Gmuscular gmuscular : lesionCliente.getLesione().getGmusculares()) {
+				   if(gmuscular.getNombre().equals("Hombro")) {
+				    List<Ejercicio> ejercicios = lesionCliente.getEjerciciosNoRehabilitadores();
+				       List<Integer>idEjercicios = new ArrayList<Integer>();
+				       for (Ejercicio ej: ejercicios){
+				     if(ej.getGmuscular().getNombre().equals("Hombro"))
+				          idEjercicios.add(ej.getIdEjercicios());
+				       }
+				       this.removeAlleles(alelosInternos);
+				       this.addAlleles(idEjercicios);
+				   }
+				     }  
+				  }
 		return false;
 	}
 }

@@ -56,10 +56,16 @@ class AlgorithmController extends Controller {
 			while(i <= MAX_ALLOWED_EVOLUTIONS && !stop) {
 				System.out.println("Generando generación número " + i + " de cromosomas.");
 				IChromosome auxSolucion = poblacion.getFittestChromosome();
-				if(auxSolucion.getFitnessValue() <= params.getEstresObjetivo()) {
-					mejorSolucion = auxSolucion;
-					params.setCromosoma(mejorSolucion);
-				} else stop = true;
+				if(mejorSolucion == null) {
+				     mejorSolucion = auxSolucion;
+				     params.setCromosoma(mejorSolucion);
+				    } else {
+				     if(auxSolucion.getFitnessValue() <= params.getEstresObjetivo() ||
+				       auxSolucion.getFitnessValue() <= mejorSolucion.getFitnessValue()) {
+				      mejorSolucion = auxSolucion;
+				      params.setCromosoma(mejorSolucion);
+				     } else stop = true;
+				    }
 				imprimirDatosSolucion(mejorSolucion);
 				poblacion.evolve();
 				i++;

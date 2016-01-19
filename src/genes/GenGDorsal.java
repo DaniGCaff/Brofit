@@ -1,5 +1,6 @@
 package genes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -50,23 +51,19 @@ public class GenGDorsal extends EjercicioGene {
 				}
 			}
 		} else {
-			List<Ejercicio> ejercicios = lesionCliente.getEjerciciosNoRehabilitadores();
-			ListIterator<Integer> iterador = alelosInternos.listIterator();
-			while(iterador.hasNext()) {
-				iterador.next();
-				iterador.remove();
-			}
-			this.addAlleles(alelosInternos);
-			/*for(Ejercicio ejercicio : ejercicios)
-				this.removeAlleles(ejercicio.getIdEjercicios());*/
-			
-			if(super.numAlelos <= 0) {
-				for(Gmuscular gmuscular : gmusculares) {
-					if(gmuscular.getNombre().equals("Dorsal"))
-						return true;
-				}
-			}
-		}
+			   for(Gmuscular gmuscular : lesionCliente.getLesione().getGmusculares()) {
+				   if(gmuscular.getNombre().equals("Dorsal")) {
+				    List<Ejercicio> ejercicios = lesionCliente.getEjerciciosNoRehabilitadores();
+				       List<Integer>idEjercicios = new ArrayList<Integer>();
+				       for (Ejercicio ej: ejercicios){
+				     if(ej.getGmuscular().getNombre().equals("Dorsal"))
+				          idEjercicios.add(ej.getIdEjercicios());
+				       }
+				       this.removeAlleles(alelosInternos);
+				       this.addAlleles(idEjercicios);
+				   }
+				     }  
+				  }
 		return false;
 	}
 
