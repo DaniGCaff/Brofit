@@ -68,5 +68,10 @@ public class BroFitnessParams {
 	public void setMinutosAerobica(int minutosAerobica) {
 		this.minutosAerobica = minutosAerobica;
 	}
+
+	public void setEstresObjetivo(float estresObjetivo) {
+		this.estresObjetivo = estresObjetivo;
+	}
+	
 	
 }

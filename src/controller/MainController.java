@@ -32,6 +32,7 @@ public class MainController extends Controller {
 			new PreprocessController(mainRutina, cliente,em).run();
 			new PlanificacionController(cliente, mainRutina, conf, em).run();
 			new AerobicoController(params, mainRutina, em).run();
+			params.setEstresObjetivo(cliente.getEstresObjetivo());
 			AlgorithmController algorithmController = new AlgorithmController(params, em);
 			algorithmController.run();
 			this.mainRutina.setMejorSolucion(params.getCromosoma());

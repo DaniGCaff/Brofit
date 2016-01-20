@@ -211,7 +211,6 @@ public class Cliente implements Serializable {
 	}
 	
 	public float getEstresObjetivo() {	
-		//TODO  queda restar lesiones IF LESION LEVE = 0'75 SI NO LESION 1..... GRAVE MOSTRAR ERROR
 		int imc = Estres.calcularIMC(peso, altura);
 		float estres_an_inf=Estres.getEstresAnInf((int)this.anaerobicaI);
 		float estres_an_sup=Estres.getEstresAnSup((int)this.anaerobicaS);
