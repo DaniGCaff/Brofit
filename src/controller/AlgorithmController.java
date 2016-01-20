@@ -20,7 +20,7 @@ import genes.EjercicioGene;
 
 class AlgorithmController extends Controller {
 
-	public static final int MAX_ALLOWED_EVOLUTIONS = 1;
+	public static final int MAX_ALLOWED_EVOLUTIONS = 500;
 	private BroFitnessParams params;
 	private Resultado resultado ;
 	public AlgorithmController(BroFitnessParams params, EntityManager em) {
