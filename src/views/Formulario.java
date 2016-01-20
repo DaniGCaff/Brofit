@@ -745,15 +745,17 @@ public class Formulario extends javax.swing.JFrame {
 
 	}
 	private boolean LesionSelect(String valor){
-		boolean result = false;
-		for(int i =0 ; i<model2.getSize();i++){
-			
-			if(model2.get(i).toString().equals(valor+"(Grave)")||model2.get(i).toString().equals(valor+"(Leve)")){
-				result=true;
-			}
-		}
+	//	boolean result = false;
 		
-		return result;
+		return model2.getSize()>0;
+	//	for(int i =0 ; i<model2.getSize();i++){
+			
+	//		if(model2.get(i).toString().equals(valor+"(Grave)")||model2.get(i).toString().equals(valor+"(Leve)")){
+	//			result=true;
+	//		}
+	//	}
+		
+	//	return result;
 	}
 	private void addLessionGrave(java.awt.event.ActionEvent evt){
 		try{
@@ -772,7 +774,7 @@ public class Formulario extends javax.swing.JFrame {
 
 		try{
 			int index = lesiones2.getSelectedIndex();
-			if(	!this.LesionSelect(model1.getElementAt(index).toString())){
+			if(	!( model2.size()== 0)){
 				String aux = model2.getElementAt(index).toString();
 				String lesion = aux.substring(0,aux.indexOf("("));
 				model1.add(model1.getSize(), lesion);
