@@ -1,36 +1,42 @@
 package controller;
 
+import java.awt.EventQueue;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Observable;
+
 import javax.persistence.EntityManager;
 
-import org.jgap.FitnessEvaluator;
 import org.jgap.FitnessFunction;
 import org.jgap.Gene;
 import org.jgap.Genotype;
 import org.jgap.IChromosome;
 import org.jgap.InvalidConfigurationException;
-import org.jgap.RandomGenerator;
-import org.jgap.impl.BestChromosomesSelector;
-import org.jgap.impl.StockRandomGenerator;
 
-import model.Ejercicio;
-import views.Resultado;
 import algorithm.BroFitness;
 import algorithm.BroFitnessParams;
 import genes.EjercicioGene;
+import model.Ejercicio;
+import views.Resultado;
 
-class AlgorithmController extends Controller {
+public class AlgorithmController extends Observable {
 
 	public static final int MAX_ALLOWED_EVOLUTIONS = 500;
 	private BroFitnessParams params;
-	private Resultado resultado ;
+	private Resultado resultado;
+	private EntityManager em;
 	public AlgorithmController(BroFitnessParams params, EntityManager em) {
-		super(em);
-		this.params = params;
 		resultado = new Resultado();
+		this.addObserver(resultado);
+		new Thread() {
+			public void run() {
+				AlgorithmController.this.resultado.run();
+			}
+		}.start();
+		this.em = em;
+		this.params = params;
 	}
 	
-	// TODO: @Borja, esto hay que llevarselo a las vistas
-	public void imprimirDatosSolucion(IChromosome solucion) {
+	private void imprimirDatosSolucion(IChromosome solucion) {
 		
 		System.out.println("Fitness de la mejor solucion: " + solucion.getFitnessValue());
 		System.out.println("Fitness objetivo: " + params.getEstresObjetivo());
@@ -45,38 +51,48 @@ class AlgorithmController extends Controller {
 	}
 	
 	public void run() {
-		try {
-			
-			FitnessFunction funcionObjetivo = new BroFitness(params);
-			params.getConf().setFitnessFunction(funcionObjetivo);
-			Genotype poblacion = Genotype.randomInitialGenotype(params.getConf());
-			IChromosome mejorSolucion = null;
-			int i = 0;
-			Boolean stop = false;
-			while(i <= MAX_ALLOWED_EVOLUTIONS && !stop) {
-				System.out.println("Generando generación número " + i + " de cromosomas.");
-				IChromosome auxSolucion = poblacion.getFittestChromosome();
-				if(mejorSolucion == null) {
-				     mejorSolucion = auxSolucion;
-				     params.setCromosoma(mejorSolucion);
-				    } else {
-				     if(auxSolucion.getFitnessValue() <= params.getEstresObjetivo() ||
-				       auxSolucion.getFitnessValue() <= mejorSolucion.getFitnessValue()) {
-				      mejorSolucion = auxSolucion;
-				      params.setCromosoma(mejorSolucion);
-				     } else stop = true;
-				    }
-				imprimirDatosSolucion(mejorSolucion);
-				poblacion.evolve();
-				i++;
+		new Thread() {
+			public void run() {
+				try {
+					
+					FitnessFunction funcionObjetivo = new BroFitness(params);
+					params.getConf().setFitnessFunction(funcionObjetivo);
+					Genotype poblacion = Genotype.randomInitialGenotype(params.getConf());
+					IChromosome mejorSolucion = null;
+					int i = 0;
+					Boolean stop = false;
+					while(i <= MAX_ALLOWED_EVOLUTIONS && !stop) {
+						System.out.println("Generando generación número " + i + " de cromosomas.");
+						IChromosome auxSolucion = poblacion.getFittestChromosome();
+						if(mejorSolucion == null) {
+						     mejorSolucion = auxSolucion;
+						     params.setCromosoma(mejorSolucion);
+						    } else {
+						     if(auxSolucion.getFitnessValue() <= params.getEstresObjetivo() ||
+						       auxSolucion.getFitnessValue() <= mejorSolucion.getFitnessValue()) {
+						      mejorSolucion = auxSolucion;
+						      params.setCromosoma(mejorSolucion);
+						     } else stop = true;
+						    }
+						AlgorithmController.this.setChanged();
+						AlgorithmController.this.notifyObservers(null);
+						imprimirDatosSolucion(mejorSolucion);
+						poblacion.evolve();
+						i++;
+					}
+				} catch (InvalidConfigurationException e) {
+					e.printStackTrace();
+				}
 			}
-			resultado.insertarDatosSolucion(mejorSolucion, params, em);
-			mejorSolucion = poblacion.getFittestChromosome();
-			params.setCromosoma(mejorSolucion);
-			imprimirDatosSolucion(mejorSolucion);
-		} catch (InvalidConfigurationException e) {
-			e.printStackTrace();
-		}	
+		}.start();	
 	}
 
+	public BroFitnessParams getParams() {
+		return params;
+	}
+
+	public EntityManager getEm() {
+		return em;
+	}
+	
 }

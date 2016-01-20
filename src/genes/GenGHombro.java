@@ -2,7 +2,6 @@ package genes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.persistence.EntityManager;
 
@@ -13,10 +12,9 @@ import org.jgap.InvalidConfigurationException;
 import model.ClientesHasLesion;
 import model.Ejercicio;
 import model.Gmuscular;
-import model.Rutina;
-import model.TamanoGMuscular;
-import model.TrenCorporal;
 import model.Lesion.TipoLesion;
+import model.Rutina;
+import model.TrenCorporal;
 
 public class GenGHombro extends EjercicioGene {
 

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.jgap.Configuration;
-import org.jgap.Gene;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.impl.SetGene;
 
@@ -17,10 +16,8 @@ import model.DatosObjetivoPK;
 import model.Ejercicio;
 import model.EstresEjercicio;
 import model.EstresEjercicioPK;
-import model.Lesion;
 import model.Objetivo;
 import model.Rutina;
-import model.TamanoGMuscular;
 
 public abstract class EjercicioGene extends SetGene implements IBrofitGene {
 

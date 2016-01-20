@@ -10,7 +10,6 @@ import algorithm.BroFitnessParams;
 import model.Cliente;
 import model.Objetivo;
 import model.Rutina;
-import views.Resultado;
 
 public class MainController extends Controller {
 

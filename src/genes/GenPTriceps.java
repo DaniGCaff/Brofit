@@ -12,10 +12,9 @@ import org.jgap.InvalidConfigurationException;
 import model.ClientesHasLesion;
 import model.Ejercicio;
 import model.Gmuscular;
-import model.Rutina;
-import model.TamanoGMuscular;
-import model.TrenCorporal;
 import model.Lesion.TipoLesion;
+import model.Rutina;
+import model.TrenCorporal;
 
 public class GenPTriceps extends EjercicioGene {
 

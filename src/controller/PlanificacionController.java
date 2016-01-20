@@ -9,13 +9,11 @@ import javax.persistence.EntityManager;
 
 import org.jgap.Chromosome;
 import org.jgap.Configuration;
-import org.jgap.Gene;
 import org.jgap.InvalidConfigurationException;
 
 import genes.EjercicioGene;
 import genes.GenAbd;
 import genes.GenGDorsal;
-import genes.GenMHombro;
 import genes.GenGPectoral;
 import genes.GenMGPierna;
 import genes.GenMHombro;
@@ -26,9 +24,6 @@ import model.Cliente;
 import model.ClientesHasLesion;
 import model.DatosObjetivo;
 import model.DatosObjetivoPK;
-import model.Gmuscular;
-import model.Lesion;
-import model.Lesion.TipoLesion;
 import model.Objetivo;
 import model.Rutina;
 import model.Rutina.TipoRutina;

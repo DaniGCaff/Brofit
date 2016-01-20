@@ -3,7 +3,6 @@ package controller;
 import javax.persistence.EntityManager;
 
 import algorithm.BroFitnessParams;
-import model.Cliente;
 import model.Estres;
 import model.Rutina;
 

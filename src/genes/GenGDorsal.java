@@ -2,7 +2,6 @@ package genes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.persistence.EntityManager;
 
@@ -12,7 +11,6 @@ import org.jgap.InvalidConfigurationException;
 
 import model.ClientesHasLesion;
 import model.Ejercicio;
-import model.EjerciciosHasLesionPK;
 import model.Gmuscular;
 import model.Lesion.TipoLesion;
 import model.Rutina;

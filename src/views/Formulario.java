@@ -604,9 +604,10 @@ public class Formulario extends javax.swing.JFrame {
 					em.persist(cliente);
 					em.getTransaction().commit();
 					Objetivo objetive = em.find(Objetivo.class, index);
+					this.setVisible(false);
 					mainController = new MainController(cliente,objetive,em).run();
 					
-					this.setVisible(false);
+					
 					
 				}catch(NullPointerException ex ) {
 					ex.printStackTrace();

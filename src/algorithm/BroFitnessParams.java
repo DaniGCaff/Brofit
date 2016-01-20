@@ -1,19 +1,9 @@
 package algorithm;
 
 import org.jgap.Configuration;
-import org.jgap.FitnessEvaluator;
-import org.jgap.FitnessFunction;
-import org.jgap.Genotype;
 import org.jgap.IChromosome;
 import org.jgap.InvalidConfigurationException;
-import org.jgap.RandomGenerator;
-import org.jgap.event.EventManager;
-import org.jgap.impl.BestChromosomesSelector;
-import org.jgap.impl.CrossoverOperator;
-import org.jgap.impl.InversionOperator;
-import org.jgap.impl.MutationOperator;
 import org.jgap.impl.StockRandomGenerator;
-
 import model.Objetivo;
 
 public class BroFitnessParams {

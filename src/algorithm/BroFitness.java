@@ -5,7 +5,6 @@ import org.jgap.Gene;
 import org.jgap.IChromosome;
 
 import genes.RepeticionesGene;
-import genes.EjercicioGene;
 import genes.IBrofitGene;
 
 public class BroFitness extends FitnessFunction {

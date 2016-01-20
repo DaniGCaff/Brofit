@@ -1,11 +1,16 @@
 package views;
 
+import java.awt.EventQueue;
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.persistence.EntityManager;
 
 import org.jgap.Gene;
 import org.jgap.IChromosome;
 
 import algorithm.BroFitnessParams;
+import controller.AlgorithmController;
 import genes.EjercicioGene;
 import model.Ejercicio;
 
@@ -13,18 +18,17 @@ import model.Ejercicio;
  *
  * @author borja
  */
-public class Resultado extends javax.swing.JFrame {
+public class Resultado extends javax.swing.JFrame implements Observer {
 
 	
-	public Resultado(IChromosome solucion, BroFitnessParams params, EntityManager em) {
-		initComponents();
-		this.insertarDatosSolucion(solucion, params, em);
-		this.setVisible(true);
-	}
-	public Resultado() {
-		initComponents();
-		this.jLabel1.setText("Calculando");
-		this.setVisible(true);
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public void run() {
+		this.initComponents();
+		this.setVisible(true);		
 	}
 
 
@@ -121,80 +125,29 @@ public class Resultado extends javax.swing.JFrame {
                 .addGap(7, 7, 7))
         );
 
+        jLabel1.setText("Calculando...");
+		jLabel2.setText("Calculando...");
+		jLabel3.setText("Calculando...");
+        
         pack();
     }
 	
 	private void volverActionPerformed(java.awt.event.ActionEvent evt) {                                       
-    	Formulario formulario = new Formulario();
+		this.setVisible(false);
+		Formulario formulario = new Formulario();
     	formulario.main(null);
-    	this.setVisible(false);
     }                                      
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {                                      
     	System.exit(0);
     }                                     
-
-	/**
-	 * @param args the command line arguments
-	 */
-	public  void main(IChromosome solucion, BroFitnessParams params, EntityManager em) {
-		
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		}
-		java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-        		new Resultado( solucion, params, em).setVisible(true);
-            }
-        });
-
-			
-	}
-	public  void main() {
-		
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(Resultado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		}
-		java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-        		new Resultado().setVisible(true);
-            }
-        });
-
-			
-	}
 	
-	public void insertarDatosSolucion( IChromosome solucion, BroFitnessParams params, EntityManager em){
+	public void insertarDatosSolucion(BroFitnessParams params, EntityManager em){
 		
 		String text ; 
 		String text1;
 		String text2;
+		IChromosome solucion = params.getCromosoma();
 		text1 = "<html><body> Fitness de la mejor solucion: " + solucion.getFitnessValue();
 		text1 = text1 + "<br>Fitness objetivo: " + params.getEstresObjetivo();
 		text1 = text1 + "<br>Edad de la solucion: " + solucion.getAge();
@@ -233,7 +186,13 @@ public class Resultado extends javax.swing.JFrame {
 		jLabel2.setText(text2);
 	}
 
-    private javax.swing.JLabel jLabel1;
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		AlgorithmController algoritmo = (AlgorithmController)arg0;
+		this.insertarDatosSolucion(algoritmo.getParams(), algoritmo.getEm());
+	}
+	
+	private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
