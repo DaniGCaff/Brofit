@@ -30,7 +30,7 @@ public class MainController extends Controller {
 		BroFitnessParams params;
 		try {
 			params = new BroFitnessParams(mainRutina.getObjetivo(), cliente.getEstresObjetivo(), conf);
-			new FilterController(mainRutina, cliente,em).run();
+			new PreprocessController(mainRutina, cliente,em).run();
 			new PlanificacionController(cliente, mainRutina, conf, em).run();
 			new AerobicoController(params, mainRutina, em).run();
 			AlgorithmController algorithmController = new AlgorithmController(params, em);
