@@ -71,7 +71,7 @@ public class AlgorithmController extends Observable {
 					int[] numeroEvolucion = new int[MAX_ALLOWED_EVOLUTIONS];
 					//JPanel panelGrafico=new JPanel();
 					//Graphics grafico = panelGrafico.getGraphics();
-					while(i <= MAX_ALLOWED_EVOLUTIONS && !stop) {
+					while(i < MAX_ALLOWED_EVOLUTIONS && !stop) {
 						
 						List <IChromosome> mediaSolucion = poblacion.getFittestChromosomes(PlanificacionController.poblacionMaxima);
 						//EL medio y el que mas se acerqe a l media fitness value. valor absoluto de la media
