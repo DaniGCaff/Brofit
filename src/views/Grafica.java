@@ -48,8 +48,8 @@ public class Grafica extends javax.swing.JFrame {
                 frame.setVisible(true);
 
                 XYDataset ds = createDataset();
-                JFreeChart chart = ChartFactory.createXYLineChart("Test Chart",
-                        "x", "y", ds, PlotOrientation.VERTICAL, true, true,
+                JFreeChart chart = ChartFactory.createXYLineChart("Gráfico média fitnes/generación",
+                        "Número de generación", "Fitness medio", ds, PlotOrientation.VERTICAL, true, true,
                         false);
                 ChartPanel cp = new ChartPanel(chart);
                 frame.getContentPane().add(cp);
