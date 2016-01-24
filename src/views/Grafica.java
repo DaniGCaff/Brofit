@@ -12,6 +12,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.jfree.data.xy.XYDataset;
+
+import controller.AlgorithmController;
  
 
 /**
@@ -23,12 +25,11 @@ public class Grafica extends javax.swing.JFrame {
 	
 	public Grafica() {
 	}
-	public Grafica(int[] numeroEvolucion, int[] mediasEvolucion, int MAX_ALLOWED_EVOLUTIONS) {
+	public Grafica(int[] numeroEvolucion, int[] mediasEvolucion) {
 			
 	
 		this.numeroEvolucion=numeroEvolucion;
 		this.mediasEvolucion=mediasEvolucion;
-		this.MAX_ALLOWED_EVOLUTIONS=MAX_ALLOWED_EVOLUTIONS;
 		this.pintarGrafica();
 		
 		for(int i =0;i<numeroEvolucion.length;i++){
@@ -62,8 +63,8 @@ public class Grafica extends javax.swing.JFrame {
 
         DefaultXYDataset ds = new DefaultXYDataset();
         
-        double[][] data = new double[2][300] ;
-        for(int i =0; i<this.MAX_ALLOWED_EVOLUTIONS;i++){
+        double[][] data = new double[2][AlgorithmController.MAX_ALLOWED_EVOLUTIONS] ;
+        for(int i =0; i<AlgorithmController.MAX_ALLOWED_EVOLUTIONS;i++){
         	data[0][i]= this.numeroEvolucion[i];
         	data[1][i]=this.mediasEvolucion[i];
         }
@@ -75,5 +76,4 @@ public class Grafica extends javax.swing.JFrame {
 
     private int[] numeroEvolucion;
     private int[] mediasEvolucion;
-    private int MAX_ALLOWED_EVOLUTIONS;
 }

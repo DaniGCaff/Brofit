@@ -104,8 +104,7 @@ public class AlgorithmController extends Observable {
 						numeroEvolucion[j]=j+1;
 					}
 					
-					//grafico.drawPolyline(numeroEvolucion, mediasEvolucion, MAX_ALLOWED_EVOLUTIONS);
-					new Grafica(numeroEvolucion, mediasEvolucion, MAX_ALLOWED_EVOLUTIONS);
+					new Grafica(numeroEvolucion, mediasEvolucion);
 				} catch (InvalidConfigurationException e) {
 					e.printStackTrace();
 				}
