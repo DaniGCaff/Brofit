@@ -2,9 +2,12 @@ package controller;
 
 import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 import javax.persistence.EntityManager;
+import javax.swing.JPanel;
 
 import org.jgap.FitnessFunction;
 import org.jgap.Gene;
@@ -18,9 +21,11 @@ import genes.EjercicioGene;
 import model.Ejercicio;
 import views.Resultado;
 
+import java.awt.Graphics;
+
 public class AlgorithmController extends Observable {
 
-	public static final int MAX_ALLOWED_EVOLUTIONS = 500;
+	public static final int MAX_ALLOWED_EVOLUTIONS = 300;
 	private BroFitnessParams params;
 	private Resultado resultado;
 	private EntityManager em;
@@ -61,7 +66,21 @@ public class AlgorithmController extends Observable {
 					IChromosome mejorSolucion = null;
 					int i = 0;
 					Boolean stop = false;
+					int[] mediasEvolucion = new int[MAX_ALLOWED_EVOLUTIONS];
+					int[] numeroEvolucion = new int[MAX_ALLOWED_EVOLUTIONS];
+					JPanel panelGrafico=new JPanel();
+					Graphics grafico = panelGrafico.getGraphics();
 					while(i <= MAX_ALLOWED_EVOLUTIONS && !stop) {
+						
+						List <IChromosome> mediaSolucion = poblacion.getFittestChromosomes(PlanificacionController.poblacionMaxima);
+						//EL medio y el que mas se acerqe a l media fitness value. valor absoluto de la media
+							double media=0;
+							for (IChromosome ch : mediaSolucion){
+								media=media+ch.getFitnessValue();
+							}
+							media=media/PlanificacionController.poblacionMaxima;
+							mediasEvolucion[i]=(int)media;
+							
 						System.out.println("Generando generación número " + i + " de cromosomas.");
 						IChromosome auxSolucion = poblacion.getFittestChromosome();
 						if(mejorSolucion == null) {
@@ -80,6 +99,10 @@ public class AlgorithmController extends Observable {
 						poblacion.evolve();
 						i++;
 					}
+					for(int j=0;j<MAX_ALLOWED_EVOLUTIONS;j++){
+						numeroEvolucion[j]=j+1;
+					}
+					grafico.drawPolyline(numeroEvolucion, mediasEvolucion, MAX_ALLOWED_EVOLUTIONS);
 				} catch (InvalidConfigurationException e) {
 					e.printStackTrace();
 				}

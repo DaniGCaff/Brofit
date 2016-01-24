@@ -519,7 +519,7 @@ public class Formulario extends javax.swing.JFrame {
 				JOptionPane.showMessageDialog(this,"IMC MENOR DE 18.5");
 			}else if(objetivo.getSelectedItem().equals("Hipertrofia")&& motivacion.getSelectedIndex()==0){
 				JOptionPane.showMessageDialog(this,"Con Hipertrofia es necesario tener motivación");				
-			}else if((objetivo.getSelectedItem().equals("Pérdida de Peso")||objetivo.getSelectedItem().equals("Mantenimiento"))&& motivacion.getSelectedIndex()==0){
+			}else if((objetivo.getSelectedItem().equals("Pérdida de Peso")||objetivo.getSelectedItem().equals("Mantenimiento"))&& motivacion.getSelectedIndex()==1){
 				JOptionPane.showMessageDialog(this,"Con perdida de peso o mantenimiento es necesario tener motivación");								
 			}
 			else{

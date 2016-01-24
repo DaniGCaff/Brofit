@@ -18,7 +18,7 @@ public class RepeticionesGene extends IntegerGene implements IBrofitGene {
 
 	@Override
 	public float getEstresAsociado(Objetivo objetivo, RepeticionesGene duracion) {
-		return 0.0f;
+		return 0.000f;
 	}
 	
 	protected Gene newGeneInternal() {
