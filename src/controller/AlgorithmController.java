@@ -19,6 +19,7 @@ import algorithm.BroFitness;
 import algorithm.BroFitnessParams;
 import genes.EjercicioGene;
 import model.Ejercicio;
+import views.Grafica;
 import views.Resultado;
 
 import java.awt.Graphics;
@@ -68,8 +69,8 @@ public class AlgorithmController extends Observable {
 					Boolean stop = false;
 					int[] mediasEvolucion = new int[MAX_ALLOWED_EVOLUTIONS];
 					int[] numeroEvolucion = new int[MAX_ALLOWED_EVOLUTIONS];
-					JPanel panelGrafico=new JPanel();
-					Graphics grafico = panelGrafico.getGraphics();
+					//JPanel panelGrafico=new JPanel();
+					//Graphics grafico = panelGrafico.getGraphics();
 					while(i <= MAX_ALLOWED_EVOLUTIONS && !stop) {
 						
 						List <IChromosome> mediaSolucion = poblacion.getFittestChromosomes(PlanificacionController.poblacionMaxima);
@@ -102,7 +103,9 @@ public class AlgorithmController extends Observable {
 					for(int j=0;j<MAX_ALLOWED_EVOLUTIONS;j++){
 						numeroEvolucion[j]=j+1;
 					}
-					grafico.drawPolyline(numeroEvolucion, mediasEvolucion, MAX_ALLOWED_EVOLUTIONS);
+					
+					//grafico.drawPolyline(numeroEvolucion, mediasEvolucion, MAX_ALLOWED_EVOLUTIONS);
+					new Grafica(numeroEvolucion, mediasEvolucion, MAX_ALLOWED_EVOLUTIONS);
 				} catch (InvalidConfigurationException e) {
 					e.printStackTrace();
 				}
@@ -117,5 +120,6 @@ public class AlgorithmController extends Observable {
 	public EntityManager getEm() {
 		return em;
 	}
+	
 	
 }

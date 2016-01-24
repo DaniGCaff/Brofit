@@ -21,9 +21,6 @@ import model.Ejercicio;
 public class Resultado extends javax.swing.JFrame implements Observer {
 
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public void run() {
