@@ -534,20 +534,25 @@ class PlanificacionController extends Controller {
 	private boolean afectaLesiones(EjercicioGene gen) {
 		boolean afecta = false;
 		List<ClientesHasLesion> lesionesCliente = this.cliente.getClientesHasLesiones();
-		Method metodo;
+		//Method metodo;
 		try {
-			metodo = gen.getClass().getMethod("meAfectaLesion", ClientesHasLesion.class);
+			
+			//metodo = gen.getClass().getMethod("meAfectaLesion", ClientesHasLesion.class);
 			for(ClientesHasLesion lesionCliente : lesionesCliente) {
-				try {
+				afecta = afecta || gen.meAfectaLesion(lesionCliente);
+				/*try {
 					afecta = afecta || (Boolean)metodo.invoke(gen, lesionCliente);
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 			}
-		} catch (NoSuchMethodException | SecurityException e1) {
+		} /*catch (NoSuchMethodException | SecurityException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}*/
+		finally {
+			
 		}
 		return afecta;
 	}

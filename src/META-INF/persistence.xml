@@ -20,7 +20,7 @@
   <class>model.RutinasHasEjercicioPK</class>
   <properties>
    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/brofit"/>
-   <property name="javax.persistence.jdbc.user" value="root"/>
+   <property name="javax.persistence.jdbc.user" value="brofit"/>
  <property name="javax.persistence.jdbc.password" value="123456789"/>
  <property name="eclipselink.logging.level" value="ALL" />
 	<property name="eclipselink.logging.level.sql" value="FINE"/>
